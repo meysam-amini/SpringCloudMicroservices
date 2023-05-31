@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -33,5 +34,10 @@ public class MemberWalletServiceImpl implements MemberWalletService{
             memberWalletRepository.save(memberWallet);
             return address;
         }
+    }
+
+    @Override
+    public List<MemberWallet> getWalletsByMember(BigDecimal memberId) {
+        return memberWalletRepository.findAllByMemberId(memberId);
     }
 }
