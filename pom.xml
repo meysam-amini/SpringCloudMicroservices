@@ -18,6 +18,8 @@
         <module>config-server</module>
         <module>user-service</module>
         <module>discovery-service</module>
+        <module>wallet-service</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -39,6 +41,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
