@@ -1,4 +1,4 @@
-package com.meysam.entity;
+package com.meysam.model.entity;
 
 import lombok.*;
 
