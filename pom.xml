@@ -20,6 +20,7 @@
         <module>discovery-service</module>
         <module>wallet-service</module>
         <module>common</module>
+        <module>utils</module>
     </modules>
 
     <properties>

@@ -1,6 +1,6 @@
 package com.meysam.service;
 
-import com.meysam.model.MemberWallet;
+import com.meysam.model.entity.MemberWallet;
 import com.meysam.repository.MemberWalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
