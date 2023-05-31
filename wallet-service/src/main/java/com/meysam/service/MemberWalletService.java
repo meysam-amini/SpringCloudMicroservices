@@ -1,4 +1,4 @@
-package com.meysam.model.service;
+package com.meysam.service;
 
 import java.math.BigDecimal;
 

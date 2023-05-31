@@ -1,4 +1,4 @@
-package com.meysam.model.repository;
+package com.meysam.repository;
 
 import com.meysam.model.MemberWallet;
 import org.springframework.data.jpa.repository.JpaRepository;
