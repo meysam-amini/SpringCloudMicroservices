@@ -1,8 +1,10 @@
 package com.meysam.model.dto;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -13,10 +15,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class MemberWalletDto {
 
-    @NotNull(message = "memberId of memberWallet cannot be null")
+    @NotNull(message = "{member.wallet.member.id.notnull}")
     private BigDecimal memberId;
 
-    @NotNull(message = "coinUnit of memberWallet cannot be null")
+    @NotBlank(message = "{member.wallet.coin.unit.notnull}")
     private String coinUnit;
 
     private String address;
