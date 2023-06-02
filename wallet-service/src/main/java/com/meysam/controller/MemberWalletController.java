@@ -20,7 +20,7 @@ public class MemberWalletController {
     private final LocaleMessageSourceService messageSourceService;
 
     @PostMapping("create")
-    public ResponseEntity generateOrReturnAddress(@Valid MemberWalletDto memberWalletDto) {
+    public ResponseEntity generateOrReturnAddress(@RequestBody @Valid MemberWalletDto memberWalletDto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(memberWalletService
