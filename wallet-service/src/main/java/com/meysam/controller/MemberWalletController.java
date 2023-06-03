@@ -16,11 +16,11 @@ import java.math.BigDecimal;
 @RequestMapping("member-wallet")
 public class MemberWalletController {
 
-    private MemberWalletService memberWalletService;
-    private LocaleMessageSourceService messageSourceService;
+    private final MemberWalletService memberWalletService;
+    private final LocaleMessageSourceService messageSourceService;
 
     @PostMapping("create")
-    public ResponseEntity generateOrReturnAddress(@Valid MemberWalletDto memberWalletDto) {
+    public ResponseEntity generateOrReturnAddress(@RequestBody @Valid MemberWalletDto memberWalletDto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(memberWalletService

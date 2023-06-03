@@ -14,13 +14,13 @@ import java.util.UUID;
 @Service
 public class MemberWalletServiceImpl implements MemberWalletService{
 
-    private MemberWalletRepository memberWalletRepository;
+    private final MemberWalletRepository memberWalletRepository;
 
     @Transactional
     @Override
     public String generateWalletAndReturnAddress(BigDecimal memberId, String unit) {
 
-        String existingAddress = memberWalletRepository.returnAddressByMemberIdAndCoinUnit(memberId,unit);
+        String existingAddress = memberWalletRepository.findAddressByMemberIdAndCoinUnit(memberId,unit);
         if (existingAddress!=null){
             return existingAddress;
         }
@@ -38,6 +38,6 @@ public class MemberWalletServiceImpl implements MemberWalletService{
 
     @Override
     public List<MemberWallet> getWalletsByMember(BigDecimal memberId) {
-        return memberWalletRepository.findAllByMemberId(memberId);
+        return memberWalletRepository.findAllWalletsByMemberId(memberId);
     }
 }

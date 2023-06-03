@@ -16,7 +16,7 @@ public interface MemberWalletRepository extends JpaRepository<MemberWallet, BigD
     String returnAddressIfExists(@Param("address") String address);
 
     @Query(value = "select mw.address from MemberWallet mw where mw.memberId=:memberId and mw.coinUnit=:unit")
-    String returnAddressByMemberIdAndCoinUnit(@Param("memberId") BigDecimal memberId,@Param("unit") String unit);
+    String findAddressByMemberIdAndCoinUnit(@Param("memberId") BigDecimal memberId, @Param("unit") String unit);
 
-    List<MemberWallet> findAllByMemberId(BigDecimal memberId);
+    List<MemberWallet> findAllWalletsByMemberId(BigDecimal memberId);
 }

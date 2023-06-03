@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(name = "memberwallet",columnNames = {"member_id","coin_unit"})})
+@Table(uniqueConstraints = {@UniqueConstraint(name = "memberwallet",columnNames = {"memberId","coinUnit"})})
 public class MemberWallet {
 
     @Id
