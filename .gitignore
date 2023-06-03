@@ -31,3 +31,5 @@ logs/
 ### VS Code ###
 .vscode/
 **/target
+**/pgadmin_data
+**/postgres_data
