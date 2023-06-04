@@ -5,8 +5,9 @@ import com.meysam.service.MemberWalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import util.LocaleMessageSourceService;
+import util.com.meysam.utils.LocaleMessageSourceService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -30,6 +31,7 @@ public class MemberWalletController {
         }
     }
 
+    @PreAuthorize("hasAnyAuthority('USER_LEVEL_1')")
     @GetMapping("wallets/{memberId}")
     public ResponseEntity getWallets(@PathVariable("memberId")BigDecimal memberId){
         return ResponseEntity.ok(memberWalletService.getWalletsByMember(memberId));

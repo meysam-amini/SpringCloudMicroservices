@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import util.LocaleMessageSourceService;
+import util.com.meysam.utils.LocaleMessageSourceService;
 
 @Slf4j
 @ControllerAdvice
