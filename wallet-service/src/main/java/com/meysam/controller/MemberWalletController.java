@@ -31,7 +31,7 @@ public class MemberWalletController {
         }
     }
 
-    @PreAuthorize("hasAnyAuthority('USER_LEVEL_1')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     @GetMapping("wallets/{memberId}")
     public ResponseEntity getWallets(@PathVariable("memberId")BigDecimal memberId){
         return ResponseEntity.ok(memberWalletService.getWalletsByMember(memberId));
