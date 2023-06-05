@@ -13,7 +13,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgres_data:/data/db
+      - ./postgres-data:/var/lib/postgresql/data
 
   pgadmin:
     container_name: pgadmin4
@@ -25,7 +25,7 @@ services:
     ports:
       - "5050:80"
     volumes:
-      - ./pgadmin_data:/data/pgadmin
+      - ./pgadmin_data:/var/lib/data/pgadmin
     depends_on:
         - postgres
         
@@ -47,26 +47,18 @@ services:
       container_name: keycloak
       image: quay.io/keycloak/keycloak:21.1.1
       environment:
-      - KEYCLOAK_ADMIN=keycloak
-      - KEYCLOAK_ADMIN_PASSWORD=password
-      - KC_LOG_LEVEL=INFO
-      - KC_DB=postgres
-      - KC_DB_URL_HOST=postgres
-      - KC_DB_URL_PORT=5432
-      - KC_DB_URL_DATABASE=keycloak
-      - KC_DB_USERNAME=admin
-      - KC_DB_PASSWORD=password
-#        DB_VENDOR: POSTGRES
-#        DB_ADDR: postgres
-#        DB_DATABASE: keycloak
-#        DB_USER: admin
-#        DB_SCHEMA: public
-#        DB_PASSWORD: password
-#        DB_PORT: 5432
-#        KEYCLOAK_ADMIN: admin
-#        KEYCLOAK_ADMIN_PASSWORD: password
-      command: start-dev --features=preview
-      #start --optimized --hostname=localhost:8080 --http-enabled=true --hostname-strict-https=false
+       KEYCLOAK_ADMIN: admin
+       KEYCLOAK_ADMIN_PASSWORD: password
+       KC_PROXY: edge
+       KC_HOSTNAME_STRICT: "false"
+       KC_HTTP_ENABLED: "true"
+       KC_DB: postgres
+       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+       KC_DB_USERNAME: admin
+       KC_DB_PASSWORD: password
+       JDBC_PARAMS: useSSL=false
+      command: start
+#      start-dev --features=preview
         #--hostname=localhost:8080 --auto-build --db:postgres --db-url=postgres --db-password=password --db-port=5432 --db-schema=public --http-enabled true --hostname-strict-https false
         # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
         #JDBC_PARAMS: "ssl=true"
@@ -75,3 +67,6 @@ services:
       restart: always
       depends_on:
         - postgres
+volumes:
+  postgres_data:
+  pgadmin_data:
