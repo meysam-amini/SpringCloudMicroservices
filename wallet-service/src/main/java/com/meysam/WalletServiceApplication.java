@@ -1,5 +1,6 @@
 package com.meysam;
 
+import com.meysam.utils.LocaleMessageSourceService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -9,7 +10,6 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import util.com.meysam.utils.LocaleMessageSourceService;
 
 @SpringBootApplication
 @EnableDiscoveryClient
