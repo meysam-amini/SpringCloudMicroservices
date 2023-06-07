@@ -1,6 +1,7 @@
-package com.meysam.model;
+package com.meysam.model.entity;
 
-import lombok.Data;
+import com.meysam.model.entity.BaseEntity;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,10 +10,13 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "users")
-@Data
-public class User implements Serializable {
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity@Table(name = "users")
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

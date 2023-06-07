@@ -1,6 +1,6 @@
 package com.meysam.controllers;
 
-import com.meysam.model.User;
+import com.meysam.model.entity.User;
 import com.meysam.model.UserResponseModel;
 import com.meysam.service.UserService;
 import org.springframework.core.env.Environment;

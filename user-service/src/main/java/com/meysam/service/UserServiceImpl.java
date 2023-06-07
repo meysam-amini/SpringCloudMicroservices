@@ -2,7 +2,7 @@ package com.meysam.service;
 
 import com.meysam.model.AlbumEntity;
 import com.meysam.model.CustomUserDetails;
-import com.meysam.model.User;
+import com.meysam.model.entity.User;
 import com.meysam.model.UserResponseModel;
 import com.meysam.repository.UserRepository;
 import org.modelmapper.ModelMapper;

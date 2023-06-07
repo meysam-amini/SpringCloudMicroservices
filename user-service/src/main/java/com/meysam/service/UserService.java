@@ -1,6 +1,6 @@
 package com.meysam.service;
 
-import com.meysam.model.User;
+import com.meysam.model.entity.User;
 import com.meysam.model.UserResponseModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
