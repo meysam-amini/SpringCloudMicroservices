@@ -1,0 +1,17 @@
+package com.meysam.model.entity;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+@Entity@Table
+@Getter@Setter@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Resource extends BaseEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private BigDecimal Id;
+}
