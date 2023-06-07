@@ -18,7 +18,7 @@
         <module>config-server</module>
         <module>user-service</module>
         <module>discovery-service</module>
-        <module>wallet-service</module>
+        <module>wallet-manager</module>
         <module>common</module>
         <module>backoffice</module>
     </modules>
