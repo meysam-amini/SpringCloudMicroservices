@@ -1,6 +1,6 @@
 package com.meysam.repository;
 
-import com.meysam.model.entity.Coin;
+import com.meysam.walletmanager.model.entity.Coin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;

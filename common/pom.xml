@@ -61,6 +61,11 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <artifactId>model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <groupId>org.meysam.walletmanager</groupId>
+        </dependency>
     </dependencies>
 
 

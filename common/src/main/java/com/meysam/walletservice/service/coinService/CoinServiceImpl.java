@@ -1,7 +1,7 @@
 package com.meysam.walletservice.service.coinService;
 
-import com.meysam.model.entity.Coin;
 import com.meysam.repository.CoinRepository;
+import com.meysam.walletmanager.model.entity.Coin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
