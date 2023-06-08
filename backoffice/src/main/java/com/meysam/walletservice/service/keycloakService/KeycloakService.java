@@ -1,7 +1,7 @@
 package com.meysam.walletservice.service.keycloakService;
 
 import com.meysam.model.entity.Role;
-import com.meysam.model.entity.User;
+import com.meysam.walletmanager.model.entity.User;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Setter@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table@Entity
 public class Coin extends BaseEntity{
 
     @Id

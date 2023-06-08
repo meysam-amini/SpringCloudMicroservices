@@ -1,13 +1,14 @@
-package com.meysam.walletservice.service.coinService;
+package com.meysam.walletservice.service.impl;
 
-import com.meysam.repository.CoinRepository;
 import com.meysam.walletmanager.model.entity.Coin;
+import com.meysam.walletservice.repository.coin.CoinRepository;
+import com.meysam.walletservice.service.api.CoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class CoinServiceImpl implements CoinService{
+public class CoinServiceImpl implements CoinService {
 
     private final CoinRepository coinRepository;
 

@@ -1,9 +1,11 @@
-package com.meysam.repository;
+package com.meysam.walletservice.repository.coin;
 
 import com.meysam.walletmanager.model.entity.Coin;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 
+@Repository
 public interface CoinRepository extends JpaRepository<Coin, BigDecimal> {
 }

@@ -58,9 +58,9 @@ public class WalletManagerWebApiApplication {
         registry.addInterceptor(localeChangeInterceptor());
     }*/
 
-    @Bean
+    /*@Bean
     public LocaleMessageSourceService getLocaleMessageSourceService(){
         return new LocaleMessageSourceService();
-    }
+    }*/
 
 }

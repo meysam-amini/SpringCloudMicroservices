@@ -1,4 +1,4 @@
-package com.meysam.walletservice.service.coinService;
+package com.meysam.walletservice.service.api;
 
 
 import com.meysam.walletmanager.model.entity.Coin;
