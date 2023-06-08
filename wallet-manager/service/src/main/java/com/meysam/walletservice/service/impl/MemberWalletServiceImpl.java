@@ -1,6 +1,6 @@
 package com.meysam.walletservice.service.impl;
 
-import com.meysam.model.entity.MemberWallet;
+import com.meysam.walletmanager.model.entity.MemberWallet;
 import com.meysam.walletservice.service.api.MemberWalletService;
 import com.meysam.walletservice.repository.memberwallet.MemberWalletRepository;
 import lombok.RequiredArgsConstructor;

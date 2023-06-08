@@ -1,6 +1,6 @@
 package com.meysam.walletservice.service.api;
 
-import com.meysam.model.entity.MemberWallet;
+import com.meysam.walletmanager.model.entity.MemberWallet;
 
 import java.math.BigDecimal;
 import java.util.List;

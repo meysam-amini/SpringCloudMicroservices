@@ -1,6 +1,6 @@
 package com.meysam.controller.memberwallet;
 
-import com.meysam.utils.LocaleMessageSourceService;
+import com.meysam.util.messages.LocaleMessageSourceService;
 import com.meysam.walletmanager.model.dto.MemberWalletDto;
 import com.meysam.walletservice.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;

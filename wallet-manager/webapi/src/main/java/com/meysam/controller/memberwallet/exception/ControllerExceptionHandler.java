@@ -1,6 +1,6 @@
 package com.meysam.controller.memberwallet.exception;
 
-import com.meysam.utils.LocaleMessageSourceService;
+import com.meysam.util.messages.LocaleMessageSourceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
