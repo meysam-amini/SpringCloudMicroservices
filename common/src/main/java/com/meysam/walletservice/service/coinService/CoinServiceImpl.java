@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CoinServiceImpl implements CoinService{
 
-    private CoinRepository coinRepository;
+    private final CoinRepository coinRepository;
 
     @Override
     public Coin addCoin(Coin coin) {
