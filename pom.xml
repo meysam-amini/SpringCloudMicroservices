@@ -18,9 +18,10 @@
         <module>config-server</module>
         <module>user-service</module>
         <module>discovery-service</module>
-        <module>wallet-service</module>
+        <module>wallet-manager</module>
         <module>common</module>
         <module>backoffice</module>
+        <module>common/util</module>
     </modules>
 
     <properties>
@@ -46,7 +47,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
+            <version>1.18.24</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

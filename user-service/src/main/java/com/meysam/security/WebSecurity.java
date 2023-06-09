@@ -1,6 +1,6 @@
 package com.meysam.security;
 
-import com.meysam.service.UserService;
+import com.meysam.walletservice.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;

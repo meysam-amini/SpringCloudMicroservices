@@ -1,8 +1,8 @@
 package com.meysam.controllers;
 
-import com.meysam.model.entity.User;
 import com.meysam.model.UserResponseModel;
-import com.meysam.service.UserService;
+import com.meysam.walletmanager.model.entity.User;
+import com.meysam.walletservice.service.UserService;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
