@@ -67,6 +67,10 @@ services:
       restart: always
       depends_on:
         - postgres
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
 volumes:
   postgres_data:
   pgadmin_data:
