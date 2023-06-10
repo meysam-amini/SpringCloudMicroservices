@@ -69,6 +69,7 @@ services:
         - postgres
 
   zookeeper:
+    container_name: zookeeper
     image: confluentinc/cp-zookeeper:7.4.0
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -77,6 +78,7 @@ services:
       - 22181:2181
 
   kafka:
+    container_name: kafka
     image: confluentinc/cp-kafka:7.4.0
     depends_on:
       - zookeeper
@@ -92,6 +94,7 @@ services:
 
 
   zipkin:
+    container_name: zipkin
     image: openzipkin/zipkin
     ports:
       - 9411:9411
