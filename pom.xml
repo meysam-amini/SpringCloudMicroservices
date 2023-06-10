@@ -22,6 +22,7 @@
         <module>common</module>
         <module>backoffice</module>
         <module>common/util</module>
+        <module>auth-service</module>
     </modules>
 
     <properties>
