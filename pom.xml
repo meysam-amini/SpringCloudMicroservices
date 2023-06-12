@@ -21,6 +21,7 @@
         <module>wallet-manager</module>
         <module>common</module>
         <module>backoffice</module>
+        <module>auth-service</module>
     </modules>
 
     <properties>
