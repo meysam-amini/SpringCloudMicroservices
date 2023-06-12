@@ -1,5 +1,6 @@
-package com.meysam.walletmanager.model.entity;
+package com.meysam.auth.model.entity;
 
+import com.meysam.common.model.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

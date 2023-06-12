@@ -14,8 +14,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>security</module>
-        <module>utils</module>
+        <module>common-security</module>
+        <module>common-utils</module>
+        <module>common-model</module>
     </modules>
 
     <properties>

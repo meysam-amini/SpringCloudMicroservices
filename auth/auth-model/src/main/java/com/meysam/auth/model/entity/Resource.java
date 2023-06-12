@@ -1,18 +1,16 @@
-package com.meysam.model.entity;
+package com.meysam.auth.model.entity;
 
+import com.meysam.common.model.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table
-@Getter
-@Setter
-@Builder
+@Entity@Table
+@Getter@Setter@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class Resource extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

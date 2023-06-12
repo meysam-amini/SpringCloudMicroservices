@@ -1,4 +1,4 @@
-package com.meysam.walletmanager.model.entity;
+package com.meysam.common.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
