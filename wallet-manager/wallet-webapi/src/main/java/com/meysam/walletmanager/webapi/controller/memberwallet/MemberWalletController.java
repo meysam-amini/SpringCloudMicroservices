@@ -2,7 +2,7 @@ package com.meysam.walletmanager.webapi.controller.memberwallet;
 
 import com.meysam.util.messages.LocaleMessageSourceService;
 import com.meysam.walletmanager.model.dto.MemberWalletDto;
-import com.meysam.walletservice.service.api.MemberWalletService;
+import com.meysam.walletmanager.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
