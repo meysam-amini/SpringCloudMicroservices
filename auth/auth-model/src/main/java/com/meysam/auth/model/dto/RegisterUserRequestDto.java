@@ -7,4 +7,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterUserRequestDto {
+    private String username;
 }
