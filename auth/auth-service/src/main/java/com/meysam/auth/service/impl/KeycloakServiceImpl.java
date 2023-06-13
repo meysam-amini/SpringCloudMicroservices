@@ -6,6 +6,7 @@ import com.meysam.auth.model.dto.RegisterUserRequestDto;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.entity.User;
 import com.meysam.auth.service.api.KeycloakService;
+import com.meysam.util.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,8 @@ import java.util.List;
 public class KeycloakServiceImpl implements KeycloakService {
 
     private final RestTemplate restTemplate;
+
+
 
     @Value("${keycloak.login.url}")
     private String KEYCLOAK_LOGIN_URL;
@@ -43,7 +46,7 @@ public class KeycloakServiceImpl implements KeycloakService {
                 .exchange(KEYCLOAK_LOGIN_URL, HttpMethod.POST, request, LoginResponseDto.class);
         LoginResponseDto loginResponseDto = response.getBody();
         if(response.getStatusCode()!=HttpStatus.OK) {
-            return null;//BusinessException here
+            throw new BusinessException("error");
         }else {
             return loginResponseDto;
         }
