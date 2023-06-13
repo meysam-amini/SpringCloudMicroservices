@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <artifactId>security</artifactId>
+    <artifactId>common-security</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

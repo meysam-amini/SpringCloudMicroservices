@@ -22,8 +22,7 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid LoginRequestDto loginRequestDto){
 
-        LoginResponseDto responseDto = keycloakService.loginUser(loginRequestDto);
+        return ResponseEntity.ok(keycloakService.loginUser(loginRequestDto));
 
-        return ResponseEntity.ok(responseDto);
     }
 }

@@ -8,10 +8,14 @@ import javax.validation.constraints.NotNull;
 @Builder@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequestDto {
+public class KeycloakLoginRequestDto {
 
     @NotNull
     private String username;
     @NotNull
     private String password;
+    @NotNull
+    private String clientId;
+    @NotNull
+    private String clientSecret;
 }

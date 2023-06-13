@@ -1,5 +1,6 @@
 package com.meysam.auth.service.impl;
 
+import com.meysam.auth.model.dto.KeycloakLoginRequestDto;
 import com.meysam.auth.model.dto.LoginRequestDto;
 import com.meysam.auth.model.dto.LoginResponseDto;
 import com.meysam.auth.model.dto.RegisterUserRequestDto;
@@ -7,8 +8,10 @@ import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.entity.User;
 import com.meysam.auth.service.api.KeycloakService;
 import com.meysam.util.exception.BusinessException;
+import com.meysam.util.messages.LocaleMessageSourceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -21,12 +24,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KeycloakServiceImpl implements KeycloakService {
 
+    @Qualifier(value = "SimpleRestTemplate")
     private final RestTemplate restTemplate;
+    private final LocaleMessageSourceService messageSourceService;
 
-
-
-    @Value("${keycloak.login.url}")
-    private String KEYCLOAK_LOGIN_URL;
+    @Value("${keycloak.get.token.url}")
+    private String KEYCLOAK_GET_TOKEN_URL;
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
+    private String CLIENT_ID;
+    @Value("${oauth.client.secret}")
+    private String CLIENT_SECRET;
 
     @Override
     public List<Role> getRoles() {
@@ -41,12 +48,20 @@ public class KeycloakServiceImpl implements KeycloakService {
     @Override
     public LoginResponseDto loginUser(LoginRequestDto loginDto) {
 
-        HttpEntity<LoginRequestDto> request = new HttpEntity<>(loginDto);
+        KeycloakLoginRequestDto keycloakLoginRequestDto = KeycloakLoginRequestDto.builder()
+                .clientId(CLIENT_ID)
+                .clientSecret(CLIENT_SECRET)
+                .username(loginDto.getUsername())
+                .password(loginDto.getPassword())
+                .build();
+
+        HttpEntity<KeycloakLoginRequestDto> request = new HttpEntity<>(keycloakLoginRequestDto);
         ResponseEntity<LoginResponseDto> response = restTemplate
-                .exchange(KEYCLOAK_LOGIN_URL, HttpMethod.POST, request, LoginResponseDto.class);
+                .exchange(KEYCLOAK_GET_TOKEN_URL, HttpMethod.POST, request, LoginResponseDto.class);
         LoginResponseDto loginResponseDto = response.getBody();
+
         if(response.getStatusCode()!=HttpStatus.OK) {
-            throw new BusinessException("error");
+            throw new BusinessException(messageSourceService.getMessage("LOGIN_USER_FAILED"));
         }else {
             return loginResponseDto;
         }
