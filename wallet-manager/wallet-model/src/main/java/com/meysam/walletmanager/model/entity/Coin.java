@@ -1,5 +1,6 @@
 package com.meysam.walletmanager.model.entity;
 
+import com.meysam.common.model.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table@Entity
-public class Coin extends BaseEntity{
+public class Coin extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

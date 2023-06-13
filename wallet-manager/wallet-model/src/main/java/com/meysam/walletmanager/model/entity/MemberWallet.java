@@ -1,6 +1,7 @@
 package com.meysam.walletmanager.model.entity;
 
 
+import com.meysam.common.model.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(name = "memberwallet",columnNames = {"memberId","coinUnit"})})
-public class MemberWallet extends BaseEntity{
+public class MemberWallet extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
