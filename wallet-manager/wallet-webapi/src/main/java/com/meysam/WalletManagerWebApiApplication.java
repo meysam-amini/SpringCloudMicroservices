@@ -1,6 +1,5 @@
 package com.meysam;
 
-import com.meysam.util.messages.LocaleMessageSourceService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
