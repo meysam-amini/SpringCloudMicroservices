@@ -7,6 +7,7 @@ import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.entity.User;
 import com.meysam.auth.service.api.KeycloakService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class KeycloakServiceImpl implements KeycloakService {
@@ -40,7 +42,11 @@ public class KeycloakServiceImpl implements KeycloakService {
         ResponseEntity<LoginResponseDto> response = restTemplate
                 .exchange(KEYCLOAK_LOGIN_URL, HttpMethod.POST, request, LoginResponseDto.class);
         LoginResponseDto loginResponseDto = response.getBody();
-        return loginResponseDto;
+        if(response.getStatusCode()!=HttpStatus.OK) {
+            return null;//BusinessException here
+        }else {
+            return loginResponseDto;
+        }
     }
 
     @Override
