@@ -1,4 +1,4 @@
-package com.meysam.walletservice.repository.memberwallet;
+package com.meysam.walletmanager.dao.repository.memberwallet;
 
 import com.meysam.walletmanager.model.entity.MemberWallet;
 import org.springframework.data.jpa.repository.JpaRepository;

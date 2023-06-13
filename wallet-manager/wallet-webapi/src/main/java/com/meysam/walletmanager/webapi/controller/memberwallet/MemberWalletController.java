@@ -1,4 +1,4 @@
-package com.meysam.controller.memberwallet;
+package com.meysam.walletmanager.webapi.controller.memberwallet;
 
 import com.meysam.util.messages.LocaleMessageSourceService;
 import com.meysam.walletmanager.model.dto.MemberWalletDto;

@@ -1,4 +1,4 @@
-package com.meysam.controller.memberwallet.exception;
+package com.meysam.walletmanager.webapi.controller.memberwallet.exception;
 
 import com.meysam.util.messages.LocaleMessageSourceService;
 import lombok.RequiredArgsConstructor;

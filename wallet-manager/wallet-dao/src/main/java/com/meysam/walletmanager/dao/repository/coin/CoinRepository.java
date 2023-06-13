@@ -1,4 +1,4 @@
-package com.meysam.walletservice.repository.coin;
+package com.meysam.walletmanager.dao.repository.coin;
 
 import com.meysam.walletmanager.model.entity.Coin;
 import org.springframework.data.jpa.repository.JpaRepository;
