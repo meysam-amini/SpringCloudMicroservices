@@ -29,18 +29,18 @@ services:
 #    depends_on:
 #        - postgres
         
-#  rabbitmq:
-#    container_name: rabbitmq
-#    image: rabbitmq:3-management
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    restart: always
-#    environment:
-#      RABBITMQ_DEFAULT_USER: user
-#      RABBITMQ_DEFAULT_PASS: password
-##    networks:
-##      - test-network
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+#    networks:
+#      - test-network
 
 
   keycloak:

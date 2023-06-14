@@ -1,10 +1,10 @@
 package com.meysam.walletservice.service;
 
+import com.meysam.common.entity.User;
 import com.meysam.model.AlbumEntity;
 import com.meysam.model.CustomUserDetails;
 import com.meysam.model.UserResponseModel;
 import com.meysam.repository.UserRepository;
-import com.meysam.walletmanager.model.entity.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
