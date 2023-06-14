@@ -18,4 +18,6 @@ public class KeycloakLoginRequestDto {
     private String clientId;
     @NotNull
     private String clientSecret;
+    @NotNull
+    private String grantType;
 }
