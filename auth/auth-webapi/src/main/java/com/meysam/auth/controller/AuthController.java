@@ -2,6 +2,7 @@ package com.meysam.auth.controller;
 
 import com.meysam.auth.model.dto.LoginRequestDto;
 import com.meysam.auth.api.KeycloakService;
+import com.meysam.auth.model.dto.RegisterUserRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,4 +25,11 @@ public class AuthController {
         return ResponseEntity.ok(keycloakService.loginUser(loginRequestDto));
 
     }
+
+    @PostMapping("register")
+    public ResponseEntity register(@RequestBody @Valid RegisterUserRequestDto registerRequestDto){
+        return ResponseEntity.ok(keycloakService.registerUser(registerRequestDto));
+
+    }
+
 }

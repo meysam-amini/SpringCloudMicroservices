@@ -9,13 +9,9 @@ import javax.validation.constraints.NotNull;
 @Builder@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterUserRequestDto {
-    @NotNull
-    private String username;
-    @NotNull
-    private String password;
+public class OtpDto {
 
-    private OtpTarget otpTarget;
-
+    @NotNull
+    private long otpCode;
 
 }

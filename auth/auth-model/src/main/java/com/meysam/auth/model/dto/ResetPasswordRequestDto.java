@@ -9,13 +9,14 @@ import javax.validation.constraints.NotNull;
 @Builder@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterUserRequestDto {
+public class ResetPasswordRequestDto {
+
     @NotNull
     private String username;
     @NotNull
-    private String password;
+    private String newPassword;
+    @NotNull
+    private String oldPassword;
 
     private OtpTarget otpTarget;
-
-
 }

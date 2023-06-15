@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Builder@Getter@AllArgsConstructor@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class LoginResponseDto {
+public class RegisterUserResponseDto {
 
     private String accessToken;
     private String refreshToken;
