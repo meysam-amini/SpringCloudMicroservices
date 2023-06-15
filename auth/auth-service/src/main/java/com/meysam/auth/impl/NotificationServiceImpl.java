@@ -1,7 +1,6 @@
 package com.meysam.auth.impl;
 
 import com.meysam.auth.api.NotificationService;
-import com.meysam.auth.model.enums.OtpTarget;
 import com.meysam.common.constants.Constants;
 import com.meysam.common.exception.BusinessException;
 import com.meysam.common.messages.LocaleMessageSourceService;

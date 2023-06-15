@@ -17,5 +17,8 @@ public class RegisterUserRequestDto {
 
     private OtpTarget otpTarget;
 
+    //email or phone number
+    private String otpDestination;
+
 
 }

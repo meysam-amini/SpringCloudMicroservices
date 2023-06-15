@@ -4,6 +4,6 @@ import com.meysam.auth.model.enums.OtpTarget;
 
 public interface OtpService {
 
-    void sendOtp(String username,OtpTarget otpTarget,String destination);
-    boolean isValidOtpCode(String username, OtpTarget otpTarget,long otpCode);
+    boolean sendOtp(String username,OtpTarget otpTarget,String destination);
+    void validateOtpCode(String username, OtpTarget otpTarget, Long enteredOtpCode);
 }

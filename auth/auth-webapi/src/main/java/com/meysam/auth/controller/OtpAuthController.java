@@ -21,20 +21,17 @@ public class OtpAuthController {
     private final LocaleMessageSourceService messageSourceService;
 
     @PostMapping("otp-login")
-    public ResponseEntity otpLogin(@RequestBody @Valid LoginRequestDto loginRequestDto){
-
+    public ResponseEntity otpLogin(@RequestBody @Valid LoginRequestDto loginRequestDto,@RequestParam(value = "otpCOde",required = true) long otpcode){
+        otpService.validateOtpCode(loginRequestDto.getUsername(),loginRequestDto.getOtpTarget(), otpcode);
         return ResponseEntity.ok(keycloakService.loginUser(loginRequestDto));
 
     }
 
     @PostMapping("otp-register")
-    public ResponseEntity register(@RequestBody @Valid RegisterUserRequestDto registerRequestDto, @RequestParam("otpCOde") long otpcode){
+    public ResponseEntity register(@RequestBody @Valid RegisterUserRequestDto registerRequestDto, @RequestParam(value = "otpCOde",required = true) long otpcode){
 
-        if(otpService.isValidOtpCode(registerRequestDto.getUsername(),registerRequestDto.getOtpTarget(),otpcode)) {
-            return ResponseEntity.ok(keycloakService.registerUser(registerRequestDto));
-        }else {
-            return ResponseEntity.badRequest().body(messageSourceService.getMessage("WRONG_OTP_CODE"));
-        }
+        otpService.validateOtpCode(registerRequestDto.getUsername(),registerRequestDto.getOtpTarget(),otpcode);
+        return ResponseEntity.ok(keycloakService.registerUser(registerRequestDto));
 
     }
 
@@ -47,8 +44,14 @@ public class OtpAuthController {
 
     @PostMapping("send-otp-register")
     public ResponseEntity SendOtpForRegister(@RequestBody @Valid RegisterUserRequestDto registerUserRequestDto){
+        //validate user inputs before sending otp
 
-        return null;
+        Boolean sendOtpResult = otpService.sendOtp(registerUserRequestDto.getUsername(),registerUserRequestDto.getOtpTarget(),registerUserRequestDto.getOtpDestination());
+        if(sendOtpResult){
+            return ResponseEntity.ok().body(messageSourceService.getMessage("SEND_OTP_SUCCESS")+"to "+registerUserRequestDto.getOtpDestination());
+        }else {
+            return ResponseEntity.internalServerError().body(messageSourceService.getMessage("SEND_OTP_FAILED"));
+        }
     }
 
     @PostMapping("send-otp-reset-password")
