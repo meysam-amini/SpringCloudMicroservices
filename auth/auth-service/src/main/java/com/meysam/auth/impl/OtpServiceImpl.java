@@ -14,7 +14,6 @@ public class OtpServiceImpl implements OtpService {
         switch (otpTarget){
             case EMAIL -> {
 
-
             }
             case PHONE -> {
 
