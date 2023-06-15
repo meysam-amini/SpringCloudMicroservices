@@ -4,6 +4,7 @@ import com.meysam.auth.api.KeycloakService;
 import com.meysam.auth.model.dto.LoginRequestDto;
 import com.meysam.auth.model.dto.LoginResponseDto;
 import com.meysam.auth.model.dto.RegisterUserRequestDto;
+import com.meysam.auth.model.dto.RegisterUserResponseDto;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.common.entity.User;
 import com.meysam.common.exception.BusinessException;
@@ -18,7 +19,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -45,7 +45,7 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public User registerUser(RegisterUserRequestDto registerDto) {
+    public RegisterUserResponseDto registerUser(RegisterUserRequestDto registerDto) {
         return null;
     }
 

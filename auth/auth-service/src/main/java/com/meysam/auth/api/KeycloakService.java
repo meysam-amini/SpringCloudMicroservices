@@ -3,6 +3,7 @@ package com.meysam.auth.api;
 import com.meysam.auth.model.dto.LoginRequestDto;
 import com.meysam.auth.model.dto.LoginResponseDto;
 import com.meysam.auth.model.dto.RegisterUserRequestDto;
+import com.meysam.auth.model.dto.RegisterUserResponseDto;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.common.entity.User;
 
@@ -12,7 +13,7 @@ public interface KeycloakService {
 
     List<Role> getRoles();
 
-    User registerUser(RegisterUserRequestDto registerDto);
+    RegisterUserResponseDto registerUser(RegisterUserRequestDto registerDto);
 
     LoginResponseDto loginUser(LoginRequestDto loginDto);
 

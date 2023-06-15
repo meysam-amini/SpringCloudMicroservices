@@ -3,6 +3,7 @@ package com.meysam.auth.model.dto;
 import com.meysam.auth.model.enums.OtpTarget;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Setter
@@ -10,9 +11,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterUserRequestDto {
-    @NotNull
+    @NotBlank
     private String username;
-    @NotNull
+    @NotBlank
     private String password;
 
     private OtpTarget otpTarget;

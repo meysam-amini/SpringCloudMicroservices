@@ -6,8 +6,10 @@ import com.meysam.common.exception.BusinessException;
 import com.meysam.common.messages.LocaleMessageSourceService;
 import com.meysam.common.service.api.GeneralPropertiesService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
@@ -17,22 +19,30 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    public boolean sendEmailOtp(String username, String destination) {
+    public void sendEmailOtp(String username, String destination,String generatedRandomCode) {
         boolean isEmailOtpActive = Boolean.parseBoolean(generalPropertiesService.findSettingByKey(Constants.GENERAL_PROPERTY_IS_EMAIL_OTP_ACTIVE_KEY));
         if (isEmailOtpActive){
-            //send email using smtp logics
-            return true;
+            try {
+                //send email using smtp logics
+            }catch (Exception e){
+                log.error("Couldn't send email otp at time: {} , exception : {}",System.currentTimeMillis(),e);
+                throw new BusinessException(messageSourceService.getMessage("SEND_EMAIL_OTP_FAILED"));
+            }
         }else {
             throw new BusinessException(messageSourceService.getMessage("EMAIL_OTP_IS_NOT_ACTIVE"));
         }
     }
 
     @Override
-    public boolean sendSMSOtp(String username, String destination) {
+    public void sendSMSOtp(String username, String destination,String generatedRandomCode) {
         boolean isSMSOtpActive = Boolean.parseBoolean(generalPropertiesService.findSettingByKey(Constants.GENERAL_PROPERTY_IS_SMS_OTP_ACTIVE_KEY));
         if (isSMSOtpActive){
-            //send SMS logics
-            return true;
+            try {
+                //send sms logics
+            }catch (Exception e){
+                log.error("Couldn't send sms otp at time: {} , exception : {}",System.currentTimeMillis(),e);
+                throw new BusinessException(messageSourceService.getMessage("SEND_SMS_OTP_FAILED"));
+            }
         }else {
             throw new BusinessException(messageSourceService.getMessage("SMS_OTP_IS_NOT_ACTIVE"));
         }
