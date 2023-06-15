@@ -1,6 +1,6 @@
 package com.meysam.security;
 
-import com.meysam.walletservice.service.UserService;
+import com.meysam.common.service.api.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -52,7 +52,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(encoder);
+    //    auth.userDetailsService(userService).passwordEncoder(encoder);
     }
 
 

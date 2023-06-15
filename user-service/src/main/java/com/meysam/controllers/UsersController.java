@@ -1,8 +1,8 @@
 package com.meysam.controllers;
 
 import com.meysam.common.entity.User;
+import com.meysam.common.service.api.UserService;
 import com.meysam.model.UserResponseModel;
-import com.meysam.walletservice.service.UserService;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,8 +49,8 @@ public class UsersController {
             {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
    // @PreAuthorize("principal == #userId")
     @PostAuthorize("principal == returnObject.getBody().getUserId()")
-    public ResponseEntity<UserResponseModel> getUser(@PathVariable("userId") String userId) {
-        UserResponseModel returnValue = userService.getUserByUserID(userId);
+    public ResponseEntity<User> getUser(@PathVariable("userId") String userId) {
+        User returnValue = userService.findByUserName(userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }

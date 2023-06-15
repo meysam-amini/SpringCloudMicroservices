@@ -3,6 +3,7 @@ package com.meysam.common.templates;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +29,15 @@ import java.time.Duration;
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
+    @Value("${spring.redis.host}")
     private String REDIS_HOST;
+    @Value("${spring.redis.port}")
     private int REDIS_PORT;
+    @Value("${spring.redis.password}")
     private String REDIS_PASSWORD;
+    @Value("${spring.redis.connect-timeout}")
     private Long JEDDIS_CONNECTION_TIME_OUT;
+    @Value("${spring.redis.timeout}")
     private Long JEDDIS_READ_TIME_OUT;
 
 

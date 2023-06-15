@@ -19,7 +19,7 @@ public class GeneralPropertiesServiceImpl implements GeneralPropertiesService {
 
     @Override
     public String findSettingByKey(String key) {
-        return generalPropertiesRepository.findByKey(key);
+        return generalPropertiesRepository.findByKey(key).getValue();
     }
 
     @Override

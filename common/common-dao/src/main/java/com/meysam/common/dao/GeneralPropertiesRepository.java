@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GeneralPropertiesRepository extends JpaRepository<GeneralProperties, Long> {
 
-    String findByKey(String key);
+    GeneralProperties findByKey(String key);
 }

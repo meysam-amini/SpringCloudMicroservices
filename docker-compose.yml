@@ -28,7 +28,16 @@ services:
 #      - ./pgadmin_data:/var/lib/data/pgadmin
 #    depends_on:
 #        - postgres
-        
+
+  redis:
+    container_name: redis
+    image: redis:6
+    ports:
+      - "6379:6379"
+    restart: always
+#    networks:
+#      - test-network
+
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3-management
