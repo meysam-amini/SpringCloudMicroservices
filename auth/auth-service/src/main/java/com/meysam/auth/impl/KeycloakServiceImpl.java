@@ -12,15 +12,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -61,15 +59,10 @@ public class KeycloakServiceImpl implements KeycloakService {
         data.add("client_secret",CLIENT_SECRET);
         data.add("grant_type",GRANT_TYPE);
 
-      /*  KeycloakLoginRequestDto keycloakLoginRequestDto = KeycloakLoginRequestDto.builder()
-                .client_id(CLIENT_ID)
-                .client_secret(CLIENT_SECRET)
-                .grant_type(GRANT_TYPE)
-                .username(loginDto.getUsername())
-                .password(loginDto.getPassword())
-                .build();*/
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(data);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(data,headers);
         try {
             ResponseEntity<LoginResponseDto> response = restTemplate
                     .exchange(KEYCLOAK_GET_TOKEN_URL, HttpMethod.POST, request, LoginResponseDto.class);

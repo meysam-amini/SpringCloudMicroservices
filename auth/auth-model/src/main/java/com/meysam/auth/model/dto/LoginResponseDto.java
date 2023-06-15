@@ -1,11 +1,12 @@
 package com.meysam.auth.model.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 @Setter
-@Builder@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder@Getter@AllArgsConstructor@NoArgsConstructor
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class LoginResponseDto {
 
     private String accessToken;
