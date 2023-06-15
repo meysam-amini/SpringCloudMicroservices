@@ -4,5 +4,6 @@ import com.meysam.auth.model.enums.OtpTarget;
 
 public interface NotificationService {
 
-    boolean sendOtp(String username, OtpTarget otpTarget,String destination);
+    boolean sendEmailOtp(String username,String destination);
+    boolean sendSMSOtp(String username,String destination);
 }

@@ -24,13 +24,4 @@ public class GeneralProperties extends BaseEntity {
     @Column(unique = true)
     private String key;
     private String value;
-
-    @Column(nullable = false)
-    private int wrongEnteredOtpCount=3;
-    @Column(nullable = false)
-    private boolean isEmailActive=true;
-    @Column(nullable = false)
-    private boolean isSMSActive=true;
-    @Column(nullable = false)
-    private int otpDurationInSeconds=60;
 }
