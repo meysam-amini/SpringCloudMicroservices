@@ -1,4 +1,4 @@
-package com.meysam.common.service.api;
+package com.meysam.auth.service.api;
 
 import java.util.HashMap;
 

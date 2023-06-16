@@ -1,4 +1,4 @@
-package com.meysam.walletmanager.controller.memberwallet;
+package com.meysam.walletmanager.webapi.controller.memberwallet;
 
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.walletmanager.model.dto.MemberWalletDto;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.math.BigDecimal;
 
 @RequiredArgsConstructor

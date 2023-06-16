@@ -1,4 +1,4 @@
-package com.meysam.walletmanager;
+package com.meysam.walletmanager.webapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

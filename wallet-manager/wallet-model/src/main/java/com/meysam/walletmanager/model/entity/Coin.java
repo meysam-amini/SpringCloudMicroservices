@@ -3,8 +3,8 @@ package com.meysam.walletmanager.model.entity;
 import com.meysam.common.model.entity.BaseEntity;
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter

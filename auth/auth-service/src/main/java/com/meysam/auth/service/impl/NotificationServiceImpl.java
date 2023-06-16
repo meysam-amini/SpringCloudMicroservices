@@ -4,7 +4,7 @@ import com.meysam.auth.service.api.NotificationService;
 import com.meysam.common.utils.constants.Constants;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.common.service.api.GeneralPropertiesService;
+import com.meysam.auth.service.api.GeneralPropertiesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

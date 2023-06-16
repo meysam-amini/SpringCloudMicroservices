@@ -1,9 +1,9 @@
 package com.meysam.common.utils.messages;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.TimeZone;

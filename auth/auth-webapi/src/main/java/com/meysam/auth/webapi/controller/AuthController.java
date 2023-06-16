@@ -4,14 +4,16 @@ import com.meysam.auth.model.dto.LoginRequestDto;
 import com.meysam.auth.service.api.KeycloakService;
 import com.meysam.auth.model.dto.RegisterUserRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
+@ComponentScan("com.meysam.auth.service.*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("auth")
