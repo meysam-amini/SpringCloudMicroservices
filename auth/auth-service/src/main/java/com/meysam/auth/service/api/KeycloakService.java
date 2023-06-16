@@ -6,6 +6,7 @@ import com.meysam.auth.model.dto.RegisterUserRequestDto;
 import com.meysam.auth.model.dto.RegisterUserResponseDto;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.common.model.entity.User;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface KeycloakService {
 
     List<Role> getRoles();
 
-    RegisterUserResponseDto registerUser(RegisterUserRequestDto registerDto);
+    JSONObject registerUser(RegisterUserRequestDto registerDto);
 
     LoginResponseDto loginUser(LoginRequestDto loginDto);
 

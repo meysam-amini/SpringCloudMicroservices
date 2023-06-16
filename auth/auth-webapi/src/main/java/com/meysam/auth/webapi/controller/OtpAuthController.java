@@ -5,6 +5,7 @@ import com.meysam.auth.service.api.OtpService;
 import com.meysam.auth.model.dto.*;
 import com.meysam.auth.model.enums.OtpTarget;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class OtpAuthController {
             , @RequestParam(value = "otpTarget",required = true) OtpTarget otpTarget){
 
         otpService.validateOtpCode(registerRequestDto.getUsername(),otpTarget,otpcode);
-        RegisterUserResponseDto registerUserResponseDto = keycloakService.registerUser(registerRequestDto);
+        JSONObject registerUserResponseDto = keycloakService.registerUser(registerRequestDto);
         otpService.removeCachedOtpCodeAndWrongOtpCount(registerRequestDto.getUsername(),otpTarget);
         return ResponseEntity.ok(registerUserResponseDto);
 

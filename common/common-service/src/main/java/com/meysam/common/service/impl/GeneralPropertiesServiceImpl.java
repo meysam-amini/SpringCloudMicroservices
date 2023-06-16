@@ -1,10 +1,9 @@
-package com.meysam.auth.service.impl;
+package com.meysam.common.service.impl;
 
-import com.meysam.auth.dao.GeneralPropertiesRepository;
-import com.meysam.auth.service.api.GeneralPropertiesService;
+import com.meysam.common.dao.GeneralPropertiesRepository;
+import com.meysam.common.service.api.GeneralPropertiesService;
 import com.meysam.common.model.entity.GeneralProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

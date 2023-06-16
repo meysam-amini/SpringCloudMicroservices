@@ -1,4 +1,4 @@
-package com.meysam.auth.dao;
+package com.meysam.common.dao;
 
 import com.meysam.common.model.entity.GeneralProperties;
 import org.springframework.data.jpa.repository.JpaRepository;
