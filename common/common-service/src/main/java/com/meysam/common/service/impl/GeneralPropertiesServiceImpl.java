@@ -1,10 +1,8 @@
 package com.meysam.common.service.impl;
 
 import com.meysam.common.dao.GeneralPropertiesRepository;
-import com.meysam.common.entity.GeneralProperties;
+import com.meysam.common.model.entity.GeneralProperties;
 import com.meysam.common.service.api.GeneralPropertiesService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,10 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class GeneralPropertiesServiceImpl implements GeneralPropertiesService {
 
     private final GeneralPropertiesRepository generalPropertiesRepository;
+
+    public GeneralPropertiesServiceImpl(GeneralPropertiesRepository generalPropertiesRepository) {
+        this.generalPropertiesRepository = generalPropertiesRepository;
+    }
 
     @Override
     public String findSettingByKey(String key) {

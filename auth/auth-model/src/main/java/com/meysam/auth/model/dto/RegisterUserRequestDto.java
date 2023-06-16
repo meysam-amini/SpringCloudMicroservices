@@ -15,11 +15,8 @@ public class RegisterUserRequestDto {
     private String username;
     @NotBlank
     private String password;
-
-    private OtpTarget otpTarget;
-
-    //email or phone number
-    private String otpDestination;
-
+    private String firstName;
+    private String lastName;
+    private String email;
 
 }

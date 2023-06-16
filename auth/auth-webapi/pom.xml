@@ -32,22 +32,12 @@
         </dependency>
         <dependency>
             <groupId>com.meysam.auth</groupId>
-            <artifactId>auth-model</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.meysam.auth</groupId>
             <artifactId>auth-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.meysam.common</groupId>
             <artifactId>common-utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.meysam.common</groupId>
-            <artifactId>common-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

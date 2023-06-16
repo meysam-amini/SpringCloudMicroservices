@@ -1,8 +1,7 @@
 package com.meysam.controllers;
 
-import com.meysam.common.entity.User;
+import com.meysam.common.model.entity.User;
 import com.meysam.common.service.api.UserService;
-import com.meysam.model.UserResponseModel;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

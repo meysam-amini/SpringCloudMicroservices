@@ -1,10 +1,7 @@
 package com.meysam.auth;
 
-import com.meysam.common.constants.DefaultConstants;
-import com.meysam.common.service.api.GeneralPropertiesService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,12 +13,14 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(value = {"com.meysam.common.*","com.meysam.auth.*"})
-@RequiredArgsConstructor
+@ComponentScan({"com.meysam.auth.*.*","com.meysam.auth.service.*","com.meysam.common.dao","com.meysam.common.*"})
 public class AuthWebApiApplication implements CommandLineRunner {
 
-    private final GeneralPropertiesService generalPropertiesService;
-
+//    private final GeneralPropertiesService generalPropertiesService;
+//
+//    public AuthWebApiApplication(GeneralPropertiesService generalPropertiesService) {
+//        this.generalPropertiesService = generalPropertiesService;
+//    }
 
     public static void main(String []args){
         SpringApplication.run(AuthWebApiApplication.class);
@@ -50,6 +49,6 @@ public class AuthWebApiApplication implements CommandLineRunner {
     }
 
     private void insertDefaultGeneralProperties(){
-        generalPropertiesService.addSettings(DefaultConstants.defaultConstants);
+//        generalPropertiesService.addSettings(DefaultConstants.defaultConstants);
     }
 }

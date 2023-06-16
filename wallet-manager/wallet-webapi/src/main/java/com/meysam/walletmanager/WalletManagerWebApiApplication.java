@@ -11,7 +11,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan("com.meysam.common.*")
+@ComponentScan({"com.meysam.common.*"})
 public class WalletManagerWebApiApplication {
 
     public static void main(String []args){
