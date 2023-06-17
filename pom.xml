@@ -16,7 +16,7 @@
     <modules>
         <module>api-gateway</module>
         <module>config-server</module>
-        <module>user-service</module>
+        <module>users</module>
         <module>discovery-service</module>
         <module>wallet-manager</module>
         <module>common</module>
