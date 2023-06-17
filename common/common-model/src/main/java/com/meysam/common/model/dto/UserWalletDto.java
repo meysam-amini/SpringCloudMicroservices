@@ -1,9 +1,7 @@
-package com.meysam.walletmanager.model.dto;
+package com.meysam.common.model.dto;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -13,10 +11,10 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberWalletDto {
+public class UserWalletDto {
 
     @NotNull(message = "{member.wallet.member.id.notnull}")
-    private BigDecimal memberId;
+    private BigDecimal userId;
 
     @NotBlank(message = "{member.wallet.coin.unit.notnull}")
     private String coinUnit;

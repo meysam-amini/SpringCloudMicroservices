@@ -1,7 +1,7 @@
-package com.meysam.controllers;
+package com.meysam.users.webapi.controller;
 
 import com.meysam.common.model.entity.User;
-import com.meysam.common.service.api.UserService;
+import com.meysam.users.service.api.UserService;
 import jakarta.validation.Valid;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -42,12 +42,13 @@ public class UsersController {
     }
 
 
-    @GetMapping(value = "/{userId}", produces =
+    @GetMapping(value = "wallets/{userId}", produces =
             {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
    // @PreAuthorize("principal == #userId")
 //    @PostAuthorize("principal == returnObject.getBody().getUserId()")
-    public ResponseEntity<User> getUser(@PathVariable("userId") String userId) {
-        User returnValue = userService.findByUserName(userId);
+    public ResponseEntity<User> getUserWallets(@PathVariable("userId") String userId) {
+        // TODO: 18.06.23 change jwt converter to add username to principal: 
+        User returnValue = userService.getUserWallets(userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }

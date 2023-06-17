@@ -2,7 +2,7 @@ package com.meysam.users.service.impl;
 
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.WalletServiceClient;
-import com.meysam.walletmanager.model.dto.MemberWalletDto;
+import com.meysam.common.model.dto.UserWalletDto;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class WalletServiceFallBackFactory implements FallbackFactory<WalletServiceClient> {
@@ -23,7 +24,6 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
         return new WalletServiceClientFallBack(cause, messageSourceService);
     }
 
-    @Slf4j
     @RequiredArgsConstructor
     class WalletServiceClientFallBack implements WalletServiceClient {
 
@@ -32,7 +32,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
 
 
         @Override
-        public ResponseEntity createWallet(MemberWalletDto memberWalletDto) {
+        public ResponseEntity createWallet(UserWalletDto memberWalletDto) {
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when createWallet called for inputs: "
                         + memberWalletDto.toString() + " . Error message: "
@@ -45,11 +45,11 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
         }
 
         @Override
-        public ResponseEntity getWallets(BigDecimal id) {
+        public ResponseEntity getWallets(BigDecimal userId) {
 
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when getWallets called for userID: "
-                        + id + " . Error message: "
+                        + userId + " . Error message: "
                         + cause.getLocalizedMessage());
             } else {
                 log.error("Other error took place: " + cause.getLocalizedMessage());

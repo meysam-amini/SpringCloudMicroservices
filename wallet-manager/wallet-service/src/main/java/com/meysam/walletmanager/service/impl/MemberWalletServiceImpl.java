@@ -1,6 +1,6 @@
 package com.meysam.walletmanager.service.impl;
 
-import com.meysam.walletmanager.model.entity.MemberWallet;
+import com.meysam.common.model.entity.UserWallet;
 import com.meysam.walletmanager.dao.repository.memberwallet.MemberWalletRepository;
 import com.meysam.walletmanager.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +27,9 @@ public class MemberWalletServiceImpl implements MemberWalletService {
         }
         else {
             String address= UUID.randomUUID().toString();
-            MemberWallet memberWallet = MemberWallet.builder()
+            UserWallet memberWallet = UserWallet.builder()
                     .coinUnit(unit)
-                    .memberId(memberId)
+                    .userId(memberId)
                     .address(address)
                     .build();
             memberWalletRepository.save(memberWallet);
@@ -38,7 +38,7 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     }
 
     @Override
-    public List<MemberWallet> getWalletsByMember(BigDecimal memberId) {
+    public List<UserWallet> getWalletsByMemberId(BigDecimal memberId) {
         return memberWalletRepository.findAllWalletsByMemberId(memberId);
     }
 }

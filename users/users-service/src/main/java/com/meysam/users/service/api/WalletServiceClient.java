@@ -1,7 +1,7 @@
 package com.meysam.users.service.api;
 
 import com.meysam.users.service.impl.WalletServiceFallBackFactory;
-import com.meysam.walletmanager.model.dto.MemberWalletDto;
+import com.meysam.common.model.dto.UserWalletDto;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import java.math.BigDecimal;
 public interface WalletServiceClient {
 
     @GetMapping("/member-wallet/wallets/create")
-    public ResponseEntity createWallet(@RequestBody @Valid MemberWalletDto memberWalletDto);
+    public ResponseEntity createWallet(@RequestBody @Valid UserWalletDto memberWalletDto);
 
     @GetMapping("/member-wallet/wallets/{memberId}")
-    public ResponseEntity getWallets(@PathVariable("memberId") BigDecimal memberId);
+    public ResponseEntity getWallets(@PathVariable("userId") BigDecimal userId);
 
 }

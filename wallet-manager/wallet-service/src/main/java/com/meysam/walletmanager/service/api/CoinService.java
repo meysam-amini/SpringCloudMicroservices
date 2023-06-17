@@ -1,6 +1,6 @@
 package com.meysam.walletmanager.service.api;
 
-import com.meysam.walletmanager.model.entity.Coin;
+import com.meysam.common.model.entity.Coin;
 
 public interface CoinService {
 

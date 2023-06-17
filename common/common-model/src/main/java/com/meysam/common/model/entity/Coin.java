@@ -1,31 +1,29 @@
-package com.meysam.walletmanager.model.entity;
-
+package com.meysam.common.model.entity;
 
 import com.meysam.common.model.entity.BaseEntity;
 import lombok.*;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
 @Setter@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(uniqueConstraints = {@UniqueConstraint(name = "memberwallet",columnNames = {"memberId","coinUnit"})})
-public class MemberWallet extends BaseEntity {
+@Table@Entity
+public class Coin extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private BigDecimal Id;
 
+    @NotNull(message = "coin symbol cannot be null")
     @Column(nullable = false)
-    private BigDecimal memberId;
+    private String symbol;
 
+    @NotNull(message = "coin network cannot be null")
     @Column(nullable = false)
-    private String coinUnit;
-
-    @Column(nullable = false)
-    private String address;
+    private String network;
 
 }

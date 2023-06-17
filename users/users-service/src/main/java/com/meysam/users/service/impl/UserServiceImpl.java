@@ -1,19 +1,32 @@
-package com.meysam.common.service.impl;
+package com.meysam.users.service.impl;
 
 import com.meysam.common.dao.UserRepository;
+import com.meysam.common.model.dto.UserDto;
+import com.meysam.common.model.dto.UserWalletDto;
+import com.meysam.common.model.dto.UserWalletsDto;
 import com.meysam.common.model.entity.User;
-import com.meysam.common.service.api.UserService;
+import com.meysam.common.model.entity.UserWallet;
+import com.meysam.users.service.api.UserService;
+import com.meysam.common.utils.exception.BusinessException;
+import com.meysam.common.utils.messages.LocaleMessageSourceService;
+import com.meysam.users.service.api.WalletServiceClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    Logger logger= LoggerFactory.getLogger(this.getClass());
     private final UserRepository userRepository;
+    private final LocaleMessageSourceService messageSourceService;
+    private final WalletServiceClient walletServiceClient;
 
 
     @Override
@@ -24,6 +37,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUserName(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public UserWalletsDto getUserWallets(String username) {
+
+        User user = userRepository.findByUsername(username);
+        if(user!=null){
+
+            List<UserWallet> wallets = (List<UserWallet>) walletServiceClient.getWallets(user.getId()).getBody();
+
+            List<UserWalletDto> walletDtos = wallets.stream().map(wallet -> UserWalletDto.builder()
+                    .address(wallet.getAddress())
+                    .coinUnit(wallet.getCoinUnit())
+                    .build()).toList();
+
+            UserDto userDto = UserDto.builder().userId(user.getId()).username(username).build();
+
+            return UserWalletsDto.builder().wallets(walletDtos).userDto(userDto).build();
+        }
+        else {
+            throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
+        }
     }
 
 

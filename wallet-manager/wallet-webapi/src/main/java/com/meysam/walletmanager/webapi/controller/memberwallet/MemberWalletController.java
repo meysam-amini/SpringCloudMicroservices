@@ -1,7 +1,7 @@
 package com.meysam.walletmanager.webapi.controller.memberwallet;
 
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.walletmanager.model.dto.MemberWalletDto;
+import com.meysam.common.model.dto.UserWalletDto;
 import com.meysam.walletmanager.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,11 +21,11 @@ public class MemberWalletController {
     private final LocaleMessageSourceService messageSourceService;
 
     @PostMapping("create")
-    public ResponseEntity generateOrReturnAddress(@RequestBody @Valid MemberWalletDto memberWalletDto) {
+    public ResponseEntity generateOrReturnAddress(@RequestBody @Valid UserWalletDto memberWalletDto) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(memberWalletService
-                            .generateWalletAndReturnAddress(memberWalletDto.getMemberId(), memberWalletDto.getCoinUnit()));
+                            .generateWalletAndReturnAddress(memberWalletDto.getUserId(), memberWalletDto.getCoinUnit()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("REQUEST_FAILED"));
         }
@@ -34,7 +34,7 @@ public class MemberWalletController {
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     @GetMapping("wallets/{memberId}")
     public ResponseEntity getWallets(@PathVariable("memberId")BigDecimal memberId){
-        return ResponseEntity.ok(memberWalletService.getWalletsByMember(memberId));
+        return ResponseEntity.ok(memberWalletService.getWalletsByMemberId(memberId));
     }
 
 
