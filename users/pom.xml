@@ -9,7 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>user-service</artifactId>
+    <artifactId>users</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>model</module>
+        <module>dao</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
