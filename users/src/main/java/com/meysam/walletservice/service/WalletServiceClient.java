@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
 
-@FeignClient(name = "wallet-ws",fallbackFactory = walletsFallBackFactory.class)
+@FeignClient(name = "wallet-ws",fallbackFactory = WalletServiceFallBackFactory.class)
 public interface WalletServiceClient {
 
     @GetMapping("/member-wallet/wallets/create")
@@ -32,7 +32,7 @@ public interface WalletServiceClient {
 
 @Component
 @RequiredArgsConstructor
-class walletsFallBackFactory implements FallbackFactory<WalletServiceClient>{
+class WalletServiceFallBackFactory implements FallbackFactory<WalletServiceClient>{
 
     private final LocaleMessageSourceService messageSourceService;
 
