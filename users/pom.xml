@@ -10,10 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>users</artifactId>
+    <groupId>com.meysam.users</groupId>
     <packaging>pom</packaging>
     <modules>
-        <module>model</module>
-        <module>dao</module>
+        <module>users-model</module>
+        <module>users-dao</module>
+        <module>users-service</module>
+        <module>users-webapi</module>
     </modules>
 
     <properties>
