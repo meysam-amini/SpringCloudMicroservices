@@ -1,16 +1,16 @@
 package com.meysam.auth.service.impl;
 
-import com.meysam.auth.service.api.KeycloakService;
+import com.meysam.auth.model.dto.KeycloakRegisterCredentialsDto;
 import com.meysam.auth.model.dto.LoginRequestDto;
 import com.meysam.auth.model.dto.LoginResponseDto;
 import com.meysam.auth.model.dto.RegisterUserRequestDto;
 import com.meysam.auth.model.entity.Role;
+import com.meysam.auth.service.api.KeycloakService;
 import com.meysam.common.model.entity.User;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,17 +52,14 @@ public class KeycloakServiceImpl implements KeycloakService {
     public JSONObject registerUser(RegisterUserRequestDto registerDto) {
         String clientAccessToken = fetchClientAccessToken();
 
-        JSONObject passwordSchema = new JSONObject();
-        passwordSchema.put("type","password");
-        passwordSchema.put("value",registerDto.getPassword());
-        passwordSchema.put("temporary","false");
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put(passwordSchema);
+        KeycloakRegisterCredentialsDto registerCredentialsDto = KeycloakRegisterCredentialsDto.builder()
+                .value(registerDto.getPassword())
+                .build();
 
         JSONObject userData = new JSONObject();
 
         userData.put("username",registerDto.getUsername());
-        userData.put("credentials",jsonArray);
+        userData.put("credentials",registerCredentialsDto);
         userData.put("firstName",registerDto.getFirstName());
         userData.put("lastName",registerDto.getLastName());
         userData.put("email",registerDto.getEmail());

@@ -2,15 +2,15 @@ package com.meysam.common.model.dto;
 
 import lombok.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Setter
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserWalletsDto {
+public class UserDto {
 
-    private UserDto userDto;
-    private List<UserWalletDto> wallets;
+    private String username;
+    private BigDecimal userId;
 }

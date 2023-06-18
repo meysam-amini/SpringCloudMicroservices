@@ -1,16 +1,15 @@
 package com.meysam.auth.model.dto;
 
-import com.meysam.auth.model.enums.OtpTarget;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Setter
 @Builder@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterUserRequestDto {
+public class RegisterUserRequestDto implements Serializable {
     @NotBlank
     private String username;
     @NotBlank
