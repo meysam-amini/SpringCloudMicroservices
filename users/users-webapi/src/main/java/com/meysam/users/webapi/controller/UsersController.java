@@ -48,8 +48,9 @@ public class UsersController {
 //    @PostAuthorize("principal == returnObject.getBody().getUserId()")
     public ResponseEntity<User> getUserWallets(@PathVariable("userId") String userId) {
         // TODO: 18.06.23 change jwt converter to add username to principal: 
-        User returnValue = userService.getUserWalletsKey(userId);
+//        User returnValue = userService.getUserWalletsKey(userId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+//        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
+        return null;
     }
 }
