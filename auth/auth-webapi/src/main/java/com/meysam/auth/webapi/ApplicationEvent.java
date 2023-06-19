@@ -5,8 +5,9 @@ import com.meysam.common.utils.constants.DefaultConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class ApplicationEvent implements ApplicationListener<ContextStartedEvent> {
 
     @Autowired

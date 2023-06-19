@@ -15,7 +15,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages = {"com.meysam.auth.*","com.meysam.common.service.*","com.meysam.common.utils.*","com.meysam.users.service.*"})
+@ComponentScan(basePackages = {"com.meysam.auth.*"
+        ,"com.meysam.common.service.*"
+        ,"com.meysam.common.utils.*"
+        ,"com.meysam.users.service.*"})
 @EnableJpaRepositories(basePackages = "com.meysam.common.dao")
 @EntityScan(basePackages = "com.meysam.common.model.entity")
 @EnableFeignClients(basePackages = {"com.meysam.users.service.*"})

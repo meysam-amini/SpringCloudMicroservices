@@ -1,23 +1,20 @@
 package com.meysam.auth.webapi.controller;
 
 import com.meysam.auth.model.dto.LoginRequestDto;
-import com.meysam.auth.service.api.KeycloakService;
 import com.meysam.auth.model.dto.RegisterUserRequestDto;
+import com.meysam.auth.service.api.KeycloakService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
-
-@ComponentScan("com.meysam.auth.service.*")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("auth")
-public class AuthController {
+@RequestMapping("auth-user")
+public class UserAuthController {
 
     private final KeycloakService keycloakService;
 
@@ -30,7 +27,7 @@ public class AuthController {
 
     @PostMapping("register")
     public ResponseEntity register(@RequestBody @Valid RegisterUserRequestDto registerRequestDto){
-        return ResponseEntity.ok(keycloakService.registerUser(registerRequestDto));
+        return keycloakService.registerUser(registerRequestDto);
 
     }
 
