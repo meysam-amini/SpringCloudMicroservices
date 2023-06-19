@@ -166,6 +166,8 @@ public class KeycloakServiceImpl implements KeycloakService {
         return null;
     }
 
+
+
     private ClientLoginResponseDto loginClient(String clientId, String clientSecret, AuthGrantType grantType) {
         MultiValueMap<String, String> clientData = new LinkedMultiValueMap<>();
         clientData.add("client_id", clientId);
