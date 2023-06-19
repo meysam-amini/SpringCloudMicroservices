@@ -1,6 +1,5 @@
 package com.meysam.common.model.dto;
 
-import com.meysam.common.model.entity.User;
 import lombok.*;
 
 import java.util.List;

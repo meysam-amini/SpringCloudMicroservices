@@ -1,14 +1,14 @@
 package com.meysam.auth.service.impl;
 
+import com.meysam.auth.model.enums.OtpTarget;
 import com.meysam.auth.service.api.NotificationService;
 import com.meysam.auth.service.api.OtpService;
-import com.meysam.auth.model.enums.OtpTarget;
-import com.meysam.common.utils.constants.Constants;
 import com.meysam.common.model.entity.User;
+import com.meysam.common.service.api.GeneralPropertiesService;
+import com.meysam.common.utils.constants.Constants;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.common.service.api.GeneralPropertiesService;
-import com.meysam.common.service.api.UserService;
+import com.meysam.users.service.api.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

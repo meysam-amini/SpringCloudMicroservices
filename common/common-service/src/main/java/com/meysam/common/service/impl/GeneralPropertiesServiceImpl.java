@@ -27,7 +27,10 @@ public class GeneralPropertiesServiceImpl implements GeneralPropertiesService {
         List<GeneralProperties> generalProperties = new ArrayList<>();
 
         settingsKeyValue.entrySet().forEach(property->{
-            generalProperties.add(new GeneralProperties(null,property.getKey(),property.getValue()));
+            GeneralProperties generalProperties1 = new GeneralProperties();
+            generalProperties1.setKey(property.getKey());
+            generalProperties1.setValue(property.getValue());
+            generalProperties.add(generalProperties1);
         });
 
         generalPropertiesRepository.saveAll(generalProperties);

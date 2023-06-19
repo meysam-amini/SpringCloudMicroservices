@@ -1,10 +1,8 @@
 package com.meysam.common.model.entity;
 
-import lombok.*;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import java.math.BigDecimal;
+import lombok.*;
 
 @Entity
 @Table
@@ -16,8 +14,8 @@ import java.math.BigDecimal;
 public class GeneralProperties extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigDecimal Id;
+    @GeneratedValue
+    private Long Id;
 
     @NotBlank
     @Column(unique = true)

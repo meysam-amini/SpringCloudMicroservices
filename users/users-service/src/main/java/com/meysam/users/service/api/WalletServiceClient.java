@@ -15,9 +15,9 @@ import java.math.BigDecimal;
 public interface WalletServiceClient {
 
     @GetMapping("/member-wallet/wallets/create")
-    public ResponseEntity createWallet(@RequestBody @Valid UserWalletDto memberWalletDto);
+    ResponseEntity createWallet(@RequestBody @Valid UserWalletDto memberWalletDto);
 
     @GetMapping("/member-wallet/wallets/{memberId}")
-    public ResponseEntity getWallets(@PathVariable("userId") BigDecimal userId);
+    ResponseEntity getWallets(@PathVariable("userId") BigDecimal userId);
 
 }
