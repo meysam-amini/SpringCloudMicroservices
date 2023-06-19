@@ -140,6 +140,11 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
+    public LoginResponseDto getUserRefreshToken(LoginRequestDto loginDto) {
+        return null;
+    }
+
+    @Override
     public Role getUserRole() {
         return null;
     }
@@ -154,6 +159,11 @@ public class KeycloakServiceImpl implements KeycloakService {
     @Override
     public ClientLoginResponseDto loginClient(ClientLoginRequestDto loginDto) {
         return loginClient(loginDto.getClientId(), loginDto.getClientSecret(),AuthGrantType.client_credentials);
+    }
+
+    @Override
+    public ClientLoginResponseDto getClientRefreshToken(ClientLoginRequestDto loginDto) {
+        return null;
     }
 
     private ClientLoginResponseDto loginClient(String clientId, String clientSecret, AuthGrantType grantType) {

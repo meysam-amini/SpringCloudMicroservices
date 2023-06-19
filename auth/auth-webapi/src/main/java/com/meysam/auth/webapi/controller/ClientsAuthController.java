@@ -22,4 +22,9 @@ public class ClientsAuthController {
     public ResponseEntity login(@RequestBody @Valid ClientLoginRequestDto loginRequestDto){
         return ResponseEntity.ok(keycloakService.loginClient(loginRequestDto));
     }
+
+    @PostMapping("refresh-token")
+    public ResponseEntity getRefreshToken(@RequestBody @Valid ClientLoginRequestDto loginRequestDto){
+        return ResponseEntity.ok(keycloakService.getClientRefreshToken(loginRequestDto));
+    }
 }

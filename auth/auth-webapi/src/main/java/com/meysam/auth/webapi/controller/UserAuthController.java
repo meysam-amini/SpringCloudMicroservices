@@ -31,4 +31,10 @@ public class UserAuthController {
 
     }
 
+    @PostMapping("refresh-token")
+    public ResponseEntity getRefreshToken(@RequestBody @Valid LoginRequestDto loginRequestDto){
+        return ResponseEntity.ok(keycloakService.getUserRefreshToken(loginRequestDto));
+
+    }
+
 }

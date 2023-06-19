@@ -14,8 +14,11 @@ public interface KeycloakService {
     ResponseEntity registerUser(RegisterUserRequestDto registerDto);
 
     LoginResponseDto loginUser(LoginRequestDto loginDto);
+    LoginResponseDto getUserRefreshToken(LoginRequestDto loginDto);
 
     ClientLoginResponseDto loginClient(ClientLoginRequestDto loginDto);
+    ClientLoginResponseDto getClientRefreshToken(ClientLoginRequestDto loginDto);
+
 
     Role getUserRole();
 
