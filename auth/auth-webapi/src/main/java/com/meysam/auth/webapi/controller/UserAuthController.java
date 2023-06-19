@@ -20,9 +20,7 @@ public class UserAuthController {
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid LoginRequestDto loginRequestDto){
-
         return ResponseEntity.ok(keycloakService.loginUser(loginRequestDto));
-
     }
 
     @PostMapping("register")
