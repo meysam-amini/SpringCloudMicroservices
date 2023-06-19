@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface MemberWalletService {
 
-    String generateWalletAndReturnAddress(BigDecimal memberId, String unit);
+    String generateWalletAndReturnAddress(BigDecimal userId, String unit);
 
-    List<UserWallet> getWalletsByMemberId(BigDecimal memberId);
+    List<UserWallet> getWalletsByUsername(String username);
 
 }

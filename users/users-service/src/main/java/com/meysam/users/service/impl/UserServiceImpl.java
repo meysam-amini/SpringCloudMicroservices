@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -34,6 +35,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUserName(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findById(BigDecimal id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override

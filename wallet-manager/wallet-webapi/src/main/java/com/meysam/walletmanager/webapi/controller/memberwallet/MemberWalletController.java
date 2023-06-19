@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -32,9 +33,18 @@ public class MemberWalletController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
-    @GetMapping("wallets/{memberId}")
-    public ResponseEntity getWallets(@PathVariable("memberId")BigDecimal memberId){
-        return ResponseEntity.ok(memberWalletService.getWalletsByMemberId(memberId));
+    @GetMapping("wallets")
+    public ResponseEntity getWallets(JwtAuthenticationToken jwtAuthenticationToken){
+        //user-name-attribute=preferred_username:
+        return ResponseEntity.ok(memberWalletService.getWalletsByUsername(jwtAuthenticationToken.getName()));
+    }
+
+
+    //get wallets scop should be added on Keycloak
+    @PreAuthorize("hasAuthority('SCOPE_profile')")
+    @GetMapping("wallets/{username}")
+    public ResponseEntity getWalletsByAuthCLients(@PathVariable("username")String username){
+        return ResponseEntity.ok(memberWalletService.getWalletsByUsername(username));
     }
 
 

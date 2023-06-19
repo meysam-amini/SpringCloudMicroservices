@@ -74,7 +74,7 @@ public class SecurityConfig {
         };
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-
+        jwtAuthenticationConverter.setPrincipalClaimName("preferred_username");
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
         return jwtAuthenticationConverter;

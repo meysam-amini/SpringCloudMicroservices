@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface MemberWalletRepository extends JpaRepository<UserWallet, BigDecimal> {
+public interface UserWalletRepository extends JpaRepository<UserWallet, BigDecimal> {
 
     @Query(value = "select mw.address from UserWallet mw where mw.address =: address")
     String returnAddressIfExists(@Param("address") String address);
 
-    @Query(value = "select mw.address from UserWallet mw where mw.memberId=:memberId and mw.coinUnit=:unit")
-    String findAddressByMemberIdAndCoinUnit(@Param("memberId") BigDecimal memberId, @Param("unit") String unit);
+    @Query(value = "select mw.address from UserWallet mw where mw.User.Id=:userId and mw.coinUnit=:unit")
+    String findAddressByUserAndCoinUnit(@Param("userId") BigDecimal userId, @Param("unit") String unit);
 
-    List<UserWallet> findAllWalletsByMemberId(BigDecimal memberId);
+    List<UserWallet> findAllWalletsByUser(BigDecimal userId);
 }

@@ -2,16 +2,24 @@ package com.meysam.walletmanager.webapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan({"com.meysam.common.*"})
+@ComponentScan(basePackages={"com.meysam.common.dao"
+        ,"com.meysam.common.utils"
+        ,"com.meysam.common.security"
+        ,"com.meysam.common.model"
+        ,"com.meysam.walletmanager.*"})
+@EnableJpaRepositories(basePackages="com.meysam.walletmanager.dao")
+@EntityScan(basePackages = "com.meysam.common.model.entity")
 public class WalletManagerWebApiApplication {
 
     public static void main(String []args){
