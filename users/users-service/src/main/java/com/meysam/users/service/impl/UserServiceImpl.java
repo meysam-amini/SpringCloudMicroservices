@@ -12,12 +12,9 @@ import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.WalletServiceClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
@@ -52,7 +49,7 @@ public class UserServiceImpl implements UserService {
                     .coinUnit(wallet.getCoinUnit())
                     .build()).toList();
 
-            UserDto userDto = UserDto.builder().userId(user.getId()).username(username).build();
+            UserDto userDto = UserDto.builder().id(user.getId()).username(username).build();
 
             return UserWalletsDto.builder().wallets(walletDtos).userDto(userDto).build();
         }

@@ -4,9 +4,11 @@ import com.meysam.auth.model.dto.*;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.enums.AuthGrantType;
 import com.meysam.auth.service.api.KeycloakService;
+import com.meysam.common.model.dto.UserDto;
 import com.meysam.common.model.entity.User;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
+import com.meysam.users.service.api.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -29,9 +31,11 @@ import java.util.List;
 public class KeycloakServiceImpl implements KeycloakService {
 
     @Qualifier(value = "SimpleRestTemplate")
-    @Autowired//for qualifier
+    @Autowired//for qualifier(lombok doesn't apply @Qualifier on constructor)
     private RestTemplate restTemplate;
     private final LocaleMessageSourceService messageSourceService;
+    private final UserService userService;
+
 
     @Value("${keycloak.get.token.url}")
     private String KEYCLOAK_GET_TOKEN_URL;
@@ -52,7 +56,7 @@ public class KeycloakServiceImpl implements KeycloakService {
 
     @Override
     public ResponseEntity registerUser(RegisterUserRequestDto registerDto) {
-        String clientAccessToken = loginClient(CLIENT_ID,CLIENT_SECRET,AuthGrantType.client_credentials).getAccessToken();
+        String clientAccessToken = loginClient(CLIENT_ID, CLIENT_SECRET, AuthGrantType.client_credentials).getAccessToken();
 
         JSONObject passwordSchema = new JSONObject();
         passwordSchema.put("type", "password");
@@ -91,15 +95,19 @@ public class KeycloakServiceImpl implements KeycloakService {
 //            RegisterUserResponseDto registerUserResponseDto = response.getBody();
 
             if (response.getStatusCode() == HttpStatus.CREATED) {
+                saveUserIfNotExist(new UserDto(null, registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
                 return ResponseEntity.status(HttpStatus.CREATED).body(messageSourceService.getMessage("REGISTER_SUCCESS"));
             } else {
+                if (response.getStatusCode() == HttpStatus.CONFLICT) {
+                    saveUserIfNotExist(new UserDto(null, registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
+                }
                 return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
             }
 
         } catch (HttpClientErrorException e) {
             log.error("Exception on register new user on keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new BusinessException(messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
         }
 
@@ -145,7 +153,7 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public Role getUserRole() {
+    public Role getUserRole(String username) {
         return null;
     }
 
@@ -155,17 +163,15 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
 
-
     @Override
     public ClientLoginResponseDto loginClient(ClientLoginRequestDto loginDto) {
-        return loginClient(loginDto.getClientId(), loginDto.getClientSecret(),AuthGrantType.client_credentials);
+        return loginClient(loginDto.getClientId(), loginDto.getClientSecret(), AuthGrantType.client_credentials);
     }
 
     @Override
     public ClientLoginResponseDto getClientRefreshToken(ClientLoginRequestDto loginDto) {
         return null;
     }
-
 
 
     private ClientLoginResponseDto loginClient(String clientId, String clientSecret, AuthGrantType grantType) {
@@ -195,4 +201,16 @@ public class KeycloakServiceImpl implements KeycloakService {
         }
     }
 
+    private void saveUserIfNotExist(UserDto userDto) {
+        User u = userService.findByUserName(userDto.getUsername());
+        if (u == null) {
+            User user = User.builder()
+                    .username(userDto.getUsername())
+                    .email(userDto.getEmail())
+                    .firstName(userDto.getFirstName())
+                    .lastName(userDto.getLastName())
+                    .build();
+            userService.createUser(user);
+        }
+    }
 }

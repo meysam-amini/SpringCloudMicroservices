@@ -7,6 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,6 +47,7 @@ public class UsersController {
             {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
    // @PreAuthorize("principal == #userId")
 //    @PostAuthorize("principal == returnObject.getBody().getUserId()")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     public ResponseEntity<User> getUserWallets(@PathVariable("userId") String userId) {
         // TODO: 18.06.23 change jwt converter to add username to principal: 
 //        User returnValue = userService.getUserWalletsKey(userId);

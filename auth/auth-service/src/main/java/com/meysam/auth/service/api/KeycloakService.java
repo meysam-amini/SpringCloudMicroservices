@@ -20,7 +20,7 @@ public interface KeycloakService {
     ClientLoginResponseDto getClientRefreshToken(ClientLoginRequestDto loginDto);
 
 
-    Role getUserRole();
+    Role getUserRole(String username);
 
     User assignRole(User user);
 
