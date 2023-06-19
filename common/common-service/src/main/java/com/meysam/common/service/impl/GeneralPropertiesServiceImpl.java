@@ -19,7 +19,7 @@ public class GeneralPropertiesServiceImpl implements GeneralPropertiesService {
 
     @Override
     public String findSettingByKey(String key) {
-        return generalPropertiesRepository.findByKey(key).getValue();
+        return generalPropertiesRepository.findBySettingKey(key).getSettingValue();
     }
 
     @Override
@@ -28,8 +28,8 @@ public class GeneralPropertiesServiceImpl implements GeneralPropertiesService {
 
         settingsKeyValue.entrySet().forEach(property->{
             GeneralProperties generalProperties1 = new GeneralProperties();
-            generalProperties1.setKey(property.getKey());
-            generalProperties1.setValue(property.getValue());
+            generalProperties1.setSettingKey(property.getKey());
+            generalProperties1.setSettingValue(property.getValue());
             generalProperties.add(generalProperties1);
         });
 

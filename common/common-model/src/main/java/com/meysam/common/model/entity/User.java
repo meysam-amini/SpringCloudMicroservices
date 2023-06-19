@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class User extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private BigDecimal Id;
 
     @Column(nullable = false , unique = true)
