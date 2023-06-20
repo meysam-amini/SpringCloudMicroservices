@@ -2,7 +2,7 @@ package com.meysam.users.service.impl;
 
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.WalletServiceClient;
-import com.meysam.common.model.dto.UserWalletDto;
+import com.meysam.common.model.dto.MemberWalletDto;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
 
 
         @Override
-        public ResponseEntity createWallet(UserWalletDto memberWalletDto) {
+        public ResponseEntity createWallet(MemberWalletDto memberWalletDto) {
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when createWallet called for inputs: "
                         + memberWalletDto.toString() + " . Error message: "
@@ -45,11 +45,11 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
         }
 
         @Override
-        public ResponseEntity getWallets(BigDecimal userId) {
+        public ResponseEntity getWallets(String username) {
 
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
-                log.error("404 error occurred when getWallets called for userID: "
-                        + userId + " . Error message: "
+                log.error("404 error occurred when getWallets called for username: "
+                        + username + " . Error message: "
                         + cause.getLocalizedMessage());
             } else {
                 log.error("Other error took place: " + cause.getLocalizedMessage());

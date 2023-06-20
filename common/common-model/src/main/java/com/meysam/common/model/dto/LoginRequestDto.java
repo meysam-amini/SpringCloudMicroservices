@@ -1,10 +1,6 @@
-package com.meysam.auth.model.dto;
-
-import com.meysam.auth.model.enums.OtpTarget;
+package com.meysam.common.model.dto;
 import lombok.*;
-
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Setter
 @Builder@Getter

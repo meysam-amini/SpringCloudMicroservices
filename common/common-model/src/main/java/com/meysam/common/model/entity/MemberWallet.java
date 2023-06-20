@@ -11,16 +11,16 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(name = "userwallet",columnNames = {"user_id","coin_unit"})})
-public class UserWallet extends BaseEntity {
+@Table(uniqueConstraints = {@UniqueConstraint(name = "memberwallet",columnNames = {"member_id","coin_unit"})})
+public class MemberWallet extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private BigDecimal Id;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id")
     @ManyToOne(cascade =  CascadeType.ALL,fetch = FetchType.EAGER)
-    private User User;
+    private Member member;
 
     @Column(name = "coin_unit",nullable = false)
     private String coinUnit;

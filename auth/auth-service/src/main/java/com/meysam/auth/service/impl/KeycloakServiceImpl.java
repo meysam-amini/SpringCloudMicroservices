@@ -4,11 +4,14 @@ import com.meysam.auth.model.dto.*;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.enums.AuthGrantType;
 import com.meysam.auth.service.api.KeycloakService;
+import com.meysam.common.model.dto.ClientLoginRequestDto;
+import com.meysam.common.model.dto.LoginRequestDto;
+import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.common.model.dto.UserDto;
-import com.meysam.common.model.entity.User;
+import com.meysam.common.model.entity.Member;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.users.service.api.UserService;
+import com.meysam.users.service.api.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -34,7 +37,7 @@ public class KeycloakServiceImpl implements KeycloakService {
     @Autowired//for qualifier(lombok doesn't apply @Qualifier on constructor)
     private RestTemplate restTemplate;
     private final LocaleMessageSourceService messageSourceService;
-    private final UserService userService;
+    private final MemberService userService;
 
 
     @Value("${keycloak.get.token.url}")
@@ -158,7 +161,7 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public User assignRole(User user) {
+    public Member assignRole(Member user) {
         return null;
     }
 
@@ -202,15 +205,15 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     private void saveUserIfNotExist(UserDto userDto) {
-        User u = userService.findByUserName(userDto.getUsername());
+        Member u = userService.findByUserName(userDto.getUsername());
         if (u == null) {
-            User user = User.builder()
+            Member user = Member.builder()
                     .username(userDto.getUsername())
                     .email(userDto.getEmail())
                     .firstName(userDto.getFirstName())
                     .lastName(userDto.getLastName())
                     .build();
-            userService.createUser(user);
+            userService.createMember(user);
         }
     }
 }

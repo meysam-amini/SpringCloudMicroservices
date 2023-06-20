@@ -2,7 +2,10 @@ package com.meysam.auth.service.api;
 
 import com.meysam.auth.model.dto.*;
 import com.meysam.auth.model.entity.Role;
-import com.meysam.common.model.entity.User;
+import com.meysam.common.model.dto.ClientLoginRequestDto;
+import com.meysam.common.model.dto.LoginRequestDto;
+import com.meysam.common.model.dto.RegisterUserRequestDto;
+import com.meysam.common.model.entity.Member;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,6 +25,6 @@ public interface KeycloakService {
 
     Role getUserRole(String username);
 
-    User assignRole(User user);
+    Member assignRole(Member user);
 
 }

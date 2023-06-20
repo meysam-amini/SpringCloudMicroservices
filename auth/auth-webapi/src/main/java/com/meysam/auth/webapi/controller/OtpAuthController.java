@@ -1,8 +1,8 @@
 package com.meysam.auth.webapi.controller;
 
-import com.meysam.auth.model.dto.LoginRequestDto;
+import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.auth.model.dto.LoginResponseDto;
-import com.meysam.auth.model.dto.RegisterUserRequestDto;
+import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.auth.model.dto.SendOtpDto;
 import com.meysam.auth.model.enums.OtpTarget;
 import com.meysam.auth.service.api.KeycloakService;

@@ -1,11 +1,11 @@
 package com.meysam.walletmanager.service.impl;
 
-import com.meysam.common.model.entity.User;
-import com.meysam.common.model.entity.UserWallet;
+import com.meysam.common.model.entity.Member;
+import com.meysam.common.model.entity.MemberWallet;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.users.service.api.UserService;
-import com.meysam.walletmanager.dao.repository.memberwallet.UserWalletRepository;
+import com.meysam.users.service.api.MemberService;
+import com.meysam.walletmanager.dao.repository.memberwallet.MemberWalletRepository;
 import com.meysam.walletmanager.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,27 +19,27 @@ import java.util.UUID;
 @Service
 public class MemberWalletServiceImpl implements MemberWalletService {
 
-    private final UserWalletRepository memberWalletRepository;
-    private final UserService userService;
+    private final MemberWalletRepository memberWalletRepository;
+    private final MemberService userService;
     private final LocaleMessageSourceService messageSourceService;
 
     @Transactional
     @Override
     public String generateWalletAndReturnAddress(BigDecimal userId, String unit) {
 
-        String existingAddress = memberWalletRepository.findAddressByUserAndCoinUnit(userId,unit);
+        String existingAddress = memberWalletRepository.findAddressByMemberAndCoinUnit(userId,unit);
         if (existingAddress!=null){
             return existingAddress;
         }
         else {
-            User user = userService.findById(userId);
+            Member user = userService.findById(userId);
             if(user==null)
                 throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
 
             String address= UUID.randomUUID().toString();
-            UserWallet memberWallet = UserWallet.builder()
+            MemberWallet memberWallet = MemberWallet.builder()
                     .coinUnit(unit)
-                    .User(user)
+                    .member(user)
                     .address(address)
                     .build();
             memberWalletRepository.save(memberWallet);
@@ -48,10 +48,10 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     }
 
     @Override
-    public List<UserWallet> getWalletsByUsername(String username) {
-        User user = userService.findByUserName(username);
+    public List<MemberWallet> getWalletsByUsername(String username) {
+        Member user = userService.findByUserName(username);
         if(user==null)
             throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
-        return memberWalletRepository.findAllWalletsByUser(user.getId());
+        return memberWalletRepository.findAllWalletsByMember(user.getId());
     }
 }

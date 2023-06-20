@@ -12,5 +12,5 @@ import java.util.List;
 public class UserWalletsDto {
 
     private UserDto userDto;
-    private List<UserWalletDto> wallets;
+    private List<MemberWalletDto> wallets;
 }

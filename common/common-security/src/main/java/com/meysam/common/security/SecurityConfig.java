@@ -62,6 +62,7 @@ public class SecurityConfig {
         Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter = jwt -> {
             Collection<GrantedAuthority> authorities = new ArrayList<>();
             Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
+            Collection<String> scopes = jwt.getClaim("scope");
             Map<String, Object> resource = null;
             Collection<String> resourceRoles = null;
             if (resourceAccess != null &&
@@ -70,6 +71,7 @@ public class SecurityConfig {
                 authorities.addAll(resourceRoles.stream()
                         .map(x -> new SimpleGrantedAuthority("ROLE_" + x))
                         .collect(Collectors.toSet()));
+            authorities.addAll(scopes.stream().map(y->new SimpleGrantedAuthority("SCOPE_"+y)).collect(Collectors.toList()));
             return authorities;
         };
 

@@ -3,12 +3,12 @@ package com.meysam.auth.service.impl;
 import com.meysam.auth.model.enums.OtpTarget;
 import com.meysam.auth.service.api.NotificationService;
 import com.meysam.auth.service.api.OtpService;
-import com.meysam.common.model.entity.User;
+import com.meysam.common.model.entity.Member;
 import com.meysam.common.service.api.GeneralPropertiesService;
 import com.meysam.common.utils.constants.Constants;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.users.service.api.UserService;
+import com.meysam.users.service.api.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,7 +27,7 @@ public class OtpServiceImpl implements OtpService {
     private final LocaleMessageSourceService messageSourceService;
     private final NotificationService notificationService;
     private final RedisTemplate redisTemplate;
-    private final UserService userService;
+    private final MemberService userService;
     private final GeneralPropertiesService generalPropertiesService;
 
 
@@ -45,7 +45,7 @@ public class OtpServiceImpl implements OtpService {
             response.put("message",messageSourceService.getMessage("OTP_ALREADY_SENT"));
             return ResponseEntity.ok(response);
         }
-        User foundUser = userService.findByUserName(username);
+        Member foundUser = userService.findByUserName(username);
 
         if(foundUser==null && isForRegisteredUser){
             throw new BusinessException(messageSourceService.getMessage("USERNAME_NOT_FOUND"));

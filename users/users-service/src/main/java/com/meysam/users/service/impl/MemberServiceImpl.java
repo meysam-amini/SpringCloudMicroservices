@@ -1,17 +1,17 @@
 package com.meysam.users.service.impl;
 
-import com.meysam.common.dao.UserRepository;
-import com.meysam.common.model.dto.UserDto;
-import com.meysam.common.model.dto.UserWalletDto;
-import com.meysam.common.model.dto.UserWalletsDto;
-import com.meysam.common.model.entity.User;
-import com.meysam.common.model.entity.UserWallet;
-import com.meysam.users.service.api.UserService;
+import com.meysam.common.dao.MemberRepository;
+import com.meysam.common.model.dto.*;
+import com.meysam.common.model.entity.Member;
+import com.meysam.common.model.entity.MemberWallet;
+import com.meysam.common.service.api.AuthServiceClient;
+import com.meysam.users.service.api.MemberService;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.WalletServiceClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,37 +20,53 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class MemberServiceImpl implements MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final LocaleMessageSourceService messageSourceService;
     private final WalletServiceClient walletServiceClient;
+    private final AuthServiceClient authServiceClient;
 
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public Member createMember(Member user) {
+        return memberRepository.save(user);
     }
 
     @Override
-    public User findByUserName(String username) {
-        return userRepository.findByUsername(username);
+    public ResponseEntity login(LoginRequestDto loginRequestDto) {
+        return authServiceClient.userLogin(loginRequestDto);
     }
 
     @Override
-    public User findById(BigDecimal id) {
-        return userRepository.findById(id).orElse(null);
+    public ResponseEntity register(RegisterUserRequestDto registerUserRequestDto) {
+        return authServiceClient.registerUser(registerUserRequestDto);
+    }
+
+    @Override
+    public Member findByUserName(String username) {
+        return memberRepository.findByUsername(username);
+    }
+
+    @Override
+    public Member findById(BigDecimal id) {
+        return memberRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return (List<Member>) memberRepository.findAll();
     }
 
     @Override
     public UserWalletsDto getUserWallets(String username) {
 
-        User user = userRepository.findByUsername(username);
+        Member user = memberRepository.findByUsername(username);
         if(user!=null){
 
-            List<UserWallet> wallets = (List<UserWallet>) walletServiceClient.getWallets(user.getId()).getBody();
+            List<MemberWallet> wallets = (List<MemberWallet>) walletServiceClient.getWallets(user.getUsername()).getBody();
 
-            List<UserWalletDto> walletDtos = wallets.stream().map(wallet -> UserWalletDto.builder()
+            List<MemberWalletDto> walletDtos = wallets.stream().map(wallet -> MemberWalletDto.builder()
                     .address(wallet.getAddress())
                     .coinUnit(wallet.getCoinUnit())
                     .build()).toList();

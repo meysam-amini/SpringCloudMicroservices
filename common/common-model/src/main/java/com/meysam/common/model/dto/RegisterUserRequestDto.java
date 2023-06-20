@@ -1,4 +1,4 @@
-package com.meysam.auth.model.dto;
+package com.meysam.common.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

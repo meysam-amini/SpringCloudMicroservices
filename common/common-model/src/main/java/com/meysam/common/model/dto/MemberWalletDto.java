@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserWalletDto {
+public class MemberWalletDto {
 
     @NotNull(message = "{member.wallet.member.id.notnull}")
     private BigDecimal userId;
