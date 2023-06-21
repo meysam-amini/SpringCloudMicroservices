@@ -2,19 +2,16 @@ package com.meysam.users.webapi.controller;
 
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
-import com.meysam.common.model.entity.Member;
 import com.meysam.users.service.api.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("member")
 public class MemberController {
 
     private final Environment env;

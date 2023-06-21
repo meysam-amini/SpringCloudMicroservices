@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         ,"com.meysam.common.security"})
 @EnableJpaRepositories(basePackages = "com.meysam.common.dao")
 @EntityScan(basePackages = "com.meysam.common.model.entity")
-@EnableFeignClients(basePackages = {"com.meysam.users.service.*"})
+@EnableFeignClients(basePackages = {"com.meysam.users.service.*","com.meysam.common.service.*"})
 public class UsersWebApiApplication {
 
     public static void main(String []args){
