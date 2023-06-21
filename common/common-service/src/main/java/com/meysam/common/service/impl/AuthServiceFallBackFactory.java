@@ -10,6 +10,7 @@ import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +41,7 @@ public class AuthServiceFallBackFactory implements FallbackFactory<AuthServiceCl
                 log.error("Other error took place: " + cause.getLocalizedMessage());
             }
 
-            return ResponseEntity.ok(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
         }
 
         @Override
@@ -51,7 +52,7 @@ public class AuthServiceFallBackFactory implements FallbackFactory<AuthServiceCl
                 log.error("Other error took place: " + cause.getLocalizedMessage());
             }
 
-            return ResponseEntity.ok(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
         }
 
         @Override
@@ -62,7 +63,7 @@ public class AuthServiceFallBackFactory implements FallbackFactory<AuthServiceCl
                 log.error("Other error took place: " + cause.getLocalizedMessage());
             }
 
-            return ResponseEntity.ok(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
         }
 
         @Override
@@ -73,7 +74,7 @@ public class AuthServiceFallBackFactory implements FallbackFactory<AuthServiceCl
                 log.error("Other error took place: " + cause.getLocalizedMessage());
             }
 
-            return ResponseEntity.ok(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
         }
     }
 
