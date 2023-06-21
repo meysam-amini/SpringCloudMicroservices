@@ -6,6 +6,7 @@ import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.common.service.impl.AuthServiceFallBackFactory;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface AuthServiceClient {
 
 
-    @PostMapping("/auth-client/login")
+    @PostMapping(value = "/auth-client/login",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity clientLogin(@RequestBody @Valid ClientLoginRequestDto loginRequestDto);
 
-    @PostMapping("/auth-user/login")
+    @PostMapping(value = "/auth-user/login",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity userLogin(@RequestBody @Valid LoginRequestDto loginRequestDto);
 
-    @PostMapping("/auth-user/register")
+    @PostMapping(value = "/auth-user/register",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity registerUser(@RequestBody @Valid RegisterUserRequestDto registerRequestDto);
 
-    @PostMapping("/auth-user/refresh-token")
+    @PostMapping(value = "/auth-user/refresh-token",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity refreshToken();
 }
