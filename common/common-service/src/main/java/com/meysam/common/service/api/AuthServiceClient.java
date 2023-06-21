@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "wallet-ws",fallbackFactory = AuthServiceFallBackFactory.class)
+@FeignClient(name = "auth-ws",fallbackFactory = AuthServiceFallBackFactory.class)
 public interface AuthServiceClient {
 
 
