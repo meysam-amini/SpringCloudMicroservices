@@ -147,7 +147,6 @@ public class KeycloakServiceImpl implements KeycloakService {
             throw new BusinessException(messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
         }
 
-
     }
 
     @Override
