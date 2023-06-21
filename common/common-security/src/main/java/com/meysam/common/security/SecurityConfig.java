@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Value("${oauth.client.id}")
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
     private String CLIENT_ID;
 
     private final KeycloakLogoutHandler keycloakLogoutHandler;
