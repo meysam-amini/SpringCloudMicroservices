@@ -7,10 +7,12 @@ import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -32,7 +34,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
 
 
         @Override
-        public String createWallet(MemberWalletDto memberWalletDto) {
+        public ResponseEntity<String> createWallet(MemberWalletDto memberWalletDto) {
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when createWallet called for inputs: "
                         + memberWalletDto.toString() + " . Error message: "
@@ -45,7 +47,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
         }
 
         @Override
-        public ResponseEntity getWallets(String username) {
+        public ResponseEntity<List<MemberWalletDto>> getWallets(String username) {
 
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when getWallets called for username: "
@@ -54,8 +56,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
             } else {
                 log.error("Other error took place: " + cause.getLocalizedMessage());
             }
-
-            return ResponseEntity.ok(messageSourceService.getMessage("WALLET_WS_PROBLEM"));
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ArrayList<>());
         }
     }
 

@@ -34,7 +34,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseEntity login(LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponseDto> login(LoginRequestDto loginRequestDto) {
         return authServiceClient.userLogin(loginRequestDto);
     }
 
@@ -81,7 +81,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String createMemberWalletAddress(MemberWalletDto memberWalletDto) {
+    public ResponseEntity<String> createMemberWalletAddress(MemberWalletDto memberWalletDto) {
         return walletServiceClient.createWallet(memberWalletDto);
     }
 }

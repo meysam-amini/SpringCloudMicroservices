@@ -23,10 +23,12 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     private final MemberService userService;
     private final LocaleMessageSourceService messageSourceService;
 
-    @Transactional
     @Override
     public String generateWalletAndReturnAddress(BigDecimal userId, String unit) {
 
+        try {
+
+        }catch ()
         String existingAddress = memberWalletRepository.findAddressByMemberAndCoinUnit(userId,unit);
         if (existingAddress!=null){
             return existingAddress;
