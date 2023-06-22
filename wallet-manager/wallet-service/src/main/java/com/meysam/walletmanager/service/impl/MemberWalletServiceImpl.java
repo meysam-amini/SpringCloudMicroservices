@@ -1,5 +1,6 @@
 package com.meysam.walletmanager.service.impl;
 
+import com.meysam.common.model.dto.MemberWalletDto;
 import com.meysam.common.model.entity.Member;
 import com.meysam.common.model.entity.MemberWallet;
 import com.meysam.common.utils.exception.BusinessException;
@@ -12,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,17 +28,17 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     private final LocaleMessageSourceService messageSourceService;
 
     @Override
-    public String generateWalletAndReturnAddress(BigDecimal userId, String unit) {
+    public ResponseEntity<String> generateWalletAndReturnAddress(BigDecimal userId, String unit) {
 
         try {
             String existingAddress = memberWalletRepository.findAddressByMemberAndCoinUnit(userId,unit);
             if (existingAddress!=null){
-                return existingAddress;
+                return ResponseEntity.ok(existingAddress);
             }
             else {
                 Member user = userService.findById(userId);
                 if (user == null)
-                    throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
+                    return ResponseEntity.status(HttpStatus.NO_CONTENT).body(messageSourceService.getMessage("USER_NOT_FOUND"));
 
                 String address = UUID.randomUUID().toString();
                 MemberWallet memberWallet = MemberWallet.builder()
@@ -47,19 +47,19 @@ public class MemberWalletServiceImpl implements MemberWalletService {
                         .address(address)
                         .build();
                 memberWalletRepository.save(memberWallet);
-                return address;
+                return ResponseEntity.status(HttpStatus.CREATED).body(address);
             }
         }catch (Exception e){
-            log.error("DB conection error on generateWalletAndReturnAddress method at time :{} , exception:{}",System.currentTimeMillis(),e);
+            log.error("DB connection error on generateWalletAndReturnAddress method at time :{} , exception:{}",System.currentTimeMillis(),e);
             throw new BusinessException(messageSourceService.getMessage("REQUEST_FAILED"));
         }
     }
 
     @Override
-    public List<MemberWallet> getWalletsByUsername(String username) {
+    public ResponseEntity<List<MemberWalletDto>> getWalletsByUsername(String username) {
         Member user = userService.findByUserName(username);
         if(user==null)
             throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
-        return memberWalletRepository.findAllWalletsByMember(user.getId());
+        return ResponseEntity.ok(memberWalletRepository.findAllWalletsByMember(user.getId()));
     }
 }

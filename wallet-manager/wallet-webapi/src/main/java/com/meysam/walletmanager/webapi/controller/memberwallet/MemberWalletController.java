@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("member-wallet")
@@ -23,30 +25,22 @@ public class MemberWalletController {
 
     @PostMapping("create")
     public ResponseEntity<String> generateOrReturnAddress(@RequestBody @Valid MemberWalletDto memberWalletDto) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(memberWalletService
-                            .generateWalletAndReturnAddress(memberWalletDto.getUserId(), memberWalletDto.getCoinUnit()));
-        } catch (BusinessException be) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(be.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("REQUEST_FAILED"));
-        }
+       return memberWalletService.generateWalletAndReturnAddress(memberWalletDto.getMemberId(),memberWalletDto.getCoinUnit());
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     @GetMapping("wallets")
-    public ResponseEntity getWallets(JwtAuthenticationToken jwtAuthenticationToken) {
+    public ResponseEntity<List<MemberWalletDto>> getWallets(JwtAuthenticationToken jwtAuthenticationToken) {
         //user-name-attribute=preferred_username:
-        return ResponseEntity.ok(memberWalletService.getWalletsByUsername(jwtAuthenticationToken.getName()));
+        return memberWalletService.getWalletsByUsername(jwtAuthenticationToken.getName());
     }
 
 
     //get wallets scop should be added on Keycloak
     @PreAuthorize("hasAuthority('SCOPE_profile')")
     @GetMapping("wallets/{username}")
-    public ResponseEntity getWalletsByAuthCLients(@PathVariable("username") String username) {
-        return ResponseEntity.ok(memberWalletService.getWalletsByUsername(username));
+    public ResponseEntity<List<MemberWalletDto>> getWalletsByAuthCLients(@PathVariable("username") String username) {
+        return memberWalletService.getWalletsByUsername(username);
     }
 
 

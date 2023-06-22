@@ -1,5 +1,6 @@
 package com.meysam.walletmanager.dao.repository.memberwallet;
 
+import com.meysam.common.model.dto.MemberWalletDto;
 import com.meysam.common.model.entity.MemberWallet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,6 @@ public interface MemberWalletRepository extends JpaRepository<MemberWallet, BigD
     @Query(value = "select mw.address from MemberWallet mw where mw.member.Id=:memberId and mw.coinUnit=:unit")
     String findAddressByMemberAndCoinUnit(@Param("memberId") BigDecimal memberId, @Param("unit") String unit);
 
-    List<MemberWallet> findAllWalletsByMember(BigDecimal memberId);
+    @Query(value = "select new com.meysam.common.model.dto.MemberWalletDto(mw.member.Id,mw.coinUnit,mw.address) from MemberWallet mw where mw.member.Id=:memberId")
+    List<MemberWalletDto> findAllWalletsByMember(BigDecimal memberId);
 }

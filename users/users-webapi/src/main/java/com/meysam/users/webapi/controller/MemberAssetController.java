@@ -26,7 +26,7 @@ public class MemberAssetController {
 
 
     @PostMapping("create-wallet")
-    public ResponseEntity createMemberWallet(@RequestBody @Valid MemberWalletDto memberWalletDto) {
-        return ResponseEntity.ok().body(memberService.)
+    public ResponseEntity<String> createMemberWallet(@RequestBody @Valid MemberWalletDto memberWalletDto) {
+        return memberService.createMemberWalletAddress(memberWalletDto);
     }
     }

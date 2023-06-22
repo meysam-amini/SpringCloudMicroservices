@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class MemberWalletDto {
 
     @NotNull(message = "{member.wallet.member.id.notnull}")
-    private BigDecimal userId;
+    private BigDecimal memberId;
 
     @NotBlank(message = "{member.wallet.coin.unit.notnull}")
     private String coinUnit;

@@ -64,16 +64,11 @@ public class MemberServiceImpl implements MemberService {
         Member user = memberRepository.findByUsername(username);
         if(user!=null){
 
-            List<MemberWallet> wallets = (List<MemberWallet>) walletServiceClient.getWallets(user.getUsername()).getBody();
-
-            List<MemberWalletDto> walletDtos = wallets.stream().map(wallet -> MemberWalletDto.builder()
-                    .address(wallet.getAddress())
-                    .coinUnit(wallet.getCoinUnit())
-                    .build()).toList();
+            List<MemberWalletDto> wallets = walletServiceClient.getWallets(user.getUsername()).getBody();
 
             UserDto userDto = UserDto.builder().id(user.getId()).username(username).build();
 
-            return UserWalletsDto.builder().wallets(walletDtos).userDto(userDto).build();
+            return UserWalletsDto.builder().wallets(wallets).userDto(userDto).build();
         }
         else {
             throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));

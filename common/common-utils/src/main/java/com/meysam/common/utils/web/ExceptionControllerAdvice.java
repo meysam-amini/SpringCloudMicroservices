@@ -44,25 +44,25 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity illegalArgumentException(IllegalArgumentException exception){
-        log.error("handelling IllegalArgumentException at time :{}",System.currentTimeMillis());
+        log.error("handelling IllegalArgumentException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("CONTACT_WITH_SUPPORT_TEAM"));
     }
 
     @ExceptionHandler(TimeoutException.class)
     public ResponseEntity error(TimeoutException exception){
-        log.error("handelling TimeoutException at time :{}",System.currentTimeMillis());
+        log.error("handelling TimeoutException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("SERVICE_UNAVAILABLE"));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity error(HttpRequestMethodNotSupportedException exception){
-        log.error("handelling HttpRequestMethodNotSupportedException at time :{}",System.currentTimeMillis());
+        log.error("handelling HttpRequestMethodNotSupportedException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(messageSourceService.getMessage("WRONG_HTTP_METHOD"));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity error(Exception exception){
-        log.error("handelling exception at time :{}",System.currentTimeMillis());
+        log.error("handelling exception at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("CONTACT_WITH_SUPPORT_TEAM"));
     }
 }
