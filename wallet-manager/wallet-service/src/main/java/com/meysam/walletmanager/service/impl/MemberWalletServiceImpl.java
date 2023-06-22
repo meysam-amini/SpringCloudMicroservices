@@ -27,25 +27,26 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     public String generateWalletAndReturnAddress(BigDecimal userId, String unit) {
 
         try {
+            String existingAddress = memberWalletRepository.findAddressByMemberAndCoinUnit(userId,unit);
+            if (existingAddress!=null){
+                return existingAddress;
+            }
+            else {
+                Member user = userService.findById(userId);
+                if (user == null)
+                    throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
 
-        }catch ()
-        String existingAddress = memberWalletRepository.findAddressByMemberAndCoinUnit(userId,unit);
-        if (existingAddress!=null){
-            return existingAddress;
-        }
-        else {
-            Member user = userService.findById(userId);
-            if(user==null)
-                throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
-
-            String address= UUID.randomUUID().toString();
-            MemberWallet memberWallet = MemberWallet.builder()
-                    .coinUnit(unit)
-                    .member(user)
-                    .address(address)
-                    .build();
-            memberWalletRepository.save(memberWallet);
-            return address;
+                String address = UUID.randomUUID().toString();
+                MemberWallet memberWallet = MemberWallet.builder()
+                        .coinUnit(unit)
+                        .member(user)
+                        .address(address)
+                        .build();
+                memberWalletRepository.save(memberWallet);
+                return address;
+            }
+        }catch (Exception e){
+            throw new BusinessException("");
         }
     }
 
