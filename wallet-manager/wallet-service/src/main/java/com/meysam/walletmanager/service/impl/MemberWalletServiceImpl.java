@@ -8,6 +8,9 @@ import com.meysam.users.service.api.MemberService;
 import com.meysam.walletmanager.dao.repository.memberwallet.MemberWalletRepository;
 import com.meysam.walletmanager.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MemberWalletServiceImpl implements MemberWalletService {
@@ -46,7 +50,8 @@ public class MemberWalletServiceImpl implements MemberWalletService {
                 return address;
             }
         }catch (Exception e){
-            throw new BusinessException("");
+            log.error("DB conection error on generateWalletAndReturnAddress method at time :{} , exception:{}",System.currentTimeMillis(),e);
+            throw new BusinessException(messageSourceService.getMessage("REQUEST_FAILED"));
         }
     }
 
