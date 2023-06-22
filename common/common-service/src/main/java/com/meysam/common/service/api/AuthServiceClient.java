@@ -2,6 +2,7 @@ package com.meysam.common.service.api;
 
 import com.meysam.common.model.dto.ClientLoginRequestDto;
 import com.meysam.common.model.dto.LoginRequestDto;
+import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.common.service.impl.AuthServiceFallBackFactory;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public interface AuthServiceClient {
     ResponseEntity clientLogin(@RequestBody @Valid ClientLoginRequestDto loginRequestDto);
 
     @PostMapping(value = "/auth-user/login",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity userLogin(@RequestBody @Valid LoginRequestDto loginRequestDto);
+    ResponseEntity<LoginResponseDto> userLogin(@RequestBody @Valid LoginRequestDto loginRequestDto);
 
     @PostMapping(value = "/auth-user/register",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity registerUser(@RequestBody @Valid RegisterUserRequestDto registerRequestDto);

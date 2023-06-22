@@ -1,10 +1,12 @@
 package com.meysam.auth.webapi.controller;
 
+import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.auth.service.api.KeycloakService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +20,9 @@ public class UserAuthController {
 
     private final KeycloakService keycloakService;
 
-    @PostMapping("login")
-    public ResponseEntity login(@RequestBody @Valid LoginRequestDto loginRequestDto){
-        return ResponseEntity.ok(keycloakService.loginUser(loginRequestDto));
+    @PostMapping(value = "login",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public LoginResponseDto login(@RequestBody @Valid LoginRequestDto loginRequestDto){
+        return keycloakService.loginUser(loginRequestDto);
     }
 
     @PostMapping("register")

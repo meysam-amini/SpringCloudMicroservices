@@ -16,11 +16,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableDiscoveryClient
 @ComponentScan(basePackages = {
         "com.meysam.users.*"
-        ,"com.meysam.common.utils"
-        ,"com.meysam.common.security"})
+        ,"com.meysam.common.utils.*"
+        ,"com.meysam.common.security"
+        ,"com.meysam.common.service.*"
+})
 @EnableJpaRepositories(basePackages = "com.meysam.common.dao")
 @EntityScan(basePackages = "com.meysam.common.model.entity")
-@EnableHystrix
 @EnableFeignClients(basePackages = {"com.meysam.users.service.*","com.meysam.common.service.*"})
 public class UsersWebApiApplication {
 

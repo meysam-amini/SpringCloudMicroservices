@@ -1,9 +1,9 @@
 package com.meysam.auth.service.api;
 
-import com.meysam.auth.model.dto.*;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.common.model.dto.ClientLoginRequestDto;
 import com.meysam.common.model.dto.LoginRequestDto;
+import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.common.model.entity.Member;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,10 @@ public interface KeycloakService {
     ResponseEntity registerUser(RegisterUserRequestDto registerDto);
 
     LoginResponseDto loginUser(LoginRequestDto loginDto);
-    LoginResponseDto getUserRefreshToken(LoginRequestDto loginDto);
+    ResponseEntity getUserRefreshToken(LoginRequestDto loginDto);
 
-    ClientLoginResponseDto loginClient(ClientLoginRequestDto loginDto);
-    ClientLoginResponseDto getClientRefreshToken(ClientLoginRequestDto loginDto);
+    ResponseEntity loginClient(ClientLoginRequestDto loginDto);
+    ResponseEntity getClientRefreshToken(ClientLoginRequestDto loginDto);
 
 
     Role getUserRole(String username);

@@ -1,6 +1,7 @@
 package com.meysam.users.webapi.controller;
 
 import com.meysam.common.model.dto.LoginRequestDto;
+import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.users.service.api.MemberService;
 import jakarta.validation.Valid;
@@ -19,7 +20,7 @@ public class MemberAuthController {
     private final MemberService memberService;
 
     @PostMapping(value = "login",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity loginMember(@Valid @RequestBody LoginRequestDto loginRequestDto){
+    public ResponseEntity<LoginResponseDto> loginMember(@Valid @RequestBody LoginRequestDto loginRequestDto){
         return memberService.login(loginRequestDto);
     }
 

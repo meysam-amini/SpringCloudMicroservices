@@ -1,7 +1,7 @@
 package com.meysam.auth.webapi.controller;
 
 import com.meysam.common.model.dto.LoginRequestDto;
-import com.meysam.auth.model.dto.LoginResponseDto;
+import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.auth.model.dto.SendOtpDto;
 import com.meysam.auth.model.enums.OtpTarget;

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -23,58 +24,51 @@ public class AuthServiceFallBackFactory implements FallbackFactory<AuthServiceCl
 
     @Override
     public AuthServiceClient create(Throwable cause) {
-        return new AuthServiceClientFallBack(cause, messageSourceService);
+        int status = ((FeignException) cause).status();
+        String message = cause.getLocalizedMessage();
+        return new AuthServiceClientFallBack(cause,message,status, messageSourceService);
     }
 
     @RequiredArgsConstructor
-    class AuthServiceClientFallBack implements AuthServiceClient {
+    public class AuthServiceClientFallBack implements AuthServiceClient {
 
         private final Throwable cause;
+        private final String message;
+        private final int status;
         private final LocaleMessageSourceService messageSourceService;
 
 
         @Override
         public ResponseEntity clientLogin(ClientLoginRequestDto loginRequestDto) {
-            if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
-                log.error("404 error occurred when auth-ws /auth-client/login called");
-            } else {
-                log.error("Other error took place: " + cause.getLocalizedMessage());
-            }
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            log.error(status+" error occurred when auth-ws /auth-client/login called at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
         }
 
         @Override
         public ResponseEntity userLogin(LoginRequestDto loginRequestDto) {
-            if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
-                log.error("404 error occurred when auth-ws /auth-user/login called");
-            } else {
-                log.error("Other error took place: " + cause.getLocalizedMessage());
-            }
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            log.error(status+" error occurred when auth-ws /auth-user/login called at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
         }
 
         @Override
         public ResponseEntity registerUser(RegisterUserRequestDto registerRequestDto) {
-            if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
-                log.error("404 error occurred when auth-ws /auth-user/register called");
-            } else {
-                log.error("Other error took place: " + cause.getLocalizedMessage());
-            }
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            log.error(status+" error occurred when auth-ws /auth-user/register called at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
         }
 
         @Override
         public ResponseEntity refreshToken() {
-            if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
-                log.error("404 error occurred when auth-ws /auth-user/refresh-token called");
-            } else {
-                log.error("Other error took place: " + cause.getLocalizedMessage());
-            }
+            log.error(status+" error occurred when auth-ws /auth-user/refresh-token called at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
+        }
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+        private ResponseEntity returnProperResponse(Throwable cause, int status){
+            if (cause instanceof FeignException && status == 404 || status ==-1) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
+            } else {
+                return ResponseEntity.status(status).body(message);
+            }
         }
     }
 

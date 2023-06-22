@@ -4,12 +4,9 @@ import com.meysam.auth.model.dto.*;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.enums.AuthGrantType;
 import com.meysam.auth.service.api.KeycloakService;
-import com.meysam.common.model.dto.ClientLoginRequestDto;
-import com.meysam.common.model.dto.LoginRequestDto;
-import com.meysam.common.model.dto.RegisterUserRequestDto;
-import com.meysam.common.model.dto.UserDto;
+import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
-import com.meysam.common.utils.exception.BusinessException;
+import com.meysam.common.utils.exception.KeycloakException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +23,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -79,15 +77,8 @@ public class KeycloakServiceImpl implements KeycloakService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.add("Authorization", "Bearer " + clientAccessToken);
-        /*MultiValueMap<String, Object> request = new LinkedMultiValueMap<>();
-        userData.put("username",registerDto.getUsername());
-        userData.put("credentials",);
-        userData.put("firstName",registerDto.getFirstName());
-        userData.put("lastName",registerDto.getLastName());
-        userData.put("email",registerDto.getEmail());
-        userData.put("enabled","true");*/
 
         System.err.println(userData.toString());
         HttpEntity<String> request = new HttpEntity<>(userData.toString(), headers);
@@ -95,23 +86,20 @@ public class KeycloakServiceImpl implements KeycloakService {
             ResponseEntity<JSONObject> response = restTemplate.
                     postForEntity(KEYCLOAK_REGISTER_USER_URL, request, JSONObject.class);
 
-//            RegisterUserResponseDto registerUserResponseDto = response.getBody();
 
             if (response.getStatusCode() == HttpStatus.CREATED) {
                 saveUserIfNotExist(new UserDto(null, registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
                 return ResponseEntity.status(HttpStatus.CREATED).body(messageSourceService.getMessage("REGISTER_SUCCESS"));
             } else {
-                if (response.getStatusCode() == HttpStatus.CONFLICT) {
-                    saveUserIfNotExist(new UserDto(null, registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
-                }
                 return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
             }
 
         } catch (HttpClientErrorException e) {
             log.error("Exception on register new user on keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
-            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+            throw  new KeycloakException(e.getStatusCode(),e.getMessage());
         } catch (Exception e) {
-            throw new BusinessException(messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
+            log.error("Exception on register new user on keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
+            throw new KeycloakException(HttpStatus.INTERNAL_SERVER_ERROR,messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
         }
 
     }
@@ -137,20 +125,23 @@ public class KeycloakServiceImpl implements KeycloakService {
             LoginResponseDto loginResponseDto = response.getBody();
 
             if (response.getStatusCode() != HttpStatus.OK) {
-                throw new BusinessException(messageSourceService.getMessage("LOGIN_USER_FAILED"));
+                throw new KeycloakException(response.getStatusCode(),messageSourceService.getMessage("LOGIN_USER_FAILED"));
             } else {
                 return loginResponseDto;
             }
 
+        } catch (HttpClientErrorException e) {
+            log.error("Exception on get token from keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
+            throw  new KeycloakException(e.getStatusCode(),e.getMessage());
         } catch (Exception e) {
             log.error("Exception on get token from keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
-            throw new BusinessException(messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
+            throw new KeycloakException(HttpStatus.INTERNAL_SERVER_ERROR,messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
         }
 
     }
 
     @Override
-    public LoginResponseDto getUserRefreshToken(LoginRequestDto loginDto) {
+    public ResponseEntity getUserRefreshToken(LoginRequestDto loginDto) {
         return null;
     }
 
@@ -166,12 +157,12 @@ public class KeycloakServiceImpl implements KeycloakService {
 
 
     @Override
-    public ClientLoginResponseDto loginClient(ClientLoginRequestDto loginDto) {
-        return loginClient(loginDto.getClientId(), loginDto.getClientSecret(), AuthGrantType.client_credentials);
+    public ResponseEntity loginClient(ClientLoginRequestDto loginDto) {
+        return ResponseEntity.ok(loginClient(loginDto.getClientId(), loginDto.getClientSecret(), AuthGrantType.client_credentials));
     }
 
     @Override
-    public ClientLoginResponseDto getClientRefreshToken(ClientLoginRequestDto loginDto) {
+    public ResponseEntity getClientRefreshToken(ClientLoginRequestDto loginDto) {
         return null;
     }
 
@@ -192,14 +183,17 @@ public class KeycloakServiceImpl implements KeycloakService {
             ClientLoginResponseDto loginResponseDto = response.getBody();
 
             if (response.getStatusCode() != HttpStatus.OK) {
-                throw new BusinessException(messageSourceService.getMessage("LOGIN_CLIENT_FAILED"));
+                throw new KeycloakException(response.getStatusCode(),messageSourceService.getMessage("LOGIN_CLIENT_FAILED"));
             } else {
                 return loginResponseDto;
             }
 
+        } catch (HttpClientErrorException e) {
+            log.error("Exception on get client token from keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
+            throw  new KeycloakException(e.getStatusCode(),e.getMessage());
         } catch (Exception e) {
             log.error("Exception on get client token from keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
-            throw new BusinessException(messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
+            throw new KeycloakException(HttpStatus.INTERNAL_SERVER_ERROR,messageSourceService.getMessage("FAILED_TO_CONNECT_TO_KEYCLOAK"));
         }
     }
 
