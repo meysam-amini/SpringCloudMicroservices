@@ -14,13 +14,16 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages={"com.meysam.common.utils"
+@ComponentScan(basePackages={
+        "com.meysam.common.utils.*"
         ,"com.meysam.common.security"
+        ,"com.meysam.common.service.*"
         ,"com.meysam.walletmanager.*"
-        ,"com.meysam.users.service.*"})
+        ,"com.meysam.users.service.*"
+})
 @EnableJpaRepositories(basePackages={"com.meysam.walletmanager.dao","com.meysam.common.dao"})
 @EntityScan(basePackages = "com.meysam.common.model.entity")
-@EnableFeignClients(basePackages = {"com.meysam.users.service.*"})
+@EnableFeignClients(basePackages = {"com.meysam.users.service.*","com.meysam.common.service.*"})
 public class WalletManagerWebApiApplication {
 
     public static void main(String []args){

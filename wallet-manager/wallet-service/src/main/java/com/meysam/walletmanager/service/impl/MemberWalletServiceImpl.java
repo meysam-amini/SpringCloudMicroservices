@@ -24,7 +24,7 @@ import java.util.UUID;
 public class MemberWalletServiceImpl implements MemberWalletService {
 
     private final MemberWalletRepository memberWalletRepository;
-    private final MemberService userService;
+    private final MemberService memberService;
     private final LocaleMessageSourceService messageSourceService;
 
     @Override
@@ -36,7 +36,7 @@ public class MemberWalletServiceImpl implements MemberWalletService {
                 return ResponseEntity.ok(existingAddress);
             }
             else {
-                Member user = userService.findById(userId);
+                Member user = memberService.findById(userId);
                 if (user == null)
                     return ResponseEntity.status(HttpStatus.NO_CONTENT).body(messageSourceService.getMessage("USER_NOT_FOUND"));
 
@@ -57,7 +57,7 @@ public class MemberWalletServiceImpl implements MemberWalletService {
 
     @Override
     public ResponseEntity<List<MemberWalletDto>> getWalletsByUsername(String username) {
-        Member user = userService.findByUserName(username);
+        Member user = memberService.findByUserName(username);
         if(user==null)
             throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
         return ResponseEntity.ok(memberWalletRepository.findAllWalletsByMember(user.getId()));

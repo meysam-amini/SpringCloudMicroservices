@@ -27,7 +27,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
     }
 
     @RequiredArgsConstructor
-    class WalletServiceClientFallBack implements WalletServiceClient {
+    public class WalletServiceClientFallBack implements WalletServiceClient {
 
         private final Throwable cause;
         private final LocaleMessageSourceService messageSourceService;
