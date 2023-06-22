@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,8 @@ public class SecurityConfig {
         Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter = jwt -> {
             Collection<GrantedAuthority> authorities = new ArrayList<>();
             Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-            Collection<String> scopes = jwt.getClaim("scope");
+            String sc = jwt.getClaim("scope");
+            Collection<String> scopes = List.of(sc.split(" "));
             Map<String, Object> resource = null;
             Collection<String> resourceRoles = null;
             if (resourceAccess != null &&

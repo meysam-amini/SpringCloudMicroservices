@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public interface WalletServiceClient {
 
     @GetMapping("/member-wallet/wallets/create")
-    ResponseEntity createWallet(@RequestBody @Valid MemberWalletDto memberWalletDto);
+    String createWallet(@RequestBody @Valid MemberWalletDto memberWalletDto);
 
     @GetMapping("/member-wallet/wallets/{username}")
     ResponseEntity getWallets(@PathVariable("username") String username);

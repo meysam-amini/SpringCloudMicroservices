@@ -1,9 +1,6 @@
 package com.meysam.users.service.api;
 
-import com.meysam.common.model.dto.LoginRequestDto;
-import com.meysam.common.model.dto.LoginResponseDto;
-import com.meysam.common.model.dto.RegisterUserRequestDto;
-import com.meysam.common.model.dto.UserWalletsDto;
+import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
 import org.springframework.http.ResponseEntity;
 
@@ -18,5 +15,7 @@ public interface MemberService/* extends UserDetailsService*/ {
   Member findById(BigDecimal id);
   List<Member> findAll();
   UserWalletsDto getUserWallets(String username);
+  String createMemberWalletAddress(MemberWalletDto memberWalletDto);
+
 //  UserResponseModel getUserByUserID(String id);
 }

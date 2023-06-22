@@ -1,13 +1,13 @@
 package com.meysam.users.webapi.controller;
 
+import com.meysam.common.model.dto.MemberWalletDto;
 import com.meysam.users.service.api.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("member/asset")
@@ -23,4 +23,10 @@ public class MemberAssetController {
     public ResponseEntity getUserWallets(JwtAuthenticationToken token) {
         return ResponseEntity.ok().body(memberService.getUserWallets(token.getName()));
     }
-}
+
+
+    @PostMapping("create-wallet")
+    public ResponseEntity createMemberWallet(@RequestBody @Valid MemberWalletDto memberWalletDto) {
+        return ResponseEntity.ok().body(memberService.)
+    }
+    }

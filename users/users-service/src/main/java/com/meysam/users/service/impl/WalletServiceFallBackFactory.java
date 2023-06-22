@@ -32,7 +32,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
 
 
         @Override
-        public ResponseEntity createWallet(MemberWalletDto memberWalletDto) {
+        public String createWallet(MemberWalletDto memberWalletDto) {
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when createWallet called for inputs: "
                         + memberWalletDto.toString() + " . Error message: "
