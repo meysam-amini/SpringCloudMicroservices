@@ -50,7 +50,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(TimeoutException.class)
     public ResponseEntity error(TimeoutException exception){
         log.error("handelling TimeoutException at time :{}",System.currentTimeMillis());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("CONTACT_WITH_SUPPORT_TEAM"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("SERVICE_UNAVAILABLE"));
     }
 
     @ExceptionHandler(Exception.class)
