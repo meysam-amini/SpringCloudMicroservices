@@ -43,7 +43,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
                 log.error("Other error took place: " + cause.getLocalizedMessage());
             }
 
-            return ResponseEntity.ok(messageSourceService.getMessage("WALLET_WS_PROBLEM"));
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(messageSourceService.getMessage("WALLET_WS_PROBLEM"));
         }
 
         @Override

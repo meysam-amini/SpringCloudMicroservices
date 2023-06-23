@@ -14,7 +14,7 @@ import java.util.List;
 @FeignClient(name = "wallet-ws",fallbackFactory = WalletServiceFallBackFactory.class)
 public interface WalletServiceClient {
 
-    @GetMapping("/member-wallet/wallets/create")
+    @GetMapping("/member-wallet/create")
     ResponseEntity<String> createWallet(@RequestBody @Valid MemberWalletDto memberWalletDto);
 
     @GetMapping("/member-wallet/wallets/{username}")

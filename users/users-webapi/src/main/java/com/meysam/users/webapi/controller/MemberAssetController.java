@@ -1,9 +1,11 @@
 package com.meysam.users.webapi.controller;
 
 import com.meysam.common.model.dto.MemberWalletDto;
+import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberAssetController {
 
     private final MemberService memberService;
+    private final LocaleMessageSourceService messageSourceService;
 
     @GetMapping(value = "wallets")
 //    @PreAuthorize("principal == #userId")
@@ -26,7 +29,10 @@ public class MemberAssetController {
 
 
     @PostMapping("create-wallet")
-    public ResponseEntity<String> createMemberWallet(@RequestBody @Valid MemberWalletDto memberWalletDto) {
-        return memberService.createMemberWalletAddress(memberWalletDto);
+    @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
+    public ResponseEntity<String> createMemberWallet(@RequestBody @Valid MemberWalletDto memberWalletDto,JwtAuthenticationToken token) {
+        if(token.getName().equals(memberWalletDto.getUsername()))
+            return memberService.createMemberWalletAddress(memberWalletDto);
+        else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(messageSourceService.getMessage("INVALID_USERNAME"));
     }
     }

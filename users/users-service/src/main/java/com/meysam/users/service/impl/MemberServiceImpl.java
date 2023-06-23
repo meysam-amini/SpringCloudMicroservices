@@ -11,6 +11,7 @@ import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.WalletServiceClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -71,7 +72,7 @@ public class MemberServiceImpl implements MemberService {
             return UserWalletsDto.builder().wallets(wallets).userDto(userDto).build();
         }
         else {
-            throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
+            throw new BusinessException(HttpStatus.NOT_FOUND,messageSourceService.getMessage("USER_NOT_FOUND"));
         }
     }
 

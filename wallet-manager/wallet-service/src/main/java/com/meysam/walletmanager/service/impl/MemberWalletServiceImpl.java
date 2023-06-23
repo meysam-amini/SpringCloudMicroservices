@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,17 +27,17 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     private final LocaleMessageSourceService messageSourceService;
 
     @Override
-    public ResponseEntity<String> generateWalletAndReturnAddress(BigDecimal userId, String unit) {
+    public ResponseEntity<String> generateWalletAndReturnAddress(String username, String unit) {
 
         try {
-            String existingAddress = memberWalletRepository.findAddressByMemberAndCoinUnit(userId,unit);
+            String existingAddress = memberWalletRepository.findAddressByMemberAndCoinUnit(username,unit);
             if (existingAddress!=null){
                 return ResponseEntity.ok(existingAddress);
             }
             else {
-                Member user = memberService.findById(userId);
+                Member user = memberService.findByUserName(username);
                 if (user == null)
-                    return ResponseEntity.status(HttpStatus.NO_CONTENT).body(messageSourceService.getMessage("USER_NOT_FOUND"));
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSourceService.getMessage("USER_NOT_FOUND"));
 
                 String address = UUID.randomUUID().toString();
                 MemberWallet memberWallet = MemberWallet.builder()
@@ -59,7 +58,7 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     public ResponseEntity<List<MemberWalletDto>> getWalletsByUsername(String username) {
         Member user = memberService.findByUserName(username);
         if(user==null)
-            throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
+            throw new BusinessException(HttpStatus.NOT_FOUND,messageSourceService.getMessage("USER_NOT_FOUND"));
         return ResponseEntity.ok(memberWalletRepository.findAllWalletsByMember(user.getId()));
     }
 }

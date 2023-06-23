@@ -13,8 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class MemberWalletDto {
 
-    @NotNull(message = "{member.wallet.member.id.notnull}")
-    private BigDecimal memberId;
+    private String username;
 
     @NotBlank(message = "{member.wallet.coin.unit.notnull}")
     private String coinUnit;

@@ -24,45 +24,45 @@ public class ExceptionControllerAdvice {
 
     @ResponseBody
     @ExceptionHandler(value = BusinessException.class)
-    public ResponseEntity marketBusinessExceptionHandler(BusinessException ex) {
-        log.error("handelling BusinessException at time :{}",System.currentTimeMillis());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    public ResponseEntity<String> businessExceptionHandler(BusinessException ex) {
+        log.error("handling BusinessException at time :{}, exception is : {}",System.currentTimeMillis(),ex);
+        return ResponseEntity.status(ex.getHttpStatusCode()).body(ex.getLocalizedMessage());
     }
 
     @ResponseBody
     @ExceptionHandler(value = KeycloakException.class)
-    public ResponseEntity keycloakExceptionHandler(KeycloakException ex) {
-        log.error("handelling KeycloakException at time :{}",System.currentTimeMillis());
+    public ResponseEntity<String>  keycloakExceptionHandler(KeycloakException ex) {
+        log.error("handling KeycloakException at time :{}, exception is : {}",System.currentTimeMillis(),ex);
         return ResponseEntity.status(ex.getHttpStatusCode()).body(ex.getMessage());
     }
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity handleBadRequest(BindException exception){
-        log.error("handelling bad request at time :{}",System.currentTimeMillis());
+    public ResponseEntity<String>  handleBadRequest(BindException exception){
+        log.error("handling bad request at time :{}, exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageSourceService.getMessage("BAD_REQUEST"));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity illegalArgumentException(IllegalArgumentException exception){
-        log.error("handelling IllegalArgumentException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
+    public ResponseEntity<String>  illegalArgumentException(IllegalArgumentException exception){
+        log.error("handling IllegalArgumentException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("CONTACT_WITH_SUPPORT_TEAM"));
     }
 
     @ExceptionHandler(TimeoutException.class)
-    public ResponseEntity error(TimeoutException exception){
-        log.error("handelling TimeoutException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
+    public ResponseEntity<String>  error(TimeoutException exception){
+        log.error("handling TimeoutException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("SERVICE_UNAVAILABLE"));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity error(HttpRequestMethodNotSupportedException exception){
-        log.error("handelling HttpRequestMethodNotSupportedException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
+    public ResponseEntity<String>  error(HttpRequestMethodNotSupportedException exception){
+        log.error("handling HttpRequestMethodNotSupportedException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(messageSourceService.getMessage("WRONG_HTTP_METHOD"));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity error(Exception exception){
-        log.error("handelling exception at time :{} , exception is : {}",System.currentTimeMillis(),exception);
+    public ResponseEntity<String>  error(Exception exception){
+        log.error("handling exception at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("CONTACT_WITH_SUPPORT_TEAM"));
     }
 }

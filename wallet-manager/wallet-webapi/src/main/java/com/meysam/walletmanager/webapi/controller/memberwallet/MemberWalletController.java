@@ -1,11 +1,9 @@
 package com.meysam.walletmanager.webapi.controller.memberwallet;
 
-import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.MemberWalletDto;
 import com.meysam.walletmanager.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -23,9 +21,11 @@ public class MemberWalletController {
     private final MemberWalletService memberWalletService;
     private final LocaleMessageSourceService messageSourceService;
 
+
     @PostMapping("create")
+    @PreAuthorize("hasAuthority('SCOPE_profile')")
     public ResponseEntity<String> generateOrReturnAddress(@RequestBody @Valid MemberWalletDto memberWalletDto) {
-       return memberWalletService.generateWalletAndReturnAddress(memberWalletDto.getMemberId(),memberWalletDto.getCoinUnit());
+       return memberWalletService.generateWalletAndReturnAddress(memberWalletDto.getUsername(),memberWalletDto.getCoinUnit());
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
