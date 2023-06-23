@@ -66,9 +66,14 @@ public class MemberServiceImpl implements MemberService {
 
             List<MemberWalletDto> wallets = walletServiceClient.getWallets(token, user.getUsername());
 
-            UserDto userDto = UserDto.builder().id(user.getId()).username(username).build();
+            UserDto userDto = UserDto.builder()
+                    .email(user.getEmail())
+                    .username(username)
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .build();
 
-            return UserWalletsDto.builder().wallets(wallets).userDto(userDto).build();
+            return UserWalletsDto.builder().wallets(wallets).user(userDto).build();
         }
         else {
             throw new BusinessException(HttpStatus.NOT_FOUND,messageSourceService.getMessage("USER_NOT_FOUND"));

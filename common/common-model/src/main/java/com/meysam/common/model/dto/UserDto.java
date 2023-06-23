@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class UserDto {
 
-    private BigDecimal id;
     private String username;
     private String email;
     private String firstName;

@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class UserWalletsDto {
 
-    private UserDto userDto;
+    private UserDto user;
     private List<MemberWalletDto> wallets;
 }
