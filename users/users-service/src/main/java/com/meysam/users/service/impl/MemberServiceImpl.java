@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
         Member user = memberRepository.findByUsername(username);
         if(user!=null){
 
-            List<MemberWalletDto> wallets = walletServiceClient.getWallets(token, user.getUsername()).getBody();
+            List<MemberWalletDto> wallets = walletServiceClient.getWallets(token, user.getUsername());
 
             UserDto userDto = UserDto.builder().id(user.getId()).username(username).build();
 

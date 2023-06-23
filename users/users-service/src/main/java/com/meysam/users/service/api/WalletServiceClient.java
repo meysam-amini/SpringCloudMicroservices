@@ -19,6 +19,6 @@ public interface WalletServiceClient {
     ResponseEntity<String> createWallet(@RequestHeader("Authorization") String token, @RequestBody @Valid MemberWalletDto memberWalletDto);
 
     @GetMapping("/member-wallet/wallets/{username}")
-    ResponseEntity<List<MemberWalletDto>> getWallets(@RequestHeader("Authorization") String token,@PathVariable("username") String username);
+    List<MemberWalletDto> getWallets(@RequestHeader("Authorization") String token,@PathVariable("username") String username);
 
 }

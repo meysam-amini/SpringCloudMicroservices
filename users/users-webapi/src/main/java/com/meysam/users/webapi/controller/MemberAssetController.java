@@ -24,7 +24,7 @@ public class MemberAssetController {
 //    @PostAuthorize("principal == returnObject.getBody().getUserId()")
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     public ResponseEntity getUserWallets(JwtAuthenticationToken token) {
-        return ResponseEntity.ok().body(memberService.getUserWallets(token.toString(),token.getName()));
+        return ResponseEntity.ok().body(memberService.getUserWallets("Bearer "+token.getToken().getTokenValue(),token.getName()));
     }
 
 

@@ -33,16 +33,14 @@ public class MemberWalletController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     @GetMapping("wallets")
-    public ResponseEntity<List<MemberWalletDto>> getWallets(JwtAuthenticationToken jwtAuthenticationToken) {
-        //user-name-attribute=preferred_username:
+    public List<MemberWalletDto> getWallets(JwtAuthenticationToken jwtAuthenticationToken) {
         return memberWalletService.getWalletsByUsername(jwtAuthenticationToken.getName());
     }
 
 
-    //get wallets scop should be added on Keycloak
     @PreAuthorize("hasAuthority('SCOPE_member_info')")
     @GetMapping("wallets/{username}")
-    public ResponseEntity<List<MemberWalletDto>> getWalletsByAuthCLients(@PathVariable("username") String username) {
+    public List<MemberWalletDto> getWalletsByAuthClients(@PathVariable("username") String username) {
         return memberWalletService.getWalletsByUsername(username);
     }
 

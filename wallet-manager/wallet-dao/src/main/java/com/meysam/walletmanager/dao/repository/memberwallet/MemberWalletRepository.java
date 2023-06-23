@@ -20,5 +20,5 @@ public interface MemberWalletRepository extends JpaRepository<MemberWallet, BigD
     String findAddressByMemberAndCoinUnit(@Param("username") String username, @Param("unit") String unit);
 
     @Query(value = "select new com.meysam.common.model.dto.MemberWalletDto(mw.member.username,mw.coinUnit,mw.address) from MemberWallet mw where mw.member.username=:username")
-    List<MemberWalletDto> findAllWalletsByMember(BigDecimal username);
+    List<MemberWalletDto> findAllWalletsByMember(String username);
 }

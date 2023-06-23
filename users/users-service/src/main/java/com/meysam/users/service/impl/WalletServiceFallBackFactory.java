@@ -1,6 +1,6 @@
 package com.meysam.users.service.impl;
 
-import com.meysam.common.service.impl.AuthServiceFallBackFactory;
+import com.meysam.common.utils.exception.ServicesException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.WalletServiceClient;
 import com.meysam.common.model.dto.MemberWalletDto;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -45,9 +44,10 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
         }
 
         @Override
-        public ResponseEntity<List<MemberWalletDto>> getWallets(String token, String username) {
+        public List<MemberWalletDto> getWallets(String token, String username) {
             log.error(status+" error occurred when createWallet method called /member-wallet/wallets/"+username+" at time :{}",System.currentTimeMillis());
-            return returnProperResponse(cause,status);
+            ResponseEntity response = returnProperResponse(cause,status);
+            throw new ServicesException(response.getBody().toString(),response.getStatusCode());
         }
 
 

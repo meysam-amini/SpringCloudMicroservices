@@ -9,6 +9,6 @@ public interface MemberWalletService {
 
     ResponseEntity<String> generateWalletAndReturnAddress(String username, String unit);
 
-    ResponseEntity<List<MemberWalletDto>> getWalletsByUsername(String username);
+    List<MemberWalletDto> getWalletsByUsername(String username);
 
 }

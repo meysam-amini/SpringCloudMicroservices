@@ -55,10 +55,10 @@ public class MemberWalletServiceImpl implements MemberWalletService {
     }
 
     @Override
-    public ResponseEntity<List<MemberWalletDto>> getWalletsByUsername(String username) {
+    public List<MemberWalletDto> getWalletsByUsername(String username) {
         Member user = memberService.findByUserName(username);
         if(user==null)
             throw new BusinessException(HttpStatus.NOT_FOUND,messageSourceService.getMessage("USER_NOT_FOUND"));
-        return ResponseEntity.ok(memberWalletRepository.findAllWalletsByMember(user.getId()));
+        return memberWalletRepository.findAllWalletsByMember(username);
     }
 }
