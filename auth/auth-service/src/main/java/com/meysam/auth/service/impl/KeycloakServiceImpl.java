@@ -102,6 +102,9 @@ public class KeycloakServiceImpl implements KeycloakService {
 
         } catch (HttpClientErrorException e) {
             log.error("Exception on register new user on keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
+            if(e.getStatusCode()==HttpStatus.CONFLICT){
+                saveUserIfNotExist(new UserDto(null, registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
+            }
             throw  new KeycloakException(e.getStatusCode(),e.getMessage());
         } catch (Exception e) {
             log.error("Exception on register new user on keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);

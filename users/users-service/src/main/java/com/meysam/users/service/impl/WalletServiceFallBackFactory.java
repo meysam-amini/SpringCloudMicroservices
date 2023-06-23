@@ -1,5 +1,6 @@
 package com.meysam.users.service.impl;
 
+import com.meysam.common.service.impl.AuthServiceFallBackFactory;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.users.service.api.WalletServiceClient;
 import com.meysam.common.model.dto.MemberWalletDto;
@@ -23,40 +24,41 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
 
     @Override
     public WalletServiceClient create(Throwable cause) {
-        return new WalletServiceClientFallBack(cause, messageSourceService);
+        int status = ((FeignException) cause).status();
+        String message = cause.getLocalizedMessage();
+        return new WalletServiceClientFallBack(cause,message,status, messageSourceService);
     }
 
     @RequiredArgsConstructor
     public class WalletServiceClientFallBack implements WalletServiceClient {
 
         private final Throwable cause;
+        private final String message;
+        private final int status;
         private final LocaleMessageSourceService messageSourceService;
 
 
         @Override
         public ResponseEntity<String> createWallet(String token,MemberWalletDto memberWalletDto) {
-            if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
-                log.error("404 error occurred when createWallet called for inputs: "
-                        + memberWalletDto.toString() + " . Error message: "
-                        + cause.getLocalizedMessage());
-            } else {
-                log.error("Other error took place: " + cause.getLocalizedMessage());
-            }
-
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(messageSourceService.getMessage("WALLET_WS_PROBLEM"));
+            log.error(status+" error occurred when createWallet method called /member-wallet/create at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
         }
 
         @Override
         public ResponseEntity<List<MemberWalletDto>> getWallets(String token, String username) {
+            log.error(status+" error occurred when createWallet method called /member-wallet/wallets/"+username+" at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
+        }
 
-            if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
-                log.error("404 error occurred when getWallets called for username: "
-                        + username + " . Error message: "
-                        + cause.getLocalizedMessage());
+
+
+        private ResponseEntity returnProperResponse(Throwable cause, int status){
+            if (cause instanceof FeignException && status ==-1) {
+                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                        .body(messageSourceService.getMessage("WALLET_WS_PROBLEM"));
             } else {
-                log.error("Other error took place: " + cause.getLocalizedMessage());
+                return ResponseEntity.status(status).body(message);
             }
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ArrayList<>());
         }
     }
 

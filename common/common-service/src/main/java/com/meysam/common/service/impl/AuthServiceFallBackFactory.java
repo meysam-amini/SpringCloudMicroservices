@@ -63,8 +63,8 @@ public class AuthServiceFallBackFactory implements FallbackFactory<AuthServiceCl
         }
 
         private ResponseEntity returnProperResponse(Throwable cause, int status){
-            if (cause instanceof FeignException && status == 404 || status ==-1) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            if (cause instanceof FeignException && status ==-1) {
+                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                         .body(messageSourceService.getMessage("AUTH_WS_PROBLEM"));
             } else {
                 return ResponseEntity.status(status).body(message);
