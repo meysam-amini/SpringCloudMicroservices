@@ -32,7 +32,7 @@ public class MemberAssetController {
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     public ResponseEntity<String> createMemberWallet(@RequestBody @Valid MemberWalletDto memberWalletDto,JwtAuthenticationToken token) {
         if(token.getName().equals(memberWalletDto.getUsername()))
-            return memberService.createMemberWalletAddress(token.getToken().toString(), memberWalletDto);
+            return memberService.createMemberWalletAddress("Bearer "+token.getToken().getTokenValue(), memberWalletDto);
         else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(messageSourceService.getMessage("INVALID_USERNAME"));
     }
     }

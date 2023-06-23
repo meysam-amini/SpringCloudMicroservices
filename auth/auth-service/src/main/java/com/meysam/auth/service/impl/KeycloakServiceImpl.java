@@ -3,6 +3,7 @@ package com.meysam.auth.service.impl;
 import com.meysam.auth.model.dto.*;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.enums.AuthGrantType;
+import com.meysam.auth.model.enums.MemberLevel;
 import com.meysam.auth.service.api.KeycloakService;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
@@ -56,7 +57,7 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public ResponseEntity registerUser(RegisterUserRequestDto registerDto) {
+    public ResponseEntity registerUser(RegisterUserRequestDto registerDto, MemberLevel memberLevel) {
         String clientAccessToken = loginClient(CLIENT_ID, CLIENT_SECRET, AuthGrantType.client_credentials).getAccessToken();
 
         JSONObject passwordSchema = new JSONObject();
@@ -74,6 +75,11 @@ public class KeycloakServiceImpl implements KeycloakService {
         userData.put("lastName", registerDto.getLastName());
         userData.put("email", registerDto.getEmail());
         userData.put("enabled", true);
+
+        //assign group for role mapping:
+        jsonArray = new JSONArray();
+        jsonArray.put(memberLevel);
+        userData.put("groups", jsonArray);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

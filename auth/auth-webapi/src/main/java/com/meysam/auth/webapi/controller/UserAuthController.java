@@ -1,5 +1,6 @@
 package com.meysam.auth.webapi.controller;
 
+import com.meysam.auth.model.enums.MemberLevel;
 import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
@@ -27,7 +28,14 @@ public class UserAuthController {
 
     @PostMapping("register")
     public ResponseEntity register(@RequestBody @Valid RegisterUserRequestDto registerRequestDto){
-        return keycloakService.registerUser(registerRequestDto);
+        return keycloakService.registerUser(registerRequestDto, MemberLevel.MEMBERS_LEVEL_1);
+
+    }
+
+
+    @PostMapping("register-admin")
+    public ResponseEntity registerAdmin(@RequestBody @Valid RegisterUserRequestDto registerRequestDto){
+        return keycloakService.registerUser(registerRequestDto, MemberLevel.ADMIN);
 
     }
 

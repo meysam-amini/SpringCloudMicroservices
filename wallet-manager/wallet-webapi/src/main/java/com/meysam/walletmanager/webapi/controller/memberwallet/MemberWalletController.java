@@ -4,6 +4,7 @@ import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.MemberWalletDto;
 import com.meysam.walletmanager.service.api.MemberWalletService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -23,9 +24,11 @@ public class MemberWalletController {
 
 
     @PostMapping("create")
-    @PreAuthorize("hasAuthority('SCOPE_profile')")
-    public ResponseEntity<String> generateOrReturnAddress(@RequestBody @Valid MemberWalletDto memberWalletDto) {
-       return memberWalletService.generateWalletAndReturnAddress(memberWalletDto.getUsername(),memberWalletDto.getCoinUnit());
+    @PreAuthorize("hasAuthority('ROLE_USER_LEVEL_1')")
+    public ResponseEntity<String> generateOrReturnAddress(@RequestBody @Valid MemberWalletDto memberWalletDto,JwtAuthenticationToken jwtAuthenticationToken) {
+        if (memberWalletDto.getUsername().equals(jwtAuthenticationToken.getName()))
+            return memberWalletService.generateWalletAndReturnAddress(memberWalletDto.getUsername(),memberWalletDto.getCoinUnit());
+        else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(messageSourceService.getMessage("INVALID_USERNAME"));
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
@@ -37,7 +40,7 @@ public class MemberWalletController {
 
 
     //get wallets scop should be added on Keycloak
-    @PreAuthorize("hasAuthority('SCOPE_profile')")
+    @PreAuthorize("hasAuthority('SCOPE_member_info')")
     @GetMapping("wallets/{username}")
     public ResponseEntity<List<MemberWalletDto>> getWalletsByAuthCLients(@PathVariable("username") String username) {
         return memberWalletService.getWalletsByUsername(username);

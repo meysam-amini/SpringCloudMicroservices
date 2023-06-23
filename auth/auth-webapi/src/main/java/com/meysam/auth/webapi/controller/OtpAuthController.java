@@ -1,5 +1,6 @@
 package com.meysam.auth.webapi.controller;
 
+import com.meysam.auth.model.enums.MemberLevel;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
@@ -38,7 +39,7 @@ public class OtpAuthController {
             , @RequestParam(value = "otpTarget",required = true) OtpTarget otpTarget){
 
         otpService.validateOtpCode(registerRequestDto.getUsername(),otpTarget,otpcode);
-        ResponseEntity response= keycloakService.registerUser(registerRequestDto);
+        ResponseEntity response= keycloakService.registerUser(registerRequestDto, MemberLevel.MEMBERS_LEVEL_1);
         otpService.removeCachedOtpCodeAndWrongOtpCount(registerRequestDto.getUsername(),otpTarget);
         return response;
 

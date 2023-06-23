@@ -1,6 +1,7 @@
 package com.meysam.auth.service.api;
 
 import com.meysam.auth.model.entity.Role;
+import com.meysam.auth.model.enums.MemberLevel;
 import com.meysam.common.model.dto.ClientLoginRequestDto;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.LoginResponseDto;
@@ -14,7 +15,7 @@ public interface KeycloakService {
 
     List<Role> getRoles();
 
-    ResponseEntity registerUser(RegisterUserRequestDto registerDto);
+    ResponseEntity registerUser(RegisterUserRequestDto registerDto, MemberLevel memberLevel);
 
     LoginResponseDto loginUser(LoginRequestDto loginDto);
     ResponseEntity getUserRefreshToken(LoginRequestDto loginDto);
