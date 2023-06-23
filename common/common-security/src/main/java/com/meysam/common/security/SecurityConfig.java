@@ -48,13 +48,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/public/**").permitAll()
-                .requestMatchers(toH2Console()).permitAll()
+//                .requestMatchers(toH2Console()).permitAll()
                 .anyRequest().authenticated()
         );
 
         http.csrf().disable();
+
+        // for h2-console
 //        http.csrf().ignoringRequestMatchers(toH2Console());
-        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();
+
+
 //        http.oauth2Login()
 //                .and()
 //                .logout()
