@@ -34,7 +34,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
 
 
         @Override
-        public ResponseEntity<String> createWallet(MemberWalletDto memberWalletDto) {
+        public ResponseEntity<String> createWallet(String token,MemberWalletDto memberWalletDto) {
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when createWallet called for inputs: "
                         + memberWalletDto.toString() + " . Error message: "
@@ -47,7 +47,7 @@ public class WalletServiceFallBackFactory implements FallbackFactory<WalletServi
         }
 
         @Override
-        public ResponseEntity<List<MemberWalletDto>> getWallets(String username) {
+        public ResponseEntity<List<MemberWalletDto>> getWallets(String token, String username) {
 
             if (cause instanceof FeignException && ((FeignException) cause).status() == 404) {
                 log.error("404 error occurred when getWallets called for username: "

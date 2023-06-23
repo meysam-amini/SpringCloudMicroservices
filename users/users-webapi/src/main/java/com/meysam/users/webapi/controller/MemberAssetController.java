@@ -24,7 +24,7 @@ public class MemberAssetController {
 //    @PostAuthorize("principal == returnObject.getBody().getUserId()")
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     public ResponseEntity getUserWallets(JwtAuthenticationToken token) {
-        return ResponseEntity.ok().body(memberService.getUserWallets(token.getName()));
+        return ResponseEntity.ok().body(memberService.getUserWallets(token.toString(),token.getName()));
     }
 
 
@@ -32,7 +32,7 @@ public class MemberAssetController {
     @PreAuthorize("hasAnyAuthority('ROLE_USER_LEVEL_1')")
     public ResponseEntity<String> createMemberWallet(@RequestBody @Valid MemberWalletDto memberWalletDto,JwtAuthenticationToken token) {
         if(token.getName().equals(memberWalletDto.getUsername()))
-            return memberService.createMemberWalletAddress(memberWalletDto);
+            return memberService.createMemberWalletAddress(token.getToken().toString(), memberWalletDto);
         else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(messageSourceService.getMessage("INVALID_USERNAME"));
     }
     }

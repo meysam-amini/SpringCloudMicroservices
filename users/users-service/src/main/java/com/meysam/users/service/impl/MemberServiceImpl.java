@@ -3,7 +3,6 @@ package com.meysam.users.service.impl;
 import com.meysam.common.dao.MemberRepository;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
-import com.meysam.common.model.entity.MemberWallet;
 import com.meysam.common.service.api.AuthServiceClient;
 import com.meysam.users.service.api.MemberService;
 import com.meysam.common.utils.exception.BusinessException;
@@ -60,12 +59,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public UserWalletsDto getUserWallets(String username) {
+    public UserWalletsDto getUserWallets(String token, String username) {
 
         Member user = memberRepository.findByUsername(username);
         if(user!=null){
 
-            List<MemberWalletDto> wallets = walletServiceClient.getWallets(user.getUsername()).getBody();
+            List<MemberWalletDto> wallets = walletServiceClient.getWallets(token, user.getUsername()).getBody();
 
             UserDto userDto = UserDto.builder().id(user.getId()).username(username).build();
 
@@ -77,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseEntity<String> createMemberWalletAddress(MemberWalletDto memberWalletDto) {
-        return walletServiceClient.createWallet(memberWalletDto);
+    public ResponseEntity<String> createMemberWalletAddress(String token, MemberWalletDto memberWalletDto) {
+        return walletServiceClient.createWallet(token,memberWalletDto);
     }
 }
