@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <!--    <conversionRule conversionWord="stacktrace"-->
+    <!--                    converterClass="net.logstash.logback.stacktrace.ShortenedThrowableConverter"/>-->
+    <springProperty name="LOGBACK_AMQP_HOST" source="logging.appender.rabbit.destination.host"/>
+    <springProperty name="LOGBACK_AMQP_PORT" source="logging.appender.rabbit.destination.port"/>
+    <springProperty name="LOGBACK_AMQP_USERNAME" source="logging.appender.rabbit.destination.username"/>
+    <springProperty name="LOGBACK_AMQP_PASSWORD" source="logging.appender.rabbit.destination.password"/>
+    <springProperty name="LOGBACK_AMQP_EXCHANGE_TYPE" source="logging.appender.rabbit.destination.exchangeType"/>
+    <springProperty name="LOGBACK_AMQP_EXCHANGE_NAME" source="logging.appender.rabbit.destination.exchangeName"/>
+    <springProperty name="LOGBACK_AMQP_VIRTUAL_HOST" source="logging.appender.rabbit.destination.virtualHost"/>
+    <springProperty name="LOGBACK_AMQP_REQUIRED" source="logging.appender.rabbit.required"/>
+
+    <appender name="rabbitmq" class="com.bizzan.bitrade.util.ExtendedAmqpAppender">
+        <layout>
+            <pattern>
+                {
+                "tag": "%tag",
+                "level": "%level",
+                "thread": "%thread",
+                "time": "%date{ISO8601}",
+                "app_name": "${appName}",
+                "app_port": "${appPort}",
+                "class": "%logger{36}",
+                "message": "%message - %exception"
+                }
+            </pattern>
+        </layout>
+        <host>${LOGBACK_AMQP_HOST:- }</host>
+        <port>${LOGBACK_AMQP_PORT:- }</port>
+        <username>${LOGBACK_AMQP_USERNAME:- }</username>
+        <password>${LOGBACK_AMQP_PASSWORD:- }</password>
+        <exchangeType>${LOGBACK_AMQP_EXCHANGE_TYPE:-topic}</exchangeType>
+        <exchangeName>${LOGBACK_AMQP_EXCHANGE_NAME:- }</exchangeName>
+        <applicationId>market-${appName}</applicationId>
+        <routingKeyPattern>ernyka.enifex.market.${appName}</routingKeyPattern>
+        <generateId>true</generateId>
+        <charset>UTF-8</charset>
+        <durable>true</durable>
+        <virtualHost>${LOGBACK_AMQP_VIRTUAL_HOST:-/}</virtualHost>
+        <required>${LOGBACK_AMQP_REQUIRED:-false}</required>
+        <deliveryMode>NON_PERSISTENT</deliveryMode>
+        <declareExchange>true</declareExchange>
+<!--        <maxSenderRetries>1</maxSenderRetries>-->
+<!--        <abbreviation>36</abbreviation>-->
+    </appender>
+
+    <appender name="asyncRabbitmq" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="rabbitmq"/>
+    </appender>
+
+</included>

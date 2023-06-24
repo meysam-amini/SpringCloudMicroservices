@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <include resource="com/meysam/logging/defaults.xml"/>
+    <include resource="com/meysam/logging/appender-logstash.xml"/>
+<!--    <include resource="com/meysam/logging/appender-console.xml"/>-->
+    <root level="INFO">
+        <appender-ref ref="logstash"/>
+    </root>
+</included>

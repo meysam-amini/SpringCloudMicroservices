@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <include resource="com/meysam/logging/defaults.xml"/>
+    <if condition='property("consoleEnabled").equalsIgnoreCase("TRUE")'>
+        <then>
+            <include resource="com/meysam/logging/appender-console.xml"/>
+        </then>
+    </if>
+    <if condition='property("fileEnabled").equalsIgnoreCase("TRUE")'>
+        <then>
+            <include resource="com/meysam/logging/appender-file.xml"/>
+        </then>
+    </if>
+    <if condition='property("amqpEnabled").equalsIgnoreCase("TRUE")'>
+        <then>
+            <include resource="com/meysam/logging/appender-amqp.xml"/>
+        </then>
+    </if>
+    <if condition='property("logstashEnabled").equalsIgnoreCase("TRUE")'>
+        <then>
+            <include resource="com/meysam/logging/appender-logstash.xml"/>
+        </then>
+    </if>
+    <root level="INFO">
+        <if condition='property("consoleEnabled").equalsIgnoreCase("TRUE")'>
+            <then>
+                <appender-ref ref="asyncConsole"/>
+            </then>
+        </if>
+        <if condition='property("fileEnabled").equalsIgnoreCase("TRUE")'>
+            <then>
+                <appender-ref ref="logFile"/>
+            </then>
+        </if>
+        <if condition='property("amqpEnabled").equalsIgnoreCase("TRUE")'>
+            <then>
+                <appender-ref ref="asyncRabbitmq"/>
+            </then>
+        </if>
+        <if condition='property("logstashEnabled").equalsIgnoreCase("TRUE")'>
+            <then>
+                <appender-ref ref="asyncLogstash"/>
+            </then>
+        </if>
+    </root>
+</included>
