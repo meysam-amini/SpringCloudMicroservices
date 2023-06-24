@@ -117,7 +117,7 @@ services:
   elasticsearch:
     container_name: elasticsearch
     hostname: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.5.0
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:8.3.3
     restart: always
     ulimits:
       memlock:
@@ -130,11 +130,12 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       cluster.name: elasticluster
       bootstrap.memory_lock: "true"
-      network.host: 0.0.0.0
+#      network.host: 0.0.0.0
       discovery.type: "single-node"
-      indices.query.bool.max_clause_count: 8192
+#      indices.query.bool.max_clause_count: 8192
       search.max_buckets: 100000
       action.destructive_requires_name: "true"
+      xpack.security.enabled: "false"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -142,11 +143,11 @@ services:
 #      - elk
 
   logstash:
-    image: logstash:7.5.0
+    image: logstash:8.3.3
     container_name: logstash
     restart: always #??
     volumes:
-      - ./logstash/:/logstash_dir
+      - ./logstash/config/logstash.yml:user/share/logstash/config/logstash.yml:ro
     command:
       - logstash -f /logstash_dir/logstash.conf
     depends_on:
@@ -162,7 +163,7 @@ services:
   kibana:
     container_name: kibana
     hostname: kibana
-    image: kibana:7.5.0
+    image: kibana:8.3.3
     restart: always
     depends_on:
       - elasticsearch
@@ -171,6 +172,7 @@ services:
     environment:
       SERVER_MAXPAYLOADBYTES: 4194304
       ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+      ELASTICSEARCH_URL: "[http://elasticsearch:9200]"
 
 #      LOGGING_DEST: stdout
 #      LOGGING_QUIET: 'false'
