@@ -32,10 +32,26 @@ spring:
         - predicates:
             #If the request URl path matches below, routing will work:
           - Path=/public/member/**
-          - Header=Authorization, Bearer (.*)
             # Only if HTTP method was GET,POST routing will work:
           - Method=Get,Post
         - filters:
             # our MS doesn't need request cookies:
           - RemoveRequestHeader=Cookie
           - AuthorizationHeaderFilter=Cookie
+
+        - id: members_authenticated_apis
+            # lb: load-balancer. In this way, API gateway will fetch service socket
+            # address from Eureka by service's registered name (MS app name: users-ws)
+            # and use built in load-balancer client and rout requests to one of the
+            # running instances of this MS
+            - url: lb://users-ws
+            - predicates:
+                #If the request URl path matches below, routing will work:
+                - Path=/member/asset/**
+                - Header=Authorization, Bearer (.*)
+                # Only if HTTP method was GET,POST routing will work:
+                - Method=Get,Post
+            - filters:
+                # our MS doesn't need request cookies:
+                - RemoveRequestHeader=Cookie
+                - AuthorizationHeaderFilter=Cookie
