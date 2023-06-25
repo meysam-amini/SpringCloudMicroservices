@@ -1,0 +1,30 @@
+# a random port number will be assigned for each instance of app:
+server:
+  port: 41423
+#${PORT:0}
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      # the url by which the client apps communicate with Eureka server
+      dedefaultZone: http://localhost:8010/eureka
+
+spring:
+  application:
+    name: auth-ws
+  messages:
+    #i18n
+    basename: messages/messages
+
+oauth:
+  client:
+    secret: rreJT7l3U5ZKIFVcqeeeEvzBB7a0tHWC
+
+keycloak:
+  get:
+    token:
+      url: http://127.0.0.1:8080/realms/meysam/protocol/openid-connect/token
+  register:
+    user:
+      url: http://127.0.0.1:8080/admin/realms/meysam/users
