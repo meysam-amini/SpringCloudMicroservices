@@ -1,0 +1,41 @@
+server:
+  port: 8082
+
+eureka:
+  client:
+    service-url:
+      # the url by which the client apps communicate with Eureka server
+      defaultZone: http://localhost:8010/eureka
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # to enable discovery locator feature, so our gateway will try to
+          # map requests to a service that is registered with Eureka and we
+          # dont need any configs for routing:
+          #####################################################
+          enabled: true
+          lower-case-service-id: true
+          #####################################################
+      routes:
+        - id: members_public_apis
+        # lb: load-balancer. In this way, API gateway will fetch service socket
+        # address from Eureka by service's registered name (MS app name: users-ws)
+        # and use built in load-balancer client and rout requests to one of the
+        # running instances of this MS
+        - url: lb://users-ws
+        - predicates:
+            #If the request URl path matches below, routing will work:
+          - Path=/public/member/**
+          - Header=Authorization, Bearer (.*)
+            # Only if HTTP method was GET,POST routing will work:
+          - Method=Get,Post
+        - filters:
+            # our MS doesn't need request cookies:
+          - RemoveRequestHeader=Cookie
+          - AuthorizationHeaderFilter=Cookie
