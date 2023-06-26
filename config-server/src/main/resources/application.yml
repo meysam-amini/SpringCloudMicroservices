@@ -1,0 +1,108 @@
+server:
+  port: 8012
+
+spring:
+  application:
+    name: config-server
+  messages:
+    #i18n
+    basename: messages/messages
+  profiles:
+    active: native
+  detools:
+    restart:
+      enabled: true
+  cloud:
+    config:
+      import-check:
+        enabled: false
+      server:
+        native:
+          search-locations: file:/home/m.amini/meysam_workspace/MyConfigServer
+        git:
+          uri: https://github.com/meysam-amini/MyConfigServer
+          username: username=meysamamini7394@gmail.com
+          password: ########################
+          default-label: main
+          clone-on-start: true
+    bus:
+      enabled: true
+    openfeign:
+      circuitbreaker:
+        enabled: true
+        alphanumeric-ids:
+          enabled: true
+      httpclient:
+        connection-timeout: 15000
+      client:
+        config:
+          default:
+            readTimeout: 15000
+            connect-timeout: 15000
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+
+##################SECURITY#####################
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:8080/realms/meysam
+      client:
+        registration:
+          keycloak:
+            client-id: spring-cloud-microservices
+#            authorization-grant-type: password
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://127.0.0.1:8080/realms/meysam
+            user-name-attribute: preferred_username
+#################RABBITMQ#####################
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+##############DATA SOURCE####################
+#  h2:
+#    console:
+#      enabled: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    #    url: jdbc:h2:mem:testdb
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: admin
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+#################REDIS########################
+  data:
+    redis:
+      port: 6379
+      password: ######
+      connect-timeout: 10000
+      timeout: 10000
+      jedis:
+        pool:
+          enabled: true
+          max-active: 300
+          max-wait: 5000
+          max-idle: 100
+          min-idle: 20
+##############################################
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh
