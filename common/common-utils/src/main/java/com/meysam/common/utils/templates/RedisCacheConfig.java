@@ -17,16 +17,16 @@ import java.time.Duration;
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
-    @Value("${spring.data.redis.host}")
-    private String REDIS_HOST;
-    @Value("${spring.data.redis.port}")
-    private int REDIS_PORT;
+//    @Value("${spring.data.redis.host}")
+    private String REDIS_HOST="localhost";
+//    @Value("${spring.data.redis.port}")
+    private int REDIS_PORT=6379;
 //    @Value("${spring.redis.password}")
 //    private String REDIS_PASSWORD;
-    @Value("${spring.data.redis.connect-timeout}")
-    private Long JEDDIS_CONNECTION_TIME_OUT;
-    @Value("${spring.data.redis.timeout}")
-    private Long JEDDIS_READ_TIME_OUT;
+//    @Value("${spring.data.redis.connect-timeout}")
+    private Long JEDDIS_CONNECTION_TIME_OUT=10000L;
+//    @Value("${spring.data.redis.timeout}")
+    private Long JEDDIS_READ_TIME_OUT=10000L;
 
 
     /*@Bean
