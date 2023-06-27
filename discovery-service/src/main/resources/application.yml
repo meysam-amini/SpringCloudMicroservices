@@ -20,4 +20,4 @@ eureka:
     fetch-registry: false
     service-url:
       # the url by which the client apps communicate with Eureka server
-    defaultZone: http://localhost:8010/eureka
+      defaultZone: http://localhost:8010/eureka
