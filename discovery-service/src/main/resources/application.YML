@@ -1,0 +1,23 @@
+server.port=8010
+server:
+  port: 8010
+
+spring:
+  application:
+    name: discovery-service
+  security:
+    user:
+      name: test
+      password: test
+
+eureka:
+  client:
+    # Eureka server can be a client app at the same time, we need
+    # to specify this 2 lines:
+    # 1. to prevent this app to register with Eureka as a client:
+    register-with-eureka: false
+    # 2. to disable the fetch registry:
+    fetch-registry: false
+    service-url:
+      # the url by which the client apps communicate with Eureka server
+      defaultZone: http://localhost:8010/eureka

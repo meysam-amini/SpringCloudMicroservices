@@ -16,7 +16,6 @@ spring:
   messages:
     #i18n
     basename: messages/messages
-
 oauth:
   client:
     secret: rreJT7l3U5ZKIFVcqeeeEvzBB7a0tHWC

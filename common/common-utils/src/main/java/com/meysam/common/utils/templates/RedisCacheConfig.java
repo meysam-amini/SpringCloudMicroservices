@@ -17,16 +17,20 @@ import java.time.Duration;
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
-//    @Value("${spring.data.redis.host}")
+    @Value("${spring.data.redis.host}")
     private String REDIS_HOST="localhost";
-//    @Value("${spring.data.redis.port}")
+    @Value("${spring.data.redis.port}")
     private int REDIS_PORT=6379;
-//    @Value("${spring.redis.password}")
-//    private String REDIS_PASSWORD;
-//    @Value("${spring.data.redis.connect-timeout}")
-    private Long JEDDIS_CONNECTION_TIME_OUT=10000L;
-//    @Value("${spring.data.redis.timeout}")
-    private Long JEDDIS_READ_TIME_OUT=10000L;
+    @Value("${spring.data.redis.password}")
+    private String REDIS_PASSWORD;
+    @Value("${spring.data.redis.connect-timeout}")
+    private Long REDIS_CONNECTION_TIME_OUT =10000L;
+    @Value("${spring.data.redis.timeout}")
+    private Long REDIS_READ_TIME_OUT =10000L;
+    @Value("${spring.data.redis.jedis.pool.min-idle}")
+    private int JEDIS_MIN_IDL=10000;
+    @Value("${spring.data.redis.jedis.pool.max-idle}")
+    private int JEDIS_MAX_IDL=10000;
 
 
     /*@Bean
@@ -60,12 +64,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 //        redisStandaloneConfiguration.setPassword(RedisPassword.of(REDIS_PASSWORD));
 
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
-        jedisClientConfiguration.connectTimeout(Duration.ofSeconds(JEDDIS_CONNECTION_TIME_OUT));
-        jedisClientConfiguration.readTimeout(Duration.ofSeconds(JEDDIS_READ_TIME_OUT));
+        jedisClientConfiguration.connectTimeout(Duration.ofSeconds(REDIS_CONNECTION_TIME_OUT));
+        jedisClientConfiguration.readTimeout(Duration.ofSeconds(REDIS_READ_TIME_OUT));
 
         JedisConnectionFactory jedisConFactory = new JedisConnectionFactory(redisStandaloneConfiguration,
                 jedisClientConfiguration.build());
-
+        jedisConFactory.getPoolConfig().setMinIdle(JEDIS_MIN_IDL);
+        jedisConFactory.getPoolConfig().setMaxIdle(JEDIS_MAX_IDL);
         return jedisConFactory;
     }
 
