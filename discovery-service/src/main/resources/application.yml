@@ -1,14 +1,13 @@
-server.port=8010
 server:
-  port: 8010
+  port: 8761
 
 spring:
   application:
     name: discovery-service
-  security:
-    user:
-      name: test
-      password: test
+#  security:
+#    user:
+#      name: test
+#      password: test
 
 eureka:
   client:
@@ -20,4 +19,4 @@ eureka:
     fetch-registry: false
     service-url:
       # the url by which the client apps communicate with Eureka server
-      defaultZone: http://localhost:8010/eureka
+      defaultZone: http://localhost:8761/eureka

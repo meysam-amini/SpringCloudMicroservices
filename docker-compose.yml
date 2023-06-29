@@ -29,16 +29,16 @@ services:
 #    depends_on:
 #        - postgres
 
-  redis:
-    container_name: redis
-    image: redis:6
-    ports:
-      - "6379:6379"
-    restart: always
-    command:
-      - redis-server
-    volumes:
-      - ./redis_data:/data
+#  redis:
+#    container_name: redis
+#    image: redis:6
+#    ports:
+#      - "6379:6379"
+#    restart: always
+#    command:
+#      - redis-server
+#    volumes:
+#      - ./redis_data:/data
 #    networks:
 #      - test-network
 
@@ -116,78 +116,73 @@ services:
 #    depends_on:
 #      - kafka
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.3
-    container_name: elasticsearch
-    hostname: elasticsearch
-    restart: always
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-#      - mkdir /var/lib/elasticsearch && chown -R 1000:1000 /var/lib/elasticsearch ?????
-      - elastic_data:/usr/share/elasticsearch/data # is this right?
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      cluster.name: elasticluster
-      bootstrap.memory_lock: "true"
-#      network.host: 0.0.0.0
-      discovery.type: "single-node"
-#      indices.query.bool.max_clause_count: 8192
-      search.max_buckets: 100000
-      action.destructive_requires_name: "true"
-      xpack.security.enabled: "false"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-#    networks:
-#      - elk
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.3.3
-    container_name: logstash
-    restart: always #??
-    volumes:
-      - ./logstash/config/logstash.yml:/user/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline:/user/share/logstash/pipeline:ro
-#    command:
-#      - logstash -f /logstash_dir/logstash.yml
-    depends_on:
-      - elasticsearch
-    ports:
-      - "9600:9600"
-      - "5000:5000/tcp"
-      - "9600:9600/udp"
-      - "5044:5044"
-    environment:
-      ELASTICSEARCH_URL: http://elasticsearch:9200
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-#    networks:
-#      - elk
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.3.3
-    container_name: kibana
-    hostname: kibana
-    restart: always
-    depends_on:
-      - elasticsearch
-    ports:
-      - "5601:5601"
-    environment:
-      SERVER_MAXPAYLOADBYTES: 4194304
-      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
-      ELASTICSEARCH_URL: "[http://elasticsearch:9200]"
-
-#      LOGGING_DEST: stdout
-#      LOGGING_QUIET: 'false'
-#    networks:
-#      - elk
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.3
+#    container_name: elasticsearch
+#    hostname: elasticsearch
+#    restart: always
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    volumes:
+#      - elastic_data:/usr/share/elasticsearch/data
+#    environment:
+#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+#      bootstrap.memory_lock: "true"
+#      discovery.type: "single-node"
+#      xpack.security.enabled: "false"
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+##    networks:
+##      - elk
+#
+#  logstash:
+#    image: docker.elastic.co/logstash/logstash:8.3.3
+#    container_name: logstash
+#    restart: always #??
+#    volumes:
+#      - ./logstash/config/logstash.yml:/user/share/logstash/config/logstash.yml:ro
+#      - ./logstash/pipeline:/user/share/logstash/pipeline:ro
+##    command:
+##      - logstash -f /logstash_dir/logstash.yml
+#    depends_on:
+#      - elasticsearch
+#    ports:
+#      - "9600:9600"
+#      - "5000:5000/tcp"
+#      - "9600:9600/udp"
+#      - "5044:5044"
+#    environment:
+#      ELASTICSEARCH_URL: http://elasticsearch:9200
+#      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+##    networks:
+##      - elk
+#
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:8.3.3
+#    container_name: kibana
+#    hostname: kibana
+#    restart: always
+#    depends_on:
+#      - elasticsearch
+#    ports:
+#      - "5601:5601"
+#    environment:
+#      SERVER_MAXPAYLOADBYTES: 4194304
+#      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+#      ELASTICSEARCH_URL: "[http://elasticsearch:9200]"
+#
+##      LOGGING_DEST: stdout
+##      LOGGING_QUIET: 'false'
+##    networks:
+##      - elk
 
 
 volumes:
   postgres_data:
   pgadmin_data:
-  elastic_data: {} # why {} ?
+#  elastic_data:
+#    driver: local
   redis_data:

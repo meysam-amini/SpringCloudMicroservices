@@ -21,8 +21,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     private String REDIS_HOST="localhost";
     @Value("${spring.data.redis.port}")
     private int REDIS_PORT=6379;
-    @Value("${spring.data.redis.password}")
-    private String REDIS_PASSWORD;
+//    @Value("${spring.data.redis.password}")
+//    private String REDIS_PASSWORD;
     @Value("${spring.data.redis.connect-timeout}")
     private Long REDIS_CONNECTION_TIME_OUT =10000L;
     @Value("${spring.data.redis.timeout}")
@@ -32,20 +32,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     @Value("${spring.data.redis.jedis.pool.max-idle}")
     private int JEDIS_MAX_IDL=10000;
 
-
-    /*@Bean
-    public RedisCacheConfiguration cacheConfiguration() {
-        return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(1800))
-                .disableCachingNullValues()
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new Jackson2JsonRedisSerializer(Object.class)));
-    }*/
-
-
-//    @Bean
-//    JedisConnectionFactory jedisConnectionFactory() {
-//        return new JedisConnectionFactory();
-//    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
