@@ -10,6 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>backoffice</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <groupId>com.meysam.backoffice</groupId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>model</module>
+        <module>dao</module>
+        <module>service</module>
+        <module>webapi</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
