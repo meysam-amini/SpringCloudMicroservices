@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
 
-<included>
-<!--    <springProperty name="LOGBACK_URL" source="logging.appender.logstash.destination.url"/>-->
-<!--    <springProperty name="LOGBACK_PORT" source="logging.appender.logstash.destination.port"/>-->
+    <!--    <springProfile name="dev">-->
+    <!--    <include resource="com.meysam.logging/logging-dev.xml"/>-->
+    <!--    </springProfile>-->
+
+<!--    <include resource="com.meysam.logging/logging-configurable.xml"/>-->
+
     <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-<!--        <destination>localhost:5000</destination>-->
+        <!--        <destination>localhost:5000</destination>-->
         <destination>127.0.0.1:5009</destination>
-<!--        <destination>${LOGBACK_URL}:${LOGBACK_PORT}</destination>-->
+        <!--        <destination>${LOGBACK_URL}:${LOGBACK_PORT}</destination>-->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <providers>
                 <timestamp/>
@@ -28,8 +32,9 @@
         <keepAliveDuration>5 minutes</keepAliveDuration>
     </appender>
 
-    <appender name="asyncLogstash" class="ch.qos.logback.classic.AsyncAppender">
+    <root lvel="INFO">
         <appender-ref ref="logstash"/>
-    </appender>
+    </root>
 
-</included>
+
+</configuration>

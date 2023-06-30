@@ -14,6 +14,8 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - meysam-docker
 
 #  pgadmin:
 #    container_name: pgadmin4
@@ -28,6 +30,8 @@ services:
 #      - ./pgadmin_data:/var/lib/data/pgadmin
 #    depends_on:
 #        - postgres
+#    networks:
+#      - meysam-docker
 
 #  redis:
 #    container_name: redis
@@ -40,7 +44,7 @@ services:
 #    volumes:
 #      - ./redis_data:/data
 #    networks:
-#      - test-network
+#      - meysam-docker
 
   rabbitmq:
     container_name: rabbitmq
@@ -52,34 +56,36 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
-#    networks:
-#      - test-network
+    networks:
+      - meysam-docker
 
 
-  keycloak:
-      container_name: keycloak
-      image: quay.io/keycloak/keycloak:21.1.1
-      environment:
-       KEYCLOAK_ADMIN: admin
-       KEYCLOAK_ADMIN_PASSWORD: password
-       KC_PROXY: edge
-       KC_HOSTNAME_STRICT: "false"
-       KC_HTTP_ENABLED: "true"
-       KC_DB: postgres
-       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
-       KC_DB_USERNAME: admin
-       KC_DB_PASSWORD: password
-       JDBC_PARAMS: useSSL=false
-      command: start
-        #start-dev --features=preview
-        #--hostname=localhost:8080 --auto-build --db:postgres --db-url=postgres --db-password=password --db-port=5432 --db-schema=public --http-enabled true --hostname-strict-https false
-        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-        #JDBC_PARAMS: "ssl=true"
-      ports:
-        - "8080:8080"
-      restart: always
-      depends_on:
-        - postgres
+#  keycloak:
+#      container_name: keycloak
+#      image: quay.io/keycloak/keycloak:21.1.1
+#      environment:
+#       KEYCLOAK_ADMIN: admin
+#       KEYCLOAK_ADMIN_PASSWORD: password
+#       KC_PROXY: edge
+#       KC_HOSTNAME_STRICT: "false"
+#       KC_HTTP_ENABLED: "true"
+#       KC_DB: postgres
+#       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+#       KC_DB_USERNAME: admin
+#       KC_DB_PASSWORD: password
+#       JDBC_PARAMS: useSSL=false
+#      command: start
+#        #start-dev --features=preview
+#        #--hostname=localhost:8080 --auto-build --db:postgres --db-url=postgres --db-password=password --db-port=5432 --db-schema=public --http-enabled true --hostname-strict-https false
+#        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+#        #JDBC_PARAMS: "ssl=true"
+#      ports:
+#        - "8080:8080"
+#      restart: always
+#      depends_on:
+#        - postgres
+#      networks:
+#        - meysam-docker
 
 #  zookeeper:
 #    container_name: zookeeper
@@ -89,6 +95,8 @@ services:
 #      ZOOKEEPER_TICK_TIME: 2000
 #    ports:
 #      - 22181:2181
+#    networks:
+#      - meysam-docker
 #
 #  kafka:
 #    container_name: kafka
@@ -104,6 +112,8 @@ services:
 #      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
 #      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
 #      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#    networks:
+#      - meysam-docker
 
 
 #  zipkin:
@@ -115,74 +125,78 @@ services:
 #      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
 #    depends_on:
 #      - kafka
+#    networks:
+#      - meysam-docker
 
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.3
-#    container_name: elasticsearch
-#    hostname: elasticsearch
-#    restart: always
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
-#    volumes:
-#      - elastic_data:/usr/share/elasticsearch/data
-#    environment:
-#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-#      bootstrap.memory_lock: "true"
-#      discovery.type: "single-node"
-#      xpack.security.enabled: "false"
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-##    networks:
-##      - elk
-#
-#  logstash:
-#    image: docker.elastic.co/logstash/logstash:8.3.3
-#    container_name: logstash
-#    restart: always #??
-#    volumes:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.3
+    container_name: elasticsearch
+    hostname: elasticsearch
+    restart: always
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      bootstrap.memory_lock: "true"
+      discovery.type: "single-node"
+      xpack.security.enabled: "false"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - meysam-docker
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.3.3
+    container_name: logstash
+    restart: always
+    volumes:
 #      - ./logstash/config/logstash.yml:/user/share/logstash/config/logstash.yml:ro
-#      - ./logstash/pipeline:/user/share/logstash/pipeline:ro
-##    command:
-##      - logstash -f /logstash_dir/logstash.yml
-#    depends_on:
-#      - elasticsearch
-#    ports:
+      - ./logstash/pipeline:/user/share/logstash/pipeline:ro
+#    command:
+#      - logstash -f /logstash_dir/logstash.yml
+    depends_on:
+      - elasticsearch
+    ports:
 #      - "9600:9600"
-#      - "5000:5000/tcp"
-#      - "9600:9600/udp"
-#      - "5044:5044"
-#    environment:
-#      ELASTICSEARCH_URL: http://elasticsearch:9200
-#      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-##    networks:
-##      - elk
-#
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:8.3.3
-#    container_name: kibana
-#    hostname: kibana
-#    restart: always
-#    depends_on:
-#      - elasticsearch
-#    ports:
-#      - "5601:5601"
-#    environment:
-#      SERVER_MAXPAYLOADBYTES: 4194304
-#      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
-#      ELASTICSEARCH_URL: "[http://elasticsearch:9200]"
-#
-##      LOGGING_DEST: stdout
-##      LOGGING_QUIET: 'false'
-##    networks:
-##      - elk
+      - "5009:5009"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - meysam-docker
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.3.3
+    container_name: kibana
+    hostname: kibana
+    restart: always
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    environment:
+      SERVER_MAXPAYLOADBYTES: 4194304
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+      ELASTICSEARCH_URL: "[http://elasticsearch:9200]"
+
+#      LOGGING_DEST: stdout
+#      LOGGING_QUIET: 'false'
+    networks:
+      - meysam-docker
 
 
 volumes:
   postgres_data:
   pgadmin_data:
-#  elastic_data:
-#    driver: local
+  elastic_data:
+    driver: local
   redis_data:
+
+networks:
+  meysam-docker:
+    driver: bridge
