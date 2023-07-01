@@ -14,10 +14,10 @@
     <groupId>com.meysam.backoffice</groupId>
     <packaging>pom</packaging>
     <modules>
-        <module>model</module>
-        <module>dao</module>
-        <module>service</module>
-        <module>webapi</module>
+        <module>backoffice-model</module>
+        <module>backoffice-dao</module>
+        <module>backoffice-service</module>
+        <module>backoffice-webapi</module>
     </modules>
 
     <properties>
