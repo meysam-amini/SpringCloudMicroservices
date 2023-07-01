@@ -20,7 +20,7 @@ spring:
         enabled: false
       server:
         native:
-          search-locations: file:/home/m.amini/meysam_workspace/MyConfigServer
+          search-locations: file:/home/meysam/Meysam_Workspace/github/repositories/MyConfigServer-main
 #        git:
 #          uri: https://github.com/meysam-amini/MyConfigServer
 #          username: username=meysamamini7394@gmail.com
@@ -28,7 +28,7 @@ spring:
 #          default-label: main
 #          clone-on-start: true
 
-
+#
 #spring:
 #  cloud:
 #    openfeign:
@@ -51,33 +51,33 @@ spring:
 #  detools:
 #    restart:
 #      enabled: true
-###################SECURITY#####################
+#  ##################SECURITY#####################
 #
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: http://127.0.0.1:8080/realms/meysam
-#      client:
-#        registration:
-#          keycloak:
-#            client-id: spring-cloud-microservices
-##            authorization-grant-type: password
-#            scope: openid
-#        provider:
-#          keycloak:
-#            issuer-uri: http://127.0.0.1:8080/realms/meysam
-#            user-name-attribute: preferred_username
-##################RABBITMQ#####################
+##  security:
+##    oauth2:
+##      resourceserver:
+##        jwt:
+##          issuer-uri: http://127.0.0.1:8080/realms/meysam
+##      client:
+##        registration:
+##          keycloak:
+##            client-id: spring-cloud-microservices
+##            #            authorization-grant-type: password
+##            scope: openid
+##        provider:
+##          keycloak:
+##            issuer-uri: http://127.0.0.1:8080/realms/meysam
+##            user-name-attribute: preferred_username
+#  #################RABBITMQ#####################
 #  rabbitmq:
 #    host: localhost
 #    port: 5672
 #    username: guest
 #    password: guest
-###############DATA SOURCE####################
-##  h2:
-##    console:
-##      enabled: true
+#  ##############DATA SOURCE####################
+#  #  h2:
+#  #    console:
+#  #      enabled: true
 #  datasource:
 #    driverClassName: org.postgresql.Driver
 #    #    url: jdbc:h2:mem:testdb
@@ -95,10 +95,10 @@ spring:
 #        jdbc:
 #          lob:
 #            non_contextual_creation: true
-##################REDIS########################
+#  #################REDIS########################
 #  data:
 #    redis:
-#      host: 127.0.0.1
+#      host: localhost
 #      port: 6379
 #      password: ######
 #      connect-timeout: 10000

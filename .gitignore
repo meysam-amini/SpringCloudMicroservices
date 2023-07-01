@@ -33,4 +33,4 @@ logs/
 **/target
 **/pgadmin_data
 **/postgres_data
-config-server/src/main/resources/application.properties
+#config-server/src/main/resources/application.properties

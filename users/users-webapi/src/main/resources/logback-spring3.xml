@@ -4,9 +4,9 @@
 <!--    <conversionRule conversionWord="tag" converterClass="com.bizzan.bitrade.config.LogConverterConfig"/>-->
 
 <!--    <springProfile name="dev">-->
-<!--        <include resource="com/meysam/logging/logging-dev.xml"/>-->
+<!--        <include resource="com.meysam.logging/logging-dev.xml"/>-->
 <!--    </springProfile>-->
 
-<!--    <include resource="com/bizzan/logging/logging-configurable.xml"/>-->
+<!--    <include resource="com.meysam.logging/logging-configurable.xml"/>-->
 
 <!--</configuration>-->

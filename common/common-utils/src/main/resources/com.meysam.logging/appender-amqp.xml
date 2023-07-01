@@ -12,7 +12,7 @@
     <springProperty name="LOGBACK_AMQP_VIRTUAL_HOST" source="logging.appender.rabbit.destination.virtualHost"/>
     <springProperty name="LOGBACK_AMQP_REQUIRED" source="logging.appender.rabbit.required"/>
 
-    <appender name="rabbitmq" class="com.bizzan.bitrade.util.ExtendedAmqpAppender">
+    <appender name="rabbitmq" class="com.meysam.bitrade.util.ExtendedAmqpAppender">
         <layout>
             <pattern>
                 {
