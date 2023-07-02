@@ -2,23 +2,22 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
 <!--    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>-->
 
-<!--    <conversionRule conversionWord="tag" converterClass="com.meysam.common.utils.config.LogConverterConfig"/>-->
+    <conversionRule conversionWord="tag" converterClass="com.meysam.common.utils.config.LogConverterConfig"/>
 <!--        <springProfile name="dev">-->
 <!--        <include resource="com.meysam.logging/logging-dev.xml"/>-->
 <!--        </springProfile>-->
 
 <!--    <include resource="com.meysam.logging/logging-configurable.xml"/>-->
 
-    <appender name="logstash" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--        <destination>localhost:5000</destination>-->
-        <destination>0.0.0.0:5044</destination>
+        <destination>localhost:5044</destination>
         <!--        <destination>${LOGBACK_URL}:${LOGBACK_PORT}</destination>-->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <providers>
                 <timestamp/>
                 <version/>
                 <loggerName/>
-                <pattern>
                     <pattern>
                         {
                         "tag": "%tag",
@@ -29,16 +28,17 @@
                         "message": "%message - %exception"
                         }
                     </pattern>
-                </pattern>
             </providers>
         </encoder>
         <keepAliveDuration>5 minutes</keepAliveDuration>
     </appender>
+
     <Appenders>
-        <Socket name="Socket" host="0.0.0.0" port="5044">
+        <Socket name="Socket" host="localhost" port="5044">
             <JsonLayout compact="true" eventEol="true" />
         </Socket>
     </Appenders>
+
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -46,10 +46,17 @@
         </encoder>
     </appender>
 
+    <appender name="asyncConsole" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="console"/>
+    </appender>
+
+    <appender name="asyncLogstash" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="logstash"/>
+    </appender>
+
     <root level="INFO">
-<!--        <appender-ref ref="logstash"/>-->
-        <appender-ref ref="Socket"/>
-<!--        <appender-ref ref="console"/>-->
+        <appender-ref ref="asyncConsole"/>
+        <appender-ref ref="asyncLogstash"/>
     </root>
 
 

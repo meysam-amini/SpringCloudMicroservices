@@ -25,11 +25,12 @@
                 </pattern>
             </providers>
         </encoder>
-        <keepAliveDuration>5 minutes</keepAliveDuration>
     </appender>
 
     <appender name="asyncLogstash" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="logstash"/>
     </appender>
+
+
 
 </included>
