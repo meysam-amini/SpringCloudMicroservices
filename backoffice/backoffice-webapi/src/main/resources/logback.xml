@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
+<!--    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>-->
 
-    <!--    <springProfile name="dev">-->
-    <!--    <include resource="com.meysam.logging/logging-dev.xml"/>-->
-    <!--    </springProfile>-->
+<!--    <conversionRule conversionWord="tag" converterClass="com.meysam.common.utils.config.LogConverterConfig"/>-->
+<!--        <springProfile name="dev">-->
+<!--        <include resource="com.meysam.logging/logging-dev.xml"/>-->
+<!--        </springProfile>-->
 
 <!--    <include resource="com.meysam.logging/logging-configurable.xml"/>-->
 
-    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
         <!--        <destination>localhost:5000</destination>-->
-        <destination>127.0.0.1:5009</destination>
+        <destination>0.0.0.0:5044</destination>
         <!--        <destination>${LOGBACK_URL}:${LOGBACK_PORT}</destination>-->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <providers>
@@ -19,6 +21,7 @@
                 <pattern>
                     <pattern>
                         {
+                        "tag": "%tag",
                         "level": "%level",
                         "thread": "%thread",
                         "app_name": "${appName}",
@@ -31,9 +34,22 @@
         </encoder>
         <keepAliveDuration>5 minutes</keepAliveDuration>
     </appender>
+    <Appenders>
+        <Socket name="Socket" host="0.0.0.0" port="5044">
+            <JsonLayout compact="true" eventEol="true" />
+        </Socket>
+    </Appenders>
 
-    <root lvel="INFO">
-        <appender-ref ref="logstash"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+<!--        <appender-ref ref="logstash"/>-->
+        <appender-ref ref="Socket"/>
+<!--        <appender-ref ref="console"/>-->
     </root>
 
 

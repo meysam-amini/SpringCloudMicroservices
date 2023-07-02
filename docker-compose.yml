@@ -162,8 +162,8 @@ services:
     depends_on:
       - elasticsearch
     ports:
-#      - "9600:9600"
-      - "5009:5009"
+      - "9600:9600"
+      - "5044:5044"
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
