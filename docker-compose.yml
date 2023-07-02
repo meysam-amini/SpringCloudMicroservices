@@ -156,7 +156,7 @@ services:
     restart: unless-stopped
     volumes:
 #      - ./logstash/config/logstash.yml:/user/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline:/user/share/logstash/pipeline:ro
+      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
 #    command:
 #      - logstash -f /logstash_dir/logstash.yml
     depends_on:

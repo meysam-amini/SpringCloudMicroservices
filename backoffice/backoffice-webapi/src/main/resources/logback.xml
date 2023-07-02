@@ -11,7 +11,7 @@
 
     <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--        <destination>localhost:5000</destination>-->
-        <destination>localhost:5044</destination>
+        <destination>172.25.1.87:5044</destination>
         <!--        <destination>${LOGBACK_URL}:${LOGBACK_PORT}</destination>-->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <providers>
