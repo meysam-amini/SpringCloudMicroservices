@@ -31,7 +31,7 @@ logging:
         password: guest
         virtualHost: /
         exchangeType: topic
-        exchangeName: test
+        exchangeName: logs
     logstash:
       enabled: true
       destination:

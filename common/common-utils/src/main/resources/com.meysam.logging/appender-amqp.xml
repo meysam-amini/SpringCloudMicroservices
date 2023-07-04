@@ -3,16 +3,16 @@
 <included>
     <!--    <conversionRule conversionWord="stacktrace"-->
     <!--                    converterClass="net.logstash.logback.stacktrace.ShortenedThrowableConverter"/>-->
-    <springProperty name="LOGBACK_AMQP_HOST" source="logging.appender.rabbit.destination.host"/>
-    <springProperty name="LOGBACK_AMQP_PORT" source="logging.appender.rabbit.destination.port"/>
-    <springProperty name="LOGBACK_AMQP_USERNAME" source="logging.appender.rabbit.destination.username"/>
-    <springProperty name="LOGBACK_AMQP_PASSWORD" source="logging.appender.rabbit.destination.password"/>
-    <springProperty name="LOGBACK_AMQP_EXCHANGE_TYPE" source="logging.appender.rabbit.destination.exchangeType"/>
-    <springProperty name="LOGBACK_AMQP_EXCHANGE_NAME" source="logging.appender.rabbit.destination.exchangeName"/>
-    <springProperty name="LOGBACK_AMQP_VIRTUAL_HOST" source="logging.appender.rabbit.destination.virtualHost"/>
-    <springProperty name="LOGBACK_AMQP_REQUIRED" source="logging.appender.rabbit.required"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_HOST" source="logging.appender.rabbit.destination.host"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_PORT" source="logging.appender.rabbit.destination.port"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_USERNAME" source="logging.appender.rabbit.destination.username"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_PASSWORD" source="logging.appender.rabbit.destination.password"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_EXCHANGE_TYPE" source="logging.appender.rabbit.destination.exchangeType"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_EXCHANGE_NAME" source="logging.appender.rabbit.destination.exchangeName"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_VIRTUAL_HOST" source="logging.appender.rabbit.destination.virtualHost"/>
+    <springProperty scope="context" name="LOGBACK_AMQP_REQUIRED" source="logging.appender.rabbit.required"/>
 
-    <appender name="rabbitmq" class="com.meysam.bitrade.util.ExtendedAmqpAppender">
+    <appender name="rabbitmq" class="com.meysam.common.utils.config.ExtendedAmqpAppender">
         <layout>
             <pattern>
                 {
@@ -27,14 +27,14 @@
                 }
             </pattern>
         </layout>
-        <host>${LOGBACK_AMQP_HOST:- }</host>
-        <port>${LOGBACK_AMQP_PORT:- }</port>
-        <username>${LOGBACK_AMQP_USERNAME:- }</username>
-        <password>${LOGBACK_AMQP_PASSWORD:- }</password>
-        <exchangeType>${LOGBACK_AMQP_EXCHANGE_TYPE:-topic}</exchangeType>
-        <exchangeName>${LOGBACK_AMQP_EXCHANGE_NAME:- }</exchangeName>
-        <applicationId>market-${appName}</applicationId>
-        <routingKeyPattern>ernyka.enifex.market.${appName}</routingKeyPattern>
+        <host>${LOGBACK_AMQP_HOST}</host>
+        <port>${LOGBACK_AMQP_PORT}</port>
+        <username>${LOGBACK_AMQP_USERNAME}</username>
+        <password>${LOGBACK_AMQP_PASSWORD}</password>
+        <exchangeType>${LOGBACK_AMQP_EXCHANGE_TYPE}</exchangeType>
+        <exchangeName>${LOGBACK_AMQP_EXCHANGE_NAME}</exchangeName>
+        <applicationId>meysam-${appName}</applicationId>
+        <routingKeyPattern>com.meysam.${appName}</routingKeyPattern>
         <generateId>true</generateId>
         <charset>UTF-8</charset>
         <durable>true</durable>
