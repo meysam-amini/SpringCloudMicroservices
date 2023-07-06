@@ -12,7 +12,8 @@
     <springProperty scope="context" name="LOGBACK_AMQP_VIRTUAL_HOST" source="logging.appender.rabbit.destination.virtualHost"/>
     <springProperty scope="context" name="LOGBACK_AMQP_REQUIRED" source="logging.appender.rabbit.required"/>
 
-    <appender name="rabbitmq" class="com.meysam.common.utils.config.ExtendedAmqpAppender">
+<!--    <appender name="rabbitmq" class="com.meysam.common.utils.config.ExtendedAmqpAppender">-->
+    <appender name="rabbitmq" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
         <layout>
             <pattern>
                 {
@@ -20,8 +21,8 @@
                 "level": "%level",
                 "thread": "%thread",
                 "time": "%date{ISO8601}",
-                "app_name": "${appName}",
-                "app_port": "${appPort}",
+                "app_name": ${appName},
+                "app_port": ${appPort},
                 "class": "%logger{36}",
                 "message": "%message - %exception"
                 }
@@ -33,7 +34,7 @@
         <password>guest<!--${LOGBACK_AMQP_PASSWORD:-guest-->}</password>
         <exchangeType>topic<!--${LOGBACK_AMQP_EXCHANGE_TYPE:-topic}--></exchangeType>
         <exchangeName>logs<!--${LOGBACK_AMQP_EXCHANGE_NAME:-logs}--></exchangeName>
-        <applicationId>meysam-${appName}</applicationId>
+        <applicationId>${appName}</applicationId>
         <routingKeyPattern>com.meysam.${appName}</routingKeyPattern>
         <generateId>true</generateId>
         <charset>UTF-8</charset>
