@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /  #why?   can I remove this?
+spec:
+  backend:
+    serviceName: default-http-backend #?? why?  can I remove this?
+    servicePort: 80
+  rules:
+    - host: microservices.info #why? can I remove this?
+      http:
+        paths:
+          - path: /api-gateway
+            backend:
+              serviceName: api-gateway
+              servicePort: 80

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server
+  labels:
+    app: config-server
+    spring-boot: "true"
+spec:
+  ports:
+    - port: 80
+      targetPort: 8012
+  #      protocol: TCP
+  selector:
+    app: config-server
+  type: ClusterIP

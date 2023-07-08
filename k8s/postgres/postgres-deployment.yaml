@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.2
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres
+              mountPath: /postgres_data # is this enough? shouldn't we map it to /var/lib/postgresql/data???
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+
+          env:
+            - name: POSTGRES_INITDB_DATABASE # are these names necessary?
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres
+                  key: database-name
+            - name: POSTGRES_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: database-user
+            - name: POSTGRES_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: database-password
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+
+
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: postgres
+
+    ## why service type isn't settled here?

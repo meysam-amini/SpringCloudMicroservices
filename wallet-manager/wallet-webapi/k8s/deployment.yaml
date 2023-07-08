@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-ws
+  labels:
+    app: users-ws
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wallet-ws
+  template:
+    metadata:
+      labels:
+        app: wallet-ws
+    spec:
+      serviceAccountName: spring-cloud-kubernetes # is this optional?
+      containers:
+        - name: wallet-ws
+          image: wallet-ws
+          ports:
+            - containerPort: 4444
+#          env:
+#            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+#              value: "true"
+#            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+#              value: "true"
