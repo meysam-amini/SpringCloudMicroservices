@@ -7,17 +7,14 @@ spring:
   profiles:
     active: native
   cloud:
-    bus:
-      enabled: true
-    refresh:
-      enabled: true
     config:
-      enabled: true
+      bus:
+        enabled: true
       import-check:
         enabled: false
       server:
         native:
-          search-locations: file:/home/meysam/Meysam_Workspace/github/repositories/MyConfigServer-main/
+          search-locations: file:/home/meysam/Meysam_Workspace/github/repositories/MyConfigServer-main
 #        git:
 #          uri: https://github.com/meysam-amini/MyConfigServer
 #          username: username=meysamamini7394@gmail.com
