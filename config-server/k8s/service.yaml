@@ -4,7 +4,7 @@ metadata:
   name: config-server
   labels:
     app: config-server
-    spring-boot: "true"
+    spring-boot: "true" #is set for Spring Boot Admin discovery purposes
 spec:
   ports:
     - port: 80

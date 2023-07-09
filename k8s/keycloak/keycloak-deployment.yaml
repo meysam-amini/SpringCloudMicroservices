@@ -1,96 +1,79 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: keycloak
-  labels:
-    app: keycloak
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: keycloak
-  template:
-    metadata:
-      labels:
-        app: keycloak
-    spec:
-      containers:
-        - name: keycloak
-          image: quay.io/keycloak/keycloak:21.1.1
-          ports:
-            - containerPort: 8080
-          volumeMounts:
-            - name: keycloak
-              mountPath: /postgres_data # is this enough? shouldn't we map it to /var/lib/postgresql/data???
-      volumes:
-        - name: storage
-          persistentVolumeClaim:
-            claimName: postgres-pvc
-          env:
-            - name: KEYCLOAK_ADMIN
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak
-                  key: keycloak-admin-username
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak
-                  key: keycloak-admin-password
-            - name: KC_DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak
-                  key: keycloak-postgres-db-username
-            - name: KC_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak
-                  key: keycloak-postgres-db-pasword
-            - name: KC_PROXY
-              value: edge
-            - name: KC_HOSTNAME_STRICT
-              value: "false"
-            - name: KC_HTTP_ENABLED
-              value: "true"
-            - name: KC_DB
-              value: postgres
-            - name: KC_DB_URL
-              value: jdbc:postgresql://postgres:5432/keycloak
-            - name: JDBC_PARAMS
-              value: useSSL=false
-          command: ["start"]
-
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 256Mi
-
-
-
-
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres
-  labels:
-    app: postgres
-spec:
-  ports:
-    - port: 5432
-      targetPort: 5432
-      protocol: TCP
-  selector:
-    app: postgres
-
-    ## why service type isn't settled here?
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: keycloak
+#  labels:
+#    app: keycloak
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: keycloak
+#  template:
+#    metadata:
+#      labels:
+#        app: keycloak
+#    spec:
+#      containers:
+#        - name: keycloak
+#          image: quay.io/keycloak/keycloak:21.1.1
+#          ports:
+#            - containerPort: 8080
+#          volumeMounts:
+#            - name: keycloak
+#              mountPath: /postgres_data # is this enough? shouldn't we map it to /var/lib/postgresql/data???
+#      volumes:
+#        - name: storage
+#          persistentVolumeClaim:
+#            claimName: postgres-pvc
+#          env:
+#            - name: KEYCLOAK_ADMIN
+#              valueFrom:
+#                secretKeyRef:
+#                  name: keycloak
+#                  key: keycloak-admin-username
+#            - name: KEYCLOAK_ADMIN_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: keycloak
+#                  key: keycloak-admin-password
+#            - name: KC_DB_USERNAME
+#              valueFrom:
+#                secretKeyRef:
+#                  name: keycloak
+#                  key: keycloak-postgres-db-username
+#            - name: KC_DB_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: keycloak
+#                  key: keycloak-postgres-db-pasword
+#            - name: KC_PROXY
+#              value: edge
+#            - name: KC_HOSTNAME_STRICT
+#              value: "false"
+#            - name: KC_HTTP_ENABLED
+#              value: "true"
+#            - name: KC_DB
+#              value: postgres
+#            - name: KC_DB_URL
+#              value: jdbc:postgresql://postgres:5432/keycloak
+#            - name: JDBC_PARAMS
+#              value: useSSL=false
+#          command: ["start"]
+#
+#
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: keycloak
+#  labels:
+#    app: keycloak
+#spec:
+#  ports:
+#    - port: 80
+#      targetPort: 8080
+#  selector:
+#    app: keycloak
+#
+#    ## why service type isn't settled here?

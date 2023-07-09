@@ -17,6 +17,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-kubernetes</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.meysam.backoffice</groupId>
             <artifactId>backoffice-service</artifactId>
             <version>1.0-SNAPSHOT</version>

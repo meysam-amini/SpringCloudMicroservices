@@ -3,7 +3,4 @@
 #metadata:
 #  name: backoffice
 #data:
-#  application.properties: |-
-#    spring.data.mongodb.host: mongodb
-#    spring.data.mongodb.database: admin
-#    spring.data.mongodb.authentication-database: admin
+#  application.yml: |-
