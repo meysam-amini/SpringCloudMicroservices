@@ -28,21 +28,18 @@ spec:
             claimName: postgres-pvc
 
           env:
-            - name: POSTGRES_INITDB_DATABASE # are these names necessary?
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres
-                  key: database-name
-            - name: POSTGRES_INITDB_ROOT_USERNAME
+            - name: POSTGRES_DB
+              value: keycloak #for initializing keycloak db on first start
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: postgres
-                  key: database-user
-            - name: POSTGRES_INITDB_ROOT_PASSWORD
+                  key: postgres-user
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres
-                  key: database-password
+                  key: postgres-password
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
