@@ -15,7 +15,7 @@ spec:
       labels:
         app: auth-ws
     spec:
-      serviceAccountName: spring-cloud-kubernetes
+#      serviceAccountName: spring-cloud-kubernetes
       containers:
         - name: auth-ws
           image: auth-ws

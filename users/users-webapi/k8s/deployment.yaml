@@ -15,7 +15,7 @@ spec:
       labels:
         app: users-ws
     spec:
-      serviceAccountName: spring-cloud-kubernetes # is this optional?
+#      serviceAccountName: spring-cloud-kubernetes # is this optional?
       containers:
         - name: users-ws
           image: users-ws

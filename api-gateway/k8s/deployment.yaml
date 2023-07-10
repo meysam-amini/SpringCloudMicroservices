@@ -15,7 +15,7 @@ spec:
       labels:
         app: api-gateway
     spec:
-      serviceAccountName: spring-cloud-kubernetes
+#      serviceAccountName: spring-cloud-kubernetes
       containers:
         - name: api-gateway
           image: api-gateway

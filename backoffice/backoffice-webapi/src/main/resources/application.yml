@@ -7,13 +7,13 @@ spring:
   application:
     name: backoffice-ws
 
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  client:
-    service-url:
-      # the url by which the client apps communicate with Eureka server
-      defaultZone: http://localhost:8010/eureka
+#eureka:
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#  client:
+#    service-url:
+#      # the url by which the client apps communicate with Eureka server
+#      defaultZone: http://localhost:8010/eureka
 
 logging:
   appender:

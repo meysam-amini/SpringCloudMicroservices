@@ -15,7 +15,7 @@ spec:
       labels:
         app: config-server
     spec:
-      serviceAccountName: spring-cloud-kubernetes
+#      serviceAccountName: spring-cloud-kubernetes
       containers:
         - name: config-server
           image: config-server
