@@ -1,6 +1,6 @@
 FROM openjdk:17-alpine
-WORKDIR /opt
+#WORKDIR /opt
 ENV PORT 8012
 EXPOSE 8012
-COPY target/*.jar /opt/app.jar
-ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
+COPY target/config-server-1.0-SNAPSHOT.jar config-server.jar
+ENTRYPOINT ["java","-jar","config-server.jar"]

@@ -19,6 +19,7 @@ spec:
       containers:
         - name: backoffice-ws
           image: backoffice-ws
+          imagePullPolicy: Never
           ports:
             - containerPort: 9999
 #          env:

@@ -25,4 +25,4 @@ spec:
               service:
                 name: config-server
                 port:
-                  number: 80
+                  number: 8012

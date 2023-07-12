@@ -19,6 +19,7 @@ spec:
       containers:
         - name: config-server
           image: config-server
+          imagePullPolicy: Never
           ports:
             - containerPort: 8012
 #          env:

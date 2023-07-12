@@ -17,8 +17,9 @@ spec:
     spec:
 #      serviceAccountName: spring-cloud-kubernetes
       containers:
-        - name: local/api-gateway:latest
+        - name: api-gateway
           image: api-gateway
+          imagePullPolicy: Never
           ports:
             - containerPort: 8082
 #          env:
