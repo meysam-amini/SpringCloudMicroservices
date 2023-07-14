@@ -18,7 +18,7 @@ spring:
         git:
           uri: https://github.com/meysam-amini/MyConfigServer
           username: username=meysamamini7394@gmail.com
-          password: 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
+          password: ####
           default-label: main
           clone-on-start: true
           timeout: 15000
