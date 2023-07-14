@@ -1,6 +1,6 @@
 spring:
   cloud:
     config:
-      uri: http://localhost:8012
+      uri: http://config-server:8080
       name: config-server
 
