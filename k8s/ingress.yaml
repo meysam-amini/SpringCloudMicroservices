@@ -1,28 +1,29 @@
 apiVersion: networking.k8s.io/v1
+# enable ingress addon first : minikube addons enable ingress
 kind: Ingress
 metadata:
   name: gateway-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /  #why?   can I remove this?
+    kubernetes.io/ingress.class: nginx
+#  minikube already comes with Nginx Ingress Controller
+#  as an Addon, we just need to enable it: minikube addons enable ingress
+    nginx.ingress.kubernetes.io/rewrite-target: / #why?   can I remove this?
 spec:
-#  backend:
-#    serviceName: default-http-backend #?? why?  can I remove this?
-#    servicePort: 80
   rules:
-    - host: localhost #microservices.info #why? can I remove this?
+    - host: springcloudmicroservices
       http:
         paths:
+#          - pathType: Prefix
+#            path: /api-gateway/*
+#            backend:
+#              service:
+#                name: api-gateway
+#                port:
+#                  number: 80
           - pathType: Prefix
-            path: /api-gateway
-            backend:
-              service:
-                name: api-gateway
-                port:
-                  number: 80
-          - pathType: Prefix
-            path: /config-server
+            path: /
             backend:
               service:
                 name: config-server
                 port:
-                  number: 8012
+                  number: 8080
