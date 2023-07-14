@@ -21,7 +21,7 @@ spec:
           image: config-server
           imagePullPolicy: Never
           ports:
-            - containerPort: 8012
+            - containerPort: 8080
 #          env:
 #            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
 #              value: "true"
