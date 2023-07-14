@@ -10,6 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: / #why?   can I remove this?
 spec:
   rules:
+    # map this host to minikube ip at /etc/hosts when using nginx as controller
     - host: springcloudmicroservices
       http:
         paths:
