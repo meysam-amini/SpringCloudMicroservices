@@ -1,5 +1,6 @@
 spring:
   cloud:
     config:
-      uri: http://localhost:8012
+      # target URI for config server corresponds to Kubernetes Service config-service
+      uri: http://config-server:8080
       name: config-server
