@@ -19,6 +19,7 @@ spec:
       containers:
         - name: users-ws
           image: users-ws
+          imagePullPolicy: Never
           ports:
             - containerPort: 3333
 #          env:

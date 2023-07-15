@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-ws
+  name: wallet-ws
   labels:
-    app: users-ws
+    app: wallet-ws
 
 spec:
   replicas: 1
@@ -19,6 +19,7 @@ spec:
       containers:
         - name: wallet-ws
           image: wallet-ws
+          imagePullPolicy: Never
           ports:
             - containerPort: 4444
 #          env:

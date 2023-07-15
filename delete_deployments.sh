@@ -1,1 +1,1 @@
-kubectl delete deployment backoffice-ws api-gateway config-server
+kubectl delete deployment api-gateway config-server auth-ws backoffice-ws users-ws

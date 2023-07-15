@@ -19,6 +19,7 @@ spec:
       containers:
         - name: auth-ws
           image: auth-ws
+          imagePullPolicy: Never
           ports:
             - containerPort: 41423
           env:
