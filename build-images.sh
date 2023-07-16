@@ -11,12 +11,12 @@ eval $(minikube -p minikube docker-env)
 cd config-server/
 docker build -t config-server .
 
-cd ../backoffice/backoffice-webapi/
+#cd ../backoffice/backoffice-webapi/
 #cd backoffice/backoffice-webapi/
-docker build -t backoffice-ws .
+#docker build -t backoffice-ws .
 
 #cd ../../auth/auth-webapi/
 #docker build -t auth-ws .
 
-cd ../../api-gateway/
-docker build -t api-gateway .
+#cd ../../api-gateway/
+#docker build -t api-gateway .

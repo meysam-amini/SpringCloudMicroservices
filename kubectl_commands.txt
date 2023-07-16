@@ -1,0 +1,3 @@
+#getting inside pod:
+kubectl exec -it podName -- /bin/sh
+

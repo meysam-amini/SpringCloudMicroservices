@@ -28,7 +28,7 @@
                 }
             </pattern>
         </layout>
-        <host>rabbitmq<!--${LOGBACK_AMQP_HOST:-localhost}--></host>
+        <host>172.22.0.3<!--${LOGBACK_AMQP_HOST:-localhost}--></host>
         <port>5672<!--${LOGBACK_AMQP_PORT:- }--></port>
         <username>guest<!--${LOGBACK_AMQP_USERNAME:-guest}--></username>
         <password>guest<!--${LOGBACK_AMQP_PASSWORD:-guest-->}</password>

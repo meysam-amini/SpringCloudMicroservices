@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: config-server
+  rabbitmq:
+    host: 0.0.0.0
+    port: 5672
+    username: guest
+    password: guest
   profiles:
     active: git
   cloud:
@@ -18,10 +23,10 @@ spring:
         git:
           uri: https://github.com/meysam-amini/MyConfigServer
           username: username=meysamamini7394@gmail.com
-          password: ####
+          password: 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
           default-label: main
           clone-on-start: true
-          timeout: 15000
+          timeout: 1000
 
 management:
   endpoints:
