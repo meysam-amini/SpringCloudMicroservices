@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server
+  labels:
+    app: config-server
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-server
+  template:
+    metadata:
+      labels:
+        app: config-server
+    spec:
+#      serviceAccountName: spring-cloud-kubernetes
+      containers:
+        - name: config-server
+          image: config-server
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+#          env:
+#            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+#              value: "true"
+#            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+#              value: "true"

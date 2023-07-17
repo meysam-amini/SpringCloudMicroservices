@@ -2,13 +2,13 @@
 server:
   port: 41423
 #${PORT:0}
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  client:
-    service-url:
-      # the url by which the client apps communicate with Eureka server
-      dedefaultZone: http://localhost:8010/eureka
+#eureka:
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#  client:
+#    service-url:
+#      # the url by which the client apps communicate with Eureka server
+#      dedefaultZone: http://localhost:8010/eureka
 
 spring:
   application:

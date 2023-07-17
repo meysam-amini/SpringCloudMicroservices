@@ -5,10 +5,10 @@ server:
 spring:
   application:
     name: wallet-ws
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  client:
-    service-url:
-      # the url by which the client apps communicate with Eureka server
-      dedefaultZone: http://localhost:8761/eureka
+#eureka:
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#  client:
+#    service-url:
+#      # the url by which the client apps communicate with Eureka server
+#      dedefaultZone: http://localhost:8761/eureka

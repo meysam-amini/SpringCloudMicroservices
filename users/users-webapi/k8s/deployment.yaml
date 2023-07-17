@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-ws
+  labels:
+    app: users-ws
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-ws
+  template:
+    metadata:
+      labels:
+        app: users-ws
+    spec:
+#      serviceAccountName: spring-cloud-kubernetes # is this optional?
+      containers:
+        - name: users-ws
+          image: users-ws
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3333
+#          env:
+#            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+#              value: "true"
+#            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+#              value: "true"

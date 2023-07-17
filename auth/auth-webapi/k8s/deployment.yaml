@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-ws
+  labels:
+    app: auth-ws
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-ws
+  template:
+    metadata:
+      labels:
+        app: auth-ws
+    spec:
+#      serviceAccountName: spring-cloud-kubernetes
+      containers:
+        - name: auth-ws
+          image: auth-ws
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 41423
+          env:
+            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+              value: "true"
+            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+              value: "true"

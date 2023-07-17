@@ -49,19 +49,19 @@ public class ExceptionControllerAdvice {
     }
 
     @ExceptionHandler(TimeoutException.class)
-    public ResponseEntity<String>  error(TimeoutException exception){
+    public ResponseEntity<String>  timeoutException(TimeoutException exception){
         log.error("handling TimeoutException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("SERVICE_UNAVAILABLE"));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<String>  error(HttpRequestMethodNotSupportedException exception){
+    public ResponseEntity<String>  httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException exception){
         log.error("handling HttpRequestMethodNotSupportedException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(messageSourceService.getMessage("WRONG_HTTP_METHOD"));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String>  error(Exception exception){
+    public ResponseEntity<String>  exception(Exception exception){
         log.error("handling exception at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(messageSourceService.getMessage("CONTACT_WITH_SUPPORT_TEAM"));
     }

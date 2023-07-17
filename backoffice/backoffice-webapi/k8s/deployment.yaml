@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backoffice-ws
+  labels:
+    app: backoffice-ws
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backoffice-ws
+  template:
+    metadata:
+      labels:
+        app: backoffice-ws
+    spec:
+#      serviceAccountName: spring-cloud-kubernetes
+      containers:
+        - name: backoffice-ws
+          image: backoffice-ws
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9999
+#          env:
+#            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+#              value: "true"
+#            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+#              value: "true"

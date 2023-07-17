@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-ws
+  labels:
+    app: users-ws
+    spring-boot: "true"
+spec:
+  ports:
+    - port: 80
+      targetPort: 4444
+  #      protocol: TCP
+  selector:
+    app: users-ws
+  type: ClusterIP

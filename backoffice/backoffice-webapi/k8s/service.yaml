@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backoffice-ws
+  labels:
+    app: backoffice-ws
+    spring-boot: "true"
+spec:
+  ports:
+    - port: 9999
+      protocol: TCP
+  selector:
+    app: backoffice-ws
+  type: ClusterIP
