@@ -28,7 +28,7 @@
                 }
             </pattern>
         </layout>
-        <host>localhost<!--${LOGBACK_AMQP_HOST:-localhost}--></host>
+        <host>host.minikube.internal<!--${LOGBACK_AMQP_HOST:-localhost}--></host>
         <port>5672<!--${LOGBACK_AMQP_PORT:- }--></port>
         <username>guest<!--${LOGBACK_AMQP_USERNAME:-guest}--></username>
         <password>guest<!--${LOGBACK_AMQP_PASSWORD:-guest-->}</password>
