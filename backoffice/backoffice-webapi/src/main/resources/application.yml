@@ -6,14 +6,28 @@ server:
 spring:
   application:
     name: backoffice-ws
-
+  cloud:
+    discovery:
+      locator:
+        enabled: true
+      enabled: true
+      client:
+        health-indicator:
+          enabled: false
+    kubernetes:
+      discovery:
+        all-namespaces: true
+        discovery-server-url: http://spring-cloud-kubernetes-discoveryserver:80
 eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-    service-url:
-      # the url by which the client apps communicate with Eureka server
-      defaultZone: http://localhost:8010/eureka
+    enabled: false
+#eureka:
+#  instance:
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#  client:
+#    service-url:
+#      # the url by which the client apps communicate with Eureka server
+#      defaultZone: http://localhost:8010/eureka
 
 logging:
   appender:
@@ -25,7 +39,7 @@ logging:
       enabled: false
       required: true
       destination:
-        host: localhost
+        host: host.minikube.internal
         port: 5672
         username: guest
         password: guest

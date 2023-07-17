@@ -1,29 +1,33 @@
 server:
-  port: 8012
-
+  port: 8080
 spring:
   application:
     name: config-server
+  rabbitmq:
+#    host: 0.0.0.0
+    host: host.minikube.internal
+    port: 5672
+    username: guest
+    password: guest
   profiles:
-    active: native
+    active: git
   cloud:
-    bus:
-      enabled: true
-    refresh:
-      enabled: true
     config:
-      enabled: true
+      bus:
+        enabled: true
       import-check:
         enabled: false
+#      server:
+#        native:
+#          search-locations: file:/home/meysam/Meysam_Workspace/github/repositories/MyConfigServer-main
       server:
-        native:
-          search-locations: file:/home/meysam/Meysam_Workspace/github/repositories/MyConfigServer-main/
-#        git:
-#          uri: https://github.com/meysam-amini/MyConfigServer
-#          username: username=meysamamini7394@gmail.com
-#          password: ########################
-#          default-label: main
-#          clone-on-start: true
+        git:
+          uri: https://github.com/meysam-amini/MyConfigServer
+          username: username=meysamamini7394@gmail.com
+          password: ####
+          default-label: main
+          clone-on-start: true
+          timeout: 1000
 
 management:
   endpoints:
@@ -114,3 +118,6 @@ management:
 #          max-idle: 100
 #          min-idle: 20
 ###############################################
+#logging:
+#  level:
+#    root: debug
