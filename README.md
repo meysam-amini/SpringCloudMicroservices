@@ -1,3 +1,6 @@
+
+/home/meysam/Downloads/SpringCloudMicroservices(2).jpg
+
 A scenario of communication between MicroServices that implemented in SpringBoot using Spring Cloud Api
 gateway and Eureka service discovery. SpringSecurity + JWT mechanism with a custom security filter used for
 authentication and authorization, and also all common configurations on microservices are broadcasting from a
