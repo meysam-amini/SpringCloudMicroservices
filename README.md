@@ -1,6 +1,8 @@
-# Spring CLoud Kubernetes Microservices
+# Spring Cloud Kubernetes Microservices
 
 A scenario of secure communications between MicroServices which are implemented using SpringBoot3 and SpringCloud2022 and deployed on k8s cluster.
+
+---
 
 ## Tech Stack:
 * JDK 17
@@ -23,6 +25,11 @@ The system contains following modules:
 4. Backoffice-Service: Its a sample service for managing common bussiness domain data of hole system, like users, roles, wallets, coins etc. There is a role mapping in this module that will be saved on Redis at start-up and authorization is handled by a custom security filter which is used to intercept requests and grant access to management services based on permissions of each role.
 5. Api-Gateway: SpringCloudApiGateway is used for route incomming request from Ingress to microservices.
 6. Discovery-Service: springCloudKubernetesDiscoveryserver is used for registering each of the above services inside the k8s cluster
+7. Config-Server: Instead of defining all needed docker containers configs, I prefered to use SpringCloudConfigServer for centralizing business and also infrastructure configs. This might not be a best practice but I wanted to make develop and testing easier and less resource intensive as I had a simple laptop with just 8 gb memory. Also I didn't want to restart my deployments manually on changing bussines configs and this is straightforward by calling /busrefresh endpoint of Config-Server actuator, then changed configs will broadcast to services by RabbitMQ.
+
+
+
+
 
 ![SpringCloudMicroservices(4)](https://github.com/meysam-amini/SpringCloudMicroservices/assets/59673699/5a141d1e-adbb-41ab-8321-c25a91698eb5)
 
