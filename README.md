@@ -1,6 +1,6 @@
 # Spring CLoud Kubernetes Microservices
 
-A scenario of secure communications between MicroServices which are implemented using SpringBoot3 and SpringCLoud2022 and deployed on k8s cluster.
+A scenario of secure communications between MicroServices which are implemented using SpringBoot3 and SpringCloud2022 and deployed on k8s cluster.
 
 ## Tech Stack:
 * JDK 17
