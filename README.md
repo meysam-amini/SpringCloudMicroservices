@@ -19,7 +19,7 @@ A scenario of secure communications between MicroServices which are implemented 
 ## Architecture
 The system contains following modules:
 
-1. Auth-Service: this module is responsible for interacting with Kyecloak for users registeration, authentication and authorization. for OTP process stores Otps on Redis.
+1. Auth-Service: this module is responsible for interacting with Kyecloak for users registeration, authentication and authorization. for OTP process stores OTPs on Redis.
 2. Users-Service: Exposes public pathes to interact with Auth-Service for registering and login for users, and some authenticated pathes for interacting with Wallet-Service.
 3. Wallet-Service: Exposes some sample services with method level security based on clients' scope or users' roles. Its accessible only from Users-Service or Backoffice-Service. to
 4. Backoffice-Service: Its a sample service for managing common bussiness domain data of hole system, like users, roles, wallets, coins etc. There is a role mapping in this module that will be saved on Redis at start-up and authorization is handled by a custom security filter which is used to intercept requests and grant access to management services based on permissions of each role.
