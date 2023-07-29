@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.math.BigInteger;
+
 @Entity
 
 @Getter
@@ -16,7 +18,7 @@ public class GeneralProperties extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private BigInteger Id;
 
     @NotBlank
     @Column(unique = true)

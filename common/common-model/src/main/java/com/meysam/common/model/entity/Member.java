@@ -5,7 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import java.math.BigDecimal;
+
+import java.math.BigInteger;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigDecimal Id;
+    private BigInteger Id;
 
     @Column(nullable = false , unique = true)
     private String username;

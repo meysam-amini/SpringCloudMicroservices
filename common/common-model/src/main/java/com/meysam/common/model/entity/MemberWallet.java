@@ -1,10 +1,10 @@
 package com.meysam.common.model.entity;
 
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import jakarta.persistence.*;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @Getter
 @Setter@Builder
@@ -16,7 +16,7 @@ public class MemberWallet extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigDecimal Id;
+    private BigInteger Id;
 
     @JoinColumn(name = "member_id")
     @ManyToOne(cascade =  CascadeType.ALL,fetch = FetchType.EAGER)
