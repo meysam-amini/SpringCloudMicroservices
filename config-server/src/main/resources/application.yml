@@ -20,7 +20,7 @@ spring:
         enabled: false
       server:
         native:
-          search-locations: file:/home/meysam/Meysam_Workspace/github/repositories/MyConfigServer-main/
+          search-locations: file:/home/m.amini/meysam_workspace/MyConfigServer
 #        git:
 #          uri: https://github.com/meysam-amini/MyConfigServer
 #          username: username=meysamamini7394@gmail.com
