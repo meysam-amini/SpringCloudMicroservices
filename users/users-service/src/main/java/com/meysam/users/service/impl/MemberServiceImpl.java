@@ -4,12 +4,15 @@ import com.meysam.common.dao.MemberRepository;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
 import com.meysam.common.service.api.AuthServiceClient;
-import com.meysam.users.service.api.MemberService;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
+import com.meysam.common.utils.utils.PredicateUtils;
+import com.meysam.users.service.api.MemberService;
 import com.meysam.users.service.api.WalletServiceClient;
+import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -49,6 +52,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Page<MemberDto> pageQuery(MemberDto memberDto) {
+        Predicate predicate = PredicateUtils.getPredicate(memberDto.getBooleanExpressions());
+        //if different sort was needed (ex: sort by username) :
+        /*PageRequest pageRequest = PageRequest.of
+                (memberDto.getPageQueryModel().getPageNumber(),
+                        memberDto.getPageQueryModel().getPageSize(), Sort.Direction.ASC,"username");*/
+        Page<Member> stakingPlanDetailPage = memberRepository.findAll(predicate, memberDto.getPageQueryModel().getPageable());
+        return stakingPlanDetailPage.map(MemberDto::maptoMemberDto);
+    }
+
+    @Override
     public Member findById(BigInteger id) {
         return memberRepository.findById(id).orElse(null);
     }
@@ -66,7 +80,7 @@ public class MemberServiceImpl implements MemberService {
 
             List<MemberWalletDto> wallets = walletServiceClient.getWallets(token, user.getUsername());
 
-            UserDto userDto = UserDto.builder()
+            MemberDto userDto = MemberDto.builder()
                     .email(user.getEmail())
                     .username(username)
                     .firstName(user.getFirstName())
