@@ -1,11 +1,10 @@
 package com.meysam.common.model.entity;
 
-import com.meysam.common.model.entity.BaseEntity;
-import lombok.*;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import java.math.BigDecimal;
+import lombok.*;
+
+import java.math.BigInteger;
 
 @Getter
 @Setter@Builder
@@ -16,7 +15,7 @@ public class Coin extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigDecimal Id;
+    private BigInteger Id;
 
     @NotNull(message = "coin symbol cannot be null")
     @Column(nullable = false)

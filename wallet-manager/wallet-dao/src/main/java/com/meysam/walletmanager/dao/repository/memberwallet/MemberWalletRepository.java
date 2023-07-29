@@ -1,17 +1,16 @@
 package com.meysam.walletmanager.dao.repository.memberwallet;
 
+import com.meysam.common.dao.BaseRepository;
 import com.meysam.common.model.dto.MemberWalletDto;
 import com.meysam.common.model.entity.MemberWallet;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface MemberWalletRepository extends JpaRepository<MemberWallet, BigDecimal> {
+public interface MemberWalletRepository extends BaseRepository<MemberWallet> {
 
     @Query(value = "select mw.address from MemberWallet mw where mw.address =: address")
     String returnAddressIfExists(@Param("address") String address);

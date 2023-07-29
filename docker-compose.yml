@@ -60,32 +60,32 @@ services:
       - meysam-docker
 
 
-#  keycloak:
-#      container_name: keycloak
-#      image: quay.io/keycloak/keycloak:21.1.1
-#      environment:
-#       KEYCLOAK_ADMIN: admin
-#       KEYCLOAK_ADMIN_PASSWORD: password
-#       KC_PROXY: edge
-#       KC_HOSTNAME_STRICT: "false"
-#       KC_HTTP_ENABLED: "true"
-#       KC_DB: postgres
-#       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
-#       KC_DB_USERNAME: admin
-#       KC_DB_PASSWORD: password
-#       JDBC_PARAMS: useSSL=false
-#      command: start
-#        #start-dev --features=preview
-#        #--hostname=localhost:8080 --auto-build --db:postgres --db-url=postgres --db-password=password --db-port=5432 --db-schema=public --http-enabled true --hostname-strict-https false
-#        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
-#        #JDBC_PARAMS: "ssl=true"
-#      ports:
-#        - "8080:8080"
-#      restart: always
-#      depends_on:
-#        - postgres
-#      networks:
-#        - meysam-docker
+  keycloak:
+      container_name: keycloak
+      image: quay.io/keycloak/keycloak:21.1.1
+      environment:
+       KEYCLOAK_ADMIN: admin
+       KEYCLOAK_ADMIN_PASSWORD: password
+       KC_PROXY: edge
+       KC_HOSTNAME_STRICT: "false"
+       KC_HTTP_ENABLED: "true"
+       KC_DB: postgres
+       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+       KC_DB_USERNAME: admin
+       KC_DB_PASSWORD: password
+       JDBC_PARAMS: useSSL=false
+      command: start
+        #start-dev --features=preview
+        #--hostname=localhost:8080 --auto-build --db:postgres --db-url=postgres --db-password=password --db-port=5432 --db-schema=public --http-enabled true --hostname-strict-https false
+        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+        #JDBC_PARAMS: "ssl=true"
+      ports:
+        - "8080:8080"
+      restart: always
+      depends_on:
+        - postgres
+      networks:
+        - meysam-docker
 
 #  zookeeper:
 #    container_name: zookeeper
