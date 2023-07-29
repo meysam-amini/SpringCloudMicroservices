@@ -1,14 +1,14 @@
-package com.meysam.users.service.impl;
+package com.meysam.common.service.impl;
 
 import com.meysam.common.dao.MemberRepository;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
 import com.meysam.common.service.api.AuthServiceClient;
+import com.meysam.common.service.api.MemberService;
+import com.meysam.common.service.api.WalletServiceClient;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.common.utils.utils.PredicateUtils;
-import com.meysam.users.service.api.MemberService;
-import com.meysam.users.service.api.WalletServiceClient;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

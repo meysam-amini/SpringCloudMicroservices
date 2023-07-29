@@ -15,20 +15,21 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <querydsl.version>5.0.0</querydsl.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
-            <version>5.0.0</version>
+            <version>${querydsl.version}</version>
             <classifier>jakarta</classifier>
         </dependency>
 
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
-            <version>5.0.0</version>
+            <version>${querydsl.version}</version>
             <scope>provided</scope>
             <optional>true</optional>
             <classifier>jakarta</classifier>
@@ -64,14 +65,14 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
+                <!--<dependencies>
                     <dependency>
                         <groupId>com.querydsl</groupId>
                         <artifactId>querydsl-apt</artifactId>
-                        <version>5.0.0</version>
+                        <version>${querydsl.version}</version>
                         <classifier>jakarta</classifier>
                     </dependency>
-                </dependencies>
+                </dependencies>-->
             </plugin>
         </plugins>
     </build>

@@ -1,4 +1,4 @@
-package com.meysam.users.service.api;
+package com.meysam.common.service.api;
 
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;

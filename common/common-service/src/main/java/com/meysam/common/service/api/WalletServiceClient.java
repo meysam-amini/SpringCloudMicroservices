@@ -1,7 +1,7 @@
-package com.meysam.users.service.api;
+package com.meysam.common.service.api;
 
-import com.meysam.users.service.impl.WalletServiceFallBackFactory;
 import com.meysam.common.model.dto.MemberWalletDto;
+import com.meysam.common.service.impl.WalletServiceFallBackFactory;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

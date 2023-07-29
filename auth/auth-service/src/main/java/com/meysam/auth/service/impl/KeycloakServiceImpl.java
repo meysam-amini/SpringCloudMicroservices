@@ -9,7 +9,7 @@ import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
 import com.meysam.common.utils.exception.KeycloakException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.users.service.api.MemberService;
+import com.meysam.common.service.api.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;

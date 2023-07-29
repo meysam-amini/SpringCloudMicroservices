@@ -3,7 +3,7 @@ package com.meysam.users.webapi.controller;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.LoginResponseDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
-import com.meysam.users.service.api.MemberService;
+import com.meysam.common.service.api.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;

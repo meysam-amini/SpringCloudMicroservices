@@ -8,7 +8,7 @@ import com.meysam.common.service.api.GeneralPropertiesService;
 import com.meysam.common.utils.constants.Constants;
 import com.meysam.common.utils.exception.BusinessException;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.users.service.api.MemberService;
+import com.meysam.common.service.api.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

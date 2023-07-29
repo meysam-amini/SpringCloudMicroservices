@@ -2,7 +2,7 @@ package com.meysam.users.webapi.controller;
 
 import com.meysam.common.model.dto.MemberWalletDto;
 import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.users.service.api.MemberService;
+import com.meysam.common.service.api.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
