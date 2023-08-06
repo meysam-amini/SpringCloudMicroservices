@@ -1,9 +1,9 @@
 package com.meysam.auth.service.impl;
 
 import com.meysam.auth.service.api.NotificationService;
-import com.meysam.common.utils.constants.Constants;
-import com.meysam.common.utils.exception.BusinessException;
-import com.meysam.common.utils.messages.LocaleMessageSourceService;
+import com.meysam.common.configs.constants.Constants;
+import com.meysam.common.configs.exception.BusinessException;
+import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.service.api.GeneralPropertiesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

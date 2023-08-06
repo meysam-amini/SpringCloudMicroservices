@@ -1,9 +1,9 @@
 package com.meysam.common.service.impl;
 
-import com.meysam.common.utils.exception.ServicesException;
-import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.common.service.api.WalletServiceClient;
+import com.meysam.common.configs.exception.ServicesException;
+import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.MemberWalletDto;
+import com.meysam.common.service.api.WalletServiceClient;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

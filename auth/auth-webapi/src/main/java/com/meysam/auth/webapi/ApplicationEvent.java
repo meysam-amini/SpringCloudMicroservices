@@ -1,7 +1,7 @@
 package com.meysam.auth.webapi;
 
+import com.meysam.common.configs.constants.DefaultConstants;
 import com.meysam.common.service.api.GeneralPropertiesService;
-import com.meysam.common.utils.constants.DefaultConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextStartedEvent;

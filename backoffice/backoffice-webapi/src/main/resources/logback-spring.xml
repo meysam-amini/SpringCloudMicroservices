@@ -4,7 +4,7 @@
     <springProperty scope="context" name="LOGBACK_URL" source="logging.appender.logstash.destination.url"/>
     <springProperty scope="context" name="LOGBACK_PORT" source="logging.appender.logstash.destination.port"/>
 
-    <conversionRule conversionWord="tag" converterClass="com.meysam.common.utils.config.LogConverterConfig"/>
+    <conversionRule conversionWord="tag" converterClass="com.meysam.common.configs.logback.LogConverterConfig"/>
 
 <!--    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
 <!--        <destination>${LOGBACK_URL:- }:${LOGBACK_PORT:- }</destination>-->

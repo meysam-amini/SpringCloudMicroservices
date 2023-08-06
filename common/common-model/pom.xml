@@ -31,6 +31,7 @@
             <artifactId>querydsl-apt</artifactId>
             <version>${querydsl.version}</version>
             <scope>provided</scope>
+            <optional>true</optional>
             <classifier>jakarta</classifier>
         </dependency>
         <dependency>
@@ -64,14 +65,14 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
+                <!--<dependencies>
                     <dependency>
                         <groupId>com.querydsl</groupId>
                         <artifactId>querydsl-apt</artifactId>
                         <version>${querydsl.version}</version>
                         <classifier>jakarta</classifier>
                     </dependency>
-                </dependencies>
+                </dependencies>-->
             </plugin>
         </plugins>
     </build>

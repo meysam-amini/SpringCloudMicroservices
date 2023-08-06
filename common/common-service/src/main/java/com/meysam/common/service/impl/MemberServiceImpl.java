@@ -1,5 +1,7 @@
 package com.meysam.common.service.impl;
 
+import com.meysam.common.configs.exception.BusinessException;
+import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.dao.MemberRepository;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
@@ -7,20 +9,14 @@ import com.meysam.common.model.entity.QMember;
 import com.meysam.common.service.api.AuthServiceClient;
 import com.meysam.common.service.api.MemberService;
 import com.meysam.common.service.api.WalletServiceClient;
-import com.meysam.common.utils.exception.BusinessException;
-import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import com.meysam.common.utils.utils.PredicateUtils;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -29,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
