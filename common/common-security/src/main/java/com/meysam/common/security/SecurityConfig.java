@@ -1,4 +1,4 @@
-package com.meysam.common;
+package com.meysam.common.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,14 +26,14 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class KeycloakSecurityConfig {
+public class SecurityConfig {
 
     @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
     private String CLIENT_ID;
 
     private final KeycloakLogoutHandler keycloakLogoutHandler;
 
-    KeycloakSecurityConfig(KeycloakLogoutHandler keycloakLogoutHandler) {
+    SecurityConfig(KeycloakLogoutHandler keycloakLogoutHandler) {
         this.keycloakLogoutHandler = keycloakLogoutHandler;
     }
 

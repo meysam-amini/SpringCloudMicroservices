@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.meysam.backoffice.*"
 //        "com.meysam.users.*"
         ,"com.meysam.common.utils.*"
+        ,"com.meysam.common.configs.*"
 //        ,"com.meysam.common.security"
         ,"com.meysam.common.service.*"
 })
