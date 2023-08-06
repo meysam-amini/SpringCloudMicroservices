@@ -1,6 +1,6 @@
 package com.meysam.common.customsecurity;
 
-import com.meysam.common.customsecurity.constants.SessionConstants;
+import com.meysam.common.customsecurity.model.constants.SessionConstants;
 import com.meysam.common.customsecurity.model.ClientPrinciple;
 import com.meysam.common.customsecurity.model.CustomSecurityContext;
 import com.meysam.common.customsecurity.model.OauthExtractedTokenDto;

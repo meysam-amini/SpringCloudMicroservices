@@ -1,7 +1,7 @@
 package com.meysam.common.customsecurity.service.impl;
 
-import com.meysam.common.customsecurity.constants.GlobalConstants;
 import com.meysam.common.customsecurity.service.api.SecurityService;
+import com.meysam.common.model.constants.GlobalConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;

@@ -1,4 +1,4 @@
-package com.meysam.common.keycloaksecurity;
+package com.meysam.common;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
