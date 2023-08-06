@@ -1,17 +1,16 @@
 package com.meysam.common.service.impl;
 
 
+import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.ClientLoginRequestDto;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
 import com.meysam.common.service.api.AuthServiceClient;
-import com.meysam.common.utils.messages.LocaleMessageSourceService;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 

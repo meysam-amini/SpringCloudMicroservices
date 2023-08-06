@@ -1,15 +1,15 @@
 package com.meysam.auth.service.impl;
 
-import com.meysam.auth.model.dto.*;
+import com.meysam.auth.model.dto.ClientLoginResponseDto;
 import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.enums.AuthGrantType;
 import com.meysam.auth.model.enums.MemberLevel;
 import com.meysam.auth.service.api.KeycloakService;
+import com.meysam.common.configs.exception.KeycloakException;
+import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
-import com.meysam.common.utils.exception.KeycloakException;
-import com.meysam.common.utils.messages.LocaleMessageSourceService;
-import com.meysam.users.service.api.MemberService;
+import com.meysam.common.service.api.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -94,7 +94,7 @@ public class KeycloakServiceImpl implements KeycloakService {
 
 
             if (response.getStatusCode() == HttpStatus.CREATED) {
-                saveUserIfNotExist(new UserDto(registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
+                saveUserIfNotExist(new MemberDto(registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
                 return ResponseEntity.status(HttpStatus.CREATED).body(messageSourceService.getMessage("REGISTER_SUCCESS"));
             } else {
                 return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
@@ -103,7 +103,7 @@ public class KeycloakServiceImpl implements KeycloakService {
         } catch (HttpClientErrorException e) {
             log.error("Exception on register new user on keycloak at keycloakServiceImpl at time :{}, exception is:{}", System.currentTimeMillis(), e);
             if(e.getStatusCode()==HttpStatus.CONFLICT){
-                saveUserIfNotExist(new UserDto(registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
+                saveUserIfNotExist(new MemberDto(registerDto.getUsername(), registerDto.getEmail(), registerDto.getFirstName(), registerDto.getLastName()));
             }
             throw  new KeycloakException(e.getStatusCode(),e.getMessage());
         } catch (Exception e) {
@@ -206,7 +206,7 @@ public class KeycloakServiceImpl implements KeycloakService {
         }
     }
 
-    private void saveUserIfNotExist(UserDto userDto) {
+    private void saveUserIfNotExist(MemberDto userDto) {
         Member u = userService.findByUserName(userDto.getUsername());
         if (u == null) {
             Member user = Member.builder()

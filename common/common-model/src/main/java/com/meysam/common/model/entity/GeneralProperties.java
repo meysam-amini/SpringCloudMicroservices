@@ -17,7 +17,7 @@ import java.math.BigInteger;
 public class GeneralProperties extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private BigInteger Id;
 
     @NotBlank

@@ -17,6 +17,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @ComponentScan(basePackages={
         "com.meysam.common.utils.*"
         ,"com.meysam.common.security"
+        ,"com.meysam.common.configs.*"
         ,"com.meysam.common.service.*"
         ,"com.meysam.walletmanager.*"
         ,"com.meysam.users.service.*"

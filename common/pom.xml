@@ -19,6 +19,8 @@
         <module>common-model</module>
         <module>common-service</module>
         <module>common-dao</module>
+        <module>common-configs</module>
+        <module>common-custom-security</module>
     </modules>
 
     <properties>

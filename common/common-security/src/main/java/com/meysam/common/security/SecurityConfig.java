@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
