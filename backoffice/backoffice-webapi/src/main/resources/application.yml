@@ -15,26 +15,26 @@ eureka:
       # the url by which the client apps communicate with Eureka server
       defaultZone: http://localhost:8010/eureka
 
-logging:
-  appender:
-    console:
-      enabled: false
-    file:
-      enabled: false
-    rabbit:
-      enabled: false
-      required: true
-      destination:
-        host: localhost
-        port: 5672
-        username: guest
-        password: guest
-        virtualHost: /
-        exchangeType: topic
-        exchangeName: logs
-    logstash:
-      enabled: true
-      destination:
-        url: localhost
-        port: 5044
+#logging:
+#  appender:
+#    console:
+#      enabled: false
+#    file:
+#      enabled: false
+#    rabbit:
+#      enabled: false
+#      required: true
+#      destination:
+#        host: localhost
+#        port: 5672
+#        username: guest
+#        password: guest
+#        virtualHost: /
+#        exchangeType: topic
+#        exchangeName: logs
+#    logstash:
+#      enabled: true
+#      destination:
+#        url: localhost
+#        port: 5044
 

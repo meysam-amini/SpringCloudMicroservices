@@ -139,6 +139,8 @@ services:
 #        hard: -1
     volumes:
       - elastic_data:/usr/share/elasticsearch/data
+    depends_on:
+      - rabbitmq
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       bootstrap.memory_lock: "true"

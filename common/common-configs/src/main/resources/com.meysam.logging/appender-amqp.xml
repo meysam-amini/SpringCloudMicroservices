@@ -3,6 +3,7 @@
 <included>
     <!--    <conversionRule conversionWord="stacktrace"-->
     <!--                    converterClass="net.logstash.logback.stacktrace.ShortenedThrowableConverter"/>-->
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
     <springProperty scope="context" name="LOGBACK_AMQP_HOST" source="logging.appender.rabbit.destination.host"/>
     <springProperty scope="context" name="LOGBACK_AMQP_PORT" source="logging.appender.rabbit.destination.port"/>
     <springProperty scope="context" name="LOGBACK_AMQP_USERNAME" source="logging.appender.rabbit.destination.username"/>
@@ -28,19 +29,19 @@
                 }
             </pattern>
         </layout>
-        <host>host.minikube.internal<!--${LOGBACK_AMQP_HOST:-localhost}--></host>
-        <port>5672<!--${LOGBACK_AMQP_PORT:- }--></port>
-        <username>guest<!--${LOGBACK_AMQP_USERNAME:-guest}--></username>
-        <password>guest<!--${LOGBACK_AMQP_PASSWORD:-guest-->}</password>
-        <exchangeType>topic<!--${LOGBACK_AMQP_EXCHANGE_TYPE:-topic}--></exchangeType>
-        <exchangeName>logs<!--${LOGBACK_AMQP_EXCHANGE_NAME:-logs}--></exchangeName>
-        <applicationId>${appName}</applicationId>
-        <routingKeyPattern>com.meysam.${appName}</routingKeyPattern>
+        <host>${LOGBACK_AMQP_HOST}</host>
+        <port>${LOGBACK_AMQP_PORT}</port>
+        <username>${LOGBACK_AMQP_USERNAME}</username>
+        <password>${LOGBACK_AMQP_PASSWORD}</password>
+        <exchangeType>${LOGBACK_AMQP_EXCHANGE_TYPE}</exchangeType>
+        <exchangeName>${LOGBACK_AMQP_EXCHANGE_NAME}</exchangeName>
+        <applicationId>${APP_NAME:-}</applicationId>
+        <routingKeyPattern>com.meysam.${APP_NAME}</routingKeyPattern>
         <generateId>true</generateId>
         <charset>UTF-8</charset>
         <durable>true</durable>
-        <virtualHost>/<!--${LOGBACK_AMQP_VIRTUAL_HOST:-/}--></virtualHost>
-        <required>false<!--${LOGBACK_AMQP_REQUIRED:-false}--></required>
+        <virtualHost>${LOGBACK_AMQP_VIRTUAL_HOST}</virtualHost>
+        <required>${LOGBACK_AMQP_REQUIRED}</required>
         <deliveryMode>NON_PERSISTENT</deliveryMode>
         <declareExchange>true</declareExchange>
 <!--        <maxSenderRetries>1</maxSenderRetries>-->
