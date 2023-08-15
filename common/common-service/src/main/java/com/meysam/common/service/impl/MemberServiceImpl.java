@@ -5,20 +5,15 @@ import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.dao.MemberRepository;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
-import com.meysam.common.model.entity.QMember;
 import com.meysam.common.service.api.AuthServiceClient;
 import com.meysam.common.service.api.MemberService;
 import com.meysam.common.service.api.WalletServiceClient;
 import com.meysam.common.utils.utils.PredicateUtils;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -62,27 +57,26 @@ public class MemberServiceImpl implements MemberService {
     public Page<MemberDto> pageQuery(MemberDto memberDto) {
         Predicate predicate = PredicateUtils.getPredicate(memberDto.getBooleanExpressions());
         //if different sort was needed (ex: sort by username) :
-        PageRequest pageRequest = PageRequest.of
-                (memberDto.getPageQueryModel().getPageNumber(),
-                        memberDto.getPageQueryModel().getPageSize(), Sort.Direction.ASC,"id");
+        /*PageRequest pageRequest = PageRequest.of
+                (memberDto.getPageQueryModel().getPageNumber()-1,
+                        memberDto.getPageQueryModel().getPageSize(), Sort.Direction.ASC,"username");*/
 
-        JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+        /*JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
         QMember member = QMember.member;
         JPAQuery<Member> query = queryFactory.selectFrom(member)
-                /*.orderBy(new OrderSpecifier(
+                .orderBy(new OrderSpecifier(
                         Order.valueOf(Order.ASC.name()),
-                        new PathBuilder(Member.class, "id")))*/
+                        new PathBuilder(Member.class, "id")))
 //                .limit(pageRequest.getPageSize())
 //                .offset(pageRequest.getPageNumber())
-                .where(member.username.like("%" + memberDto.getUsername() + "%"));
+                .where(member.username.like("%" + memberDto.getUsername() + "%"));*/
 
 //        long total = query.fetchCount();
 //        List<MemberDto> members= query.fetch().stream().map(MemberDto::maptoMemberDto).toList();
-//        return new PageImpl<>(members,pageRequest,total);
 
+//        return memberRepository.findAll(predicate, memberDto.getPageQueryModel().getPageable());
+        return memberRepository.findAll(predicate, memberDto.getPageQueryModel().getPageable()).map(MemberDto::maptoMemberDto);
 
-        Page<Member> stakingPlanDetailPage = memberRepository.findAll(predicate, memberDto.getPageQueryModel().getPageable());
-        return stakingPlanDetailPage.map(MemberDto::maptoMemberDto);
     }
 
     @Override

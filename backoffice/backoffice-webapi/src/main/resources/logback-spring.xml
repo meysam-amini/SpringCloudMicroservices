@@ -54,7 +54,7 @@
 
     <root level="INFO">
         <appender-ref ref="asyncConsole"/>
-        <appender-ref ref="asyncRabbitmq"/>
+<!--        <appender-ref ref="asyncRabbitmq"/>-->
 <!--        <appender-ref ref="asyncSocketLogstash"/>-->
     </root>
 

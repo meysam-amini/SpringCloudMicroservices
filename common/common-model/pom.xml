@@ -58,21 +58,13 @@
                             <goal>process</goal>
                         </goals>
                         <configuration>
-<!--                            The "jakarta"-variant of querydsl-apt provides a service declaration for javax.annotation.processing.Processor.
-                                Due to this, the Java compiler itself generates the Q-classes under target/generated-sources/annotation./-->
-<!--                            <outputDirectory>${project.build.directory}/generated-sources/java</outputDirectory>-->
+                            <!--                            The "jakarta"-variant of querydsl-apt provides a service declaration for javax.annotation.processing.Processor.
+                                                            Due to this, the Java compiler itself generates the Q-classes under target/generated-sources/annotation./-->
+                            <!--                            <outputDirectory>${project.build.directory}/generated-sources/java</outputDirectory>-->
                             <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
                         </configuration>
                     </execution>
                 </executions>
-                <!--<dependencies>
-                    <dependency>
-                        <groupId>com.querydsl</groupId>
-                        <artifactId>querydsl-apt</artifactId>
-                        <version>${querydsl.version}</version>
-                        <classifier>jakarta</classifier>
-                    </dependency>
-                </dependencies>-->
             </plugin>
         </plugins>
     </build>
