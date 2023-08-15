@@ -7,7 +7,7 @@ A scenario of secure communications between MicroServices which are implemented 
 ## Tech Stack:
 * JDK 17
 * Spring-Boot 3.1.2
-* Spring-Cloud 22.0.0
+* Spring-Cloud 22.0.3
 * Spring-Cloud-Kubernetes 1.1.10
 * Postgres 14.2
 * Redis 6
