@@ -49,11 +49,11 @@
         <appender-ref ref="logstash"/>
     </appender>
 
-        <include resource="com.meysam.logging/appender-amqp.xml"/>
+    <include resource="com.meysam.logging/appender-amqp.xml"/>
 
     <root level="INFO">
         <appender-ref ref="asyncConsole"/>
-<!--        <appender-ref ref="asyncRabbitmq"/>-->
+        <appender-ref ref="asyncRabbitmq"/>
 <!--        <appender-ref ref="asyncSocketLogstash"/>-->
     </root>
 

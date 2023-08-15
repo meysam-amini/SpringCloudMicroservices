@@ -1,11 +1,11 @@
 server:
   port: 8082
 
-#eureka:
-#  client:
-#    service-url:
-#      # the url by which the client apps communicate with Eureka server
-#      defaultZone: http://localhost:8010/eureka
+eureka:
+  client:
+    service-url:
+      # the url by which the client apps communicate with Eureka server
+      defaultZone: http://localhost:8010/eureka
 
 spring:
   application:
@@ -44,6 +44,15 @@ spring:
           predicates:
             - Path=/member/asset/**
             - Header=Authorization, Bearer (.*)
+            - Method=Get,Post
+          filters:
+            - RemoveRequestHeader=Cookie
+            - AuthorizationHeaderFilter=Cookie
+
+        - id: backoffice
+          uri: lb://backoffice-ws
+          predicates:
+            - Path=/**
             - Method=Get,Post
           filters:
             - RemoveRequestHeader=Cookie
