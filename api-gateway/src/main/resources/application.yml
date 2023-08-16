@@ -11,6 +11,56 @@ spring:
   application:
     name: api-gateway
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include=gateway:
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 2s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+      recordExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
+      ignoreExceptions:
+        - java.lang.IllegalStateException
+    shared:
+      slidingWindowSize: 100
+      permittedNumberOfCallsInHalfOpenState: 30
+      waitDurationInOpenState: 1s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+      ignoreExceptions:
+        - java.lang.IllegalStateException
+  instances:
+    backendA:
+      baseConfig: default
+    backendB:
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 10
+      permittedNumberOfCallsInHalfOpenState: 3
+      waitDurationInOpenState: 1s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+
+resilience4j.timelimiter:
+  time-limiter-aspect-order: 398
+  configs:
+    default:
+      timeoutDuration: 1s
+      cancelRunningFuture: false
+  instances:
+    backendB:
+      timeoutDuration: 250ms
+
   cloud:
     gateway:
       discovery:
@@ -57,3 +107,9 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - AuthorizationHeaderFilter=Cookie
+        - id: test-service-withResilient4j
+          uri: http://localhost:8082
+          predicates:
+            - Path=/testService/**
+          filters:
+            - RewritePath=/testService/(?<path>.*), /$\{path}
