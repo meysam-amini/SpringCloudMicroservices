@@ -2,6 +2,7 @@ package com.meysam.apigateway.controller;
 
 import com.meysam.apigateway.model.FallbackResponse;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +19,7 @@ public class GatewayFallback {
     }
 
 
-    @GetMapping("/testInternalServiceError")
+    @PostMapping("/testInternalServiceError")
     public FallbackResponse getFallBackBackendB() {
         FallbackResponse a = new FallbackResponse();
         a.setMsgCode(500);

@@ -6,6 +6,6 @@ import java.util.function.Predicate;
 public class HttpInternalServicePredicate implements Predicate<ResponseStatusException> {
     @Override
     public boolean test(ResponseStatusException e) {
-        return e.getStatusCode().is5xxServerError();
+        return e.getStatusCode().is4xxClientError();
     }
 }

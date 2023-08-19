@@ -11,55 +11,62 @@ spring:
   application:
     name: api-gateway
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include=gateway:
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
 
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      slidingWindowSize: 10
-      minimumNumberOfCalls: 5
-      permittedNumberOfCallsInHalfOpenState: 3
-      automaticTransitionFromOpenToHalfOpenEnabled: true
-      waitDurationInOpenState: 2s
-      failureRateThreshold: 50
-      eventConsumerBufferSize: 10
-      recordExceptions:
-        - org.springframework.web.client.HttpServerErrorException
-        - java.io.IOException
-      ignoreExceptions:
-        - java.lang.IllegalStateException
-    shared:
-      slidingWindowSize: 100
-      permittedNumberOfCallsInHalfOpenState: 30
-      waitDurationInOpenState: 1s
-      failureRateThreshold: 50
-      eventConsumerBufferSize: 10
-      ignoreExceptions:
-        - java.lang.IllegalStateException
-  instances:
-    backendA:
-      baseConfig: default
-    backendB:
-      slidingWindowSize: 10
-      minimumNumberOfCalls: 10
-      permittedNumberOfCallsInHalfOpenState: 3
-      waitDurationInOpenState: 1s
-      failureRateThreshold: 50
-      eventConsumerBufferSize: 10
+#logging.level.io.github.resilience4j: DEBUG
+#
+#resilience4j.circuitbreaker:
+#  configs:
+#    default:
+#      slidingWindowSize: 10
+#      minimumNumberOfCalls: 5
+#      permittedNumberOfCallsInHalfOpenState: 3
+#      automaticTransitionFromOpenToHalfOpenEnabled: true
+#      waitDurationInOpenState: 2s
+#      failureRateThreshold: 5
+#      eventConsumerBufferSize: 10
+#      slowCallDurationThreshold: 200ms
+#      slowCallRateThreshold: 30
+#      recordExceptions:
+#        - org.springframework.web.client.HttpServerErrorException
+#        - java.io.IOException
+#        - org.springframework.web.server.ResponseStatusException
+#      ignoreExceptions:
+#        - java.lang.IllegalStateException
+#    shared:
+#      slidingWindowSize: 100
+#      permittedNumberOfCallsInHalfOpenState: 30
+#      waitDurationInOpenState: 10s
+#      failureRateThreshold: 50
+#      eventConsumerBufferSize: 10
+#      ignoreExceptions:
+#        - java.lang.IllegalStateException
+#  instances:
+#    backendA:
+#      baseConfig: default
+#    backendB:
+#      slidingWindowSize: 10
+#      minimumNumberOfCalls: 10
+#      permittedNumberOfCallsInHalfOpenState: 30
+#      waitDurationInOpenState: 10s
+#      failureRateThreshold: 50
+#      eventConsumerBufferSize: 10
+#      recordFailurePredicate: com.meysam.apigateway.filter.HttpInternalServicePredicate
+#
+#resilience4j.timelimiter:
+#  time-limiter-aspect-order: 398
+#  configs:
+#    default:
+#      timeoutDuration: 10s
+#      cancelRunningFuture: false
+#  instances:
+#    backendB:
+#      timeoutDuration: 11250ms
 
-resilience4j.timelimiter:
-  time-limiter-aspect-order: 398
-  configs:
-    default:
-      timeoutDuration: 1s
-      cancelRunningFuture: false
-  instances:
-    backendB:
-      timeoutDuration: 250ms
 
   cloud:
     gateway:
@@ -87,7 +94,7 @@ resilience4j.timelimiter:
           filters:
             # our MS doesn't need request cookies:
             - RemoveRequestHeader=Cookie
-            - AuthorizationHeaderFilter=Cookie
+#            - AuthorizationHeaderFilter=Cookie
 
         - id: members_authenticated_apis
           uri: lb://users-ws
@@ -97,7 +104,7 @@ resilience4j.timelimiter:
             - Method=Get,Post
           filters:
             - RemoveRequestHeader=Cookie
-            - AuthorizationHeaderFilter=Cookie
+#            - AuthorizationHeaderFilter=Cookie
 
         - id: backoffice
           uri: lb://backoffice-ws
@@ -105,11 +112,8 @@ resilience4j.timelimiter:
             - Path=/**
             - Method=Get,Post
           filters:
-            - RemoveRequestHeader=Cookie
-            - AuthorizationHeaderFilter=Cookie
-        - id: test-service-withResilient4j
-          uri: http://localhost:8082
-          predicates:
-            - Path=/testService/**
-          filters:
-            - RewritePath=/testService/(?<path>.*), /$\{path}
+            - StatusCodeCheck
+            - name: CircuitBreaker
+              args:
+                name: helloworldCircuitBreaker
+                fallbackuri: forward:/fallback/testInternalServiceError

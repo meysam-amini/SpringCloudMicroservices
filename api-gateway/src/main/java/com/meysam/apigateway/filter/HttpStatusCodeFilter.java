@@ -24,7 +24,7 @@ public class HttpStatusCodeFilter extends AbstractGatewayFilterFactory<HttpStatu
         return (exchange, chain) -> chain.filter(exchange).then(
                 Mono.defer(() -> {
                     if (!exchange.getResponse().isCommitted() &&
-                            HttpStatus.INTERNAL_SERVER_ERROR.equals(exchange.getResponse().getStatusCode())) {
+                            HttpStatus.NOT_FOUND.equals(exchange.getResponse().getStatusCode())) {
                         return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
                     }
                     return Mono.empty();
