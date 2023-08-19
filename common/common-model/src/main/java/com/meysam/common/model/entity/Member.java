@@ -15,7 +15,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Entity
 @Table
-public class Member extends BaseEntity {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

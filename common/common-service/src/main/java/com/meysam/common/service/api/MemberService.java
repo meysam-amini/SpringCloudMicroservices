@@ -13,7 +13,7 @@ public interface MemberService/* extends UserDetailsService*/ {
   ResponseEntity<LoginResponseDto> login(LoginRequestDto loginRequestDto);
   ResponseEntity register(RegisterUserRequestDto registerUserRequestDto);
   Member findByUserName(String username);
-  Page<MemberDto> pageQuery(MemberDto memberDto);
+  Page<MemberDto> pageQuery(MemberFilterDto memberFilterDto);
   Member findById(BigInteger id);
   List<Member> findAll();
   UserWalletsDto getUserWallets(String token,String username);

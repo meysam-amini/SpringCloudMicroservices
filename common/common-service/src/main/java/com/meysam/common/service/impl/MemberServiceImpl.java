@@ -54,8 +54,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Page<MemberDto> pageQuery(MemberDto memberDto) {
-        Predicate predicate = PredicateUtils.getPredicate(memberDto.getBooleanExpressions());
+    public Page<MemberDto> pageQuery(MemberFilterDto memberFilterDto) {
+        Predicate predicate = PredicateUtils.getPredicate(memberFilterDto.getBooleanExpressions());
         //if different sort was needed (ex: sort by username) :
         /*PageRequest pageRequest = PageRequest.of
                 (memberDto.getPageQueryModel().getPageNumber()-1,
@@ -75,7 +75,7 @@ public class MemberServiceImpl implements MemberService {
 //        List<MemberDto> members= query.fetch().stream().map(MemberDto::maptoMemberDto).toList();
 
 //        return memberRepository.findAll(predicate, memberDto.getPageQueryModel().getPageable());
-        return memberRepository.findAll(predicate, memberDto.getPageQueryModel().getPageable()).map(MemberDto::maptoMemberDto);
+        return memberRepository.findAll(predicate, memberFilterDto.getPageQueryModel().getPageable()).map(MemberDto::maptoMemberDto);
 
     }
 

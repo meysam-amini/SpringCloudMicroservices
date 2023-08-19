@@ -1,6 +1,7 @@
 package com.meysam.backoffice.webapi.controller.members;
 
 import com.meysam.common.model.dto.MemberDto;
+import com.meysam.common.model.dto.MemberFilterDto;
 import com.meysam.common.service.api.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class MemberController {
     }
 
     @PostMapping("page-query")
-    public ResponseEntity<Page<MemberDto>> pageQuery(MemberDto memberDto){
-        return ResponseEntity.ok(memberService.pageQuery(memberDto));
+    public ResponseEntity<Page<MemberDto>> pageQuery(MemberFilterDto memberFilterDto){
+        return ResponseEntity.ok(memberService.pageQuery(memberFilterDto));
     }
 }
