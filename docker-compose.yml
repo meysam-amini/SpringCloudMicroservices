@@ -33,18 +33,18 @@ services:
 #    networks:
 #      - meysam-docker
 
-#  redis:
-#    container_name: redis
-#    image: redis:6
-#    ports:
-#      - "6379:6379"
-#    restart: always
-#    command:
-#      - redis-server
-#    volumes:
-#      - ./redis_data:/data
-#    networks:
-#      - meysam-docker
+  redis:
+    container_name: redis
+    image: redis:6
+    ports:
+      - "6379:6379"
+    restart: always
+    command:
+      - redis-server
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - meysam-docker
 
   rabbitmq:
     container_name: rabbitmq

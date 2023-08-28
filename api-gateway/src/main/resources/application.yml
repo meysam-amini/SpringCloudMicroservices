@@ -70,6 +70,13 @@ spring:
 
   cloud:
     gateway:
+#      default-filters:
+#        - name: RequestRateLimiter
+#          args:
+#            redis-rate-limiter:
+#              replenishRate: 10
+#              burstCapacity: 20
+#              requestedTokens: 1
       discovery:
         locator:
           # to enable discovery locator feature, so our gateway will try to
@@ -106,14 +113,49 @@ spring:
             - RemoveRequestHeader=Cookie
 #            - AuthorizationHeaderFilter=Cookie
 
-        - id: backoffice
+        - id: backoffice-ws
           uri: lb://backoffice-ws
           predicates:
             - Path=/**
             - Method=Get,Post
-          filters:
-            - StatusCodeCheck
-            - name: CircuitBreaker
-              args:
-                name: helloworldCircuitBreaker
-                fallbackuri: forward:/fallback/testInternalServiceError
+#          filters:
+#            - StatusCodeCheck
+#            - name: CircuitBreaker
+#              args:
+#                name: backoffice
+#                fallbackuri: forward:/fallback/testInternalServiceError
+#            - name: Retry
+#              args:
+#                retries: 3
+#                method: GET
+#                backoff:
+#                  firstBackoff: 50ms
+#                  maxBackoff: 500ms
+#      filter:
+#        hystrix:
+#          enabled: true
+
+#hystrix:
+#  command:
+#    fallbackcmd:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 5000
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      backoffice-ws:
+#        slidingWindowSize: 10
+#        permittedNumberOfCallsInHalfOpenState: 5
+#        failureRateThreshold: 50
+#        waitDurationInOpenState: 10000
+#        registerHealthIndicator: true
+#  timelimiter:
+#    instances:
+#      backoffice-ws:
+#        timeoutDuration: 3s
+
+logging:
+  level:
+    root: debug
