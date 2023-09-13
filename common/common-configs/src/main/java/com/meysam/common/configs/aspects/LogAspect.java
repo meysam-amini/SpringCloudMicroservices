@@ -1,6 +1,6 @@
 package com.meysam.common.configs.aspects;
 
-import com.meysam.common.utils.logs.LogUtils;
+import com.meysam.common.utils.log.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
