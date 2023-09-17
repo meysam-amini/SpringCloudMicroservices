@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
@@ -31,7 +32,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic().disable().anonymous().disable().csrf().disable().formLogin().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        http.httpBasic(AbstractHttpConfigurer::disable).anonymous().disable().csrf(AbstractHttpConfigurer::disable).formLogin().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterAfter(new CheckTokenFilter(securityService, ignoredPaths), ConcurrentSessionFilter.class)
                 .addFilterAfter(new IntegratedLogFilter(), CheckTokenFilter.class);
         return http.build();

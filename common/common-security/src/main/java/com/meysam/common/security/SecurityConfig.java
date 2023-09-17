@@ -7,6 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -50,7 +51,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
         );
 
-        http.csrf().disable();
+        http.csrf(AbstractHttpConfigurer::disable);
 
         // for h2-console
 //        http.csrf().ignoringRequestMatchers(toH2Console());
