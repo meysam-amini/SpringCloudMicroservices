@@ -20,7 +20,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public boolean checkToken(String token) {
         if (!isTest) {
-            // TODO: 03.07.23 sajad : fake implementation, should complete it
+            // TODO: 03.07.23 meysam : fake implementation, should complete it
             Boolean result = simpleRestTemplate.exchange(checkTokenUrl, HttpMethod.GET, null, Boolean.class).getBody();
             return result;
         } else {

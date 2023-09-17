@@ -1,5 +1,6 @@
-package com.meysam.common.customsecurity;
+package com.meysam.common.customsecurity.filter;
 
+import com.meysam.common.customsecurity.TokenDecoder;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
 import com.meysam.common.customsecurity.model.ClientPrinciple;
 import com.meysam.common.customsecurity.model.CustomSecurityContext;
@@ -26,12 +27,12 @@ import java.util.Objects;
  * */
 
 @Slf4j
-public class CustomSecurityConfig extends OncePerRequestFilter {
+public class CheckTokenFilter extends OncePerRequestFilter {
 
     private final RequestMatcher[] ignoredPathMatchers;
     private SecurityService securityService;
 
-    public CustomSecurityConfig(SecurityService securityService, String... ignoredPaths) {
+    public CheckTokenFilter(SecurityService securityService, String... ignoredPaths) {
         this.securityService = securityService;
         if (Objects.isNull(ignoredPaths)) {
             ignoredPathMatchers = new RequestMatcher[0];
@@ -52,7 +53,7 @@ public class CustomSecurityConfig extends OncePerRequestFilter {
             return;
         }
         String authorizationToken = authorizationHeader.substring(7);
-        // TODO: 04.07.23 sajad : currently there is no benefit to store tokens because we can just store them based on token, so because of token are too long, it is not efficient
+        // TODO: 04.07.23 meysam : currently there is no benefit to store tokens because we can just store them based on token, so because of token are too long, it is not efficient
         if (securityService.checkToken(authorizationToken)) {
             OauthExtractedTokenDto oauthExtractedTokenDto = decodeToken(authorizationToken);
             ClientPrinciple clientPrinciple = ClientPrinciple.convertToClientPrinciple(oauthExtractedTokenDto);
