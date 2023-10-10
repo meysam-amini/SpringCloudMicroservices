@@ -15,6 +15,7 @@
                 <pattern>
                     <pattern>
                         {
+<!--                        "metadata":"mymetadata",-->
                         "level": "%level",
                         "thread": "%thread",
                         "app_name": "${appName}",
