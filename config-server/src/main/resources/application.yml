@@ -60,21 +60,21 @@ management:
 #      enabled: true
 #  ##################SECURITY#####################
 #
-##  security:
-##    oauth2:
-##      resourceserver:
-##        jwt:
-##          issuer-uri: http://127.0.0.1:8080/realms/meysam
-##      client:
-##        registration:
-##          keycloak:
-##            client-id: spring-cloud-microservices
-##            #            authorization-grant-type: password
-##            scope: openid
-##        provider:
-##          keycloak:
-##            issuer-uri: http://127.0.0.1:8080/realms/meysam
-##            user-name-attribute: preferred_username
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://127.0.0.1:8080/realms/meysam
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: spring-cloud-microservices
+#            #            authorization-grant-type: password
+#            scope: openid
+#        provider:
+#          keycloak:
+#            issuer-uri: http://127.0.0.1:8080/realms/meysam
+#            user-name-attribute: preferred_username
 #  #################RABBITMQ#####################
 #  rabbitmq:
 #    host: localhost

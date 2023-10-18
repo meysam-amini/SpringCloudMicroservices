@@ -8,7 +8,7 @@ eureka:
   client:
     service-url:
       # the url by which the client apps communicate with Eureka server
-      dedefaultZone: http://localhost:8010/eureka
+      defaultZone: http://localhost:8010/eureka
 
 spring:
   application:
