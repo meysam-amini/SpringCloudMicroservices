@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContext;
 public class CustomSecurityContext implements SecurityContext {
     private Authentication authentication;
 
-    public CustomSecurityContext(ClientPrinciple clientPrinciple) {
+    public CustomSecurityContext(SecurityPrinciple clientPrinciple) {
         authentication = new CustomAuthentication(clientPrinciple);
         authentication.setAuthenticated(true);
     }

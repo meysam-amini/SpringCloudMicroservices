@@ -6,9 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 public class CustomAuthentication implements Authentication {
-    private ClientPrinciple clientPrinciple;
+    private SecurityPrinciple clientPrinciple;
 
-    public CustomAuthentication(ClientPrinciple clientPrinciple) {
+    public CustomAuthentication(SecurityPrinciple clientPrinciple) {
         this.clientPrinciple = clientPrinciple;
     }
 

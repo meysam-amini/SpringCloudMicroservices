@@ -2,7 +2,7 @@ package com.meysam.common.customsecurity.filter;
 
 import com.meysam.common.customsecurity.TokenDecoder;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
-import com.meysam.common.customsecurity.model.ClientPrinciple;
+import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.CustomSecurityContext;
 import com.meysam.common.customsecurity.model.OauthExtractedTokenDto;
 import com.meysam.common.customsecurity.service.api.SecurityService;
@@ -54,8 +54,7 @@ public class CheckTokenFilter extends OncePerRequestFilter {
         }
         String authorizationToken = authorizationHeader.substring(7);
         if (securityService.checkToken(authorizationToken)) {
-            OauthExtractedTokenDto oauthExtractedTokenDto = decodeToken(authorizationToken);
-            ClientPrinciple clientPrinciple = ClientPrinciple.convertToClientPrinciple(oauthExtractedTokenDto);
+            SecurityPrinciple clientPrinciple = decodeToken(authorizationToken);
             SecurityContext securityContext = new CustomSecurityContext(clientPrinciple);
             try {
                 SecurityContextHolder.setContext(securityContext);
@@ -76,14 +75,14 @@ public class CheckTokenFilter extends OncePerRequestFilter {
         return;
     }
 
-    private OauthExtractedTokenDto decodeToken(String authorization) {
-        OauthExtractedTokenDto keycloakExtractedTokenDto = null;
+    private SecurityPrinciple decodeToken(String authorization) {
+        SecurityPrinciple securityPrinciple = null;
         try {
-            keycloakExtractedTokenDto = (OauthExtractedTokenDto) TokenDecoder.decodeToken(authorization);
+            securityPrinciple = (SecurityPrinciple) TokenDecoder.decodeToken(authorization);
         } catch (Exception exception) {
             log.error("token is valid but decoding or casting token encounter exception, the exception is : {}", exception);
         }
-        return keycloakExtractedTokenDto;
+        return securityPrinciple;
     }
 
 

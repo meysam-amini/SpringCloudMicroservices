@@ -4,8 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meysam.common.customsecurity.model.OauthExtractedTokenDto;
+import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+
+import java.math.BigInteger;
+import java.util.Arrays;
 
 @Slf4j
 public class TokenDecoder {
@@ -25,10 +29,18 @@ public class TokenDecoder {
             log.error("can't read the parsed token");
             return null;
         }
-        JsonNode usernameJsonNode = actualObj.get("preferred_username");
-        OauthExtractedTokenDto keycloakExtractedTokenDto = new OauthExtractedTokenDto();
-        keycloakExtractedTokenDto.setClientId(usernameJsonNode.textValue());
-        return keycloakExtractedTokenDto;
+        //extract claims(nationalId,...)
+        JsonNode adminUsernameJsonNode = actualObj.get("username");
+        JsonNode adminIdJsonNode = actualObj.get("profileId");
+        JsonNode permissionsJsonNode = actualObj.get("permissions");
+        JsonNode rolesJsonNode = actualObj.get("roles");
+        SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
+                .username(adminUsernameJsonNode.asText())
+                .adminId(BigInteger.valueOf(Long.parseLong(adminIdJsonNode.asText())))
+                .permissions(Arrays.stream(permissionsJsonNode.asText().split(",")).toList())
+                .roles(Arrays.stream(rolesJsonNode.asText().split(",")).toList())
+                .build();
+        return securityPrinciple;
     }
 
 }

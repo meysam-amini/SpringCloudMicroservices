@@ -1,4 +1,4 @@
-package com.meysam.backoffice.model.entity;
+package com.meysam.common.customsecurity.model.entity;
 
 import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 
 @Table(name = "PROFILE")
@@ -19,7 +20,7 @@ public class Admin extends BaseEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private BigInteger id;
 
     @Size(max = 50)
     @Column(name = "FIRSTNAME")
