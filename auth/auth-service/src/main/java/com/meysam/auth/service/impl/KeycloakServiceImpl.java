@@ -150,7 +150,7 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public ResponseEntity getUserRefreshToken(LoginRequestDto loginDto) {
+    public ResponseEntity getTokenByRefreshToken(LoginRequestDto loginDto) {
         return null;
     }
 

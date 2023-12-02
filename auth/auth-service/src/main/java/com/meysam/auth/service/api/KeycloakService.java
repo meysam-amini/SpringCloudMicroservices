@@ -18,11 +18,12 @@ public interface KeycloakService {
     ResponseEntity registerUser(RegisterUserRequestDto registerDto, MemberLevel memberLevel);
 
     LoginResponseDto loginUser(LoginRequestDto loginDto);
-    ResponseEntity getUserRefreshToken(LoginRequestDto loginDto);
+
+    ResponseEntity getTokenByRefreshToken(LoginRequestDto loginDto);
 
     ResponseEntity loginClient(ClientLoginRequestDto loginDto);
-    ResponseEntity getClientRefreshToken(ClientLoginRequestDto loginDto);
 
+    ResponseEntity getClientRefreshToken(ClientLoginRequestDto loginDto);
 
     Role getUserRole(String username);
 

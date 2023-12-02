@@ -32,6 +32,11 @@ public class UserAuthController {
 
     }
 
+    //the admin side services could be in another separate microservice
+    @PostMapping(value = "login-admin",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public LoginResponseDto loginAdmin(@RequestBody @Valid LoginRequestDto loginRequestDto){
+        return keycloakService.loginUser(loginRequestDto);
+    }
 
     @PostMapping("register-admin")
     public ResponseEntity registerAdmin(@RequestBody @Valid RegisterUserRequestDto registerRequestDto){
@@ -41,7 +46,7 @@ public class UserAuthController {
 
     @PostMapping("refresh-token")
     public ResponseEntity getRefreshToken(@RequestBody @Valid LoginRequestDto loginRequestDto){
-        return ResponseEntity.ok(keycloakService.getUserRefreshToken(loginRequestDto));
+        return ResponseEntity.ok(keycloakService.getTokenByRefreshToken(loginRequestDto));
 
     }
 
