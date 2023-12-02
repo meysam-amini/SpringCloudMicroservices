@@ -40,32 +40,38 @@ public class PrincipleServiceImpl implements PrincipleService {
         try {
             hasKey = valueOperations.getOperations().hasKey(key);
         } catch (Exception e) {
-            log.error("Exception on connecting to Redis server for getting Client principle at login process at time:{} , exception is:{}", System.currentTimeMillis(), e);
+            log.error("Exception on connecting to Redis server for getting client principle at login process at time:{} , exception is:{}", System.currentTimeMillis(), e);
             throw new BusinessException("Server error at login process");
         }
 
-        if (Boolean.FALSE.equals(hasKey)) {
-            Admin admin = null;
-            admin = getProfileByUsername(username);
-            List<String> directPermissions = getProfilePermissions(admin.getId());
+        try {
 
-            List<Role> roles = getRolesNames(admin.getId());
-            List<BigInteger> rolesIds = roles.stream().map(Role::getId).toList();
-            List<String> permissionsByRoles = getRolesPermissionsNames(rolesIds);
+            if (Boolean.FALSE.equals(hasKey)) {
+                Admin admin = null;
+                admin = getProfileByUsername(username);
+                List<String> directPermissions = getProfilePermissions(admin.getId());
 
-            permissionsByRoles.addAll(directPermissions);
+                List<Role> roles = getRolesNames(admin.getId());
+                List<BigInteger> rolesIds = roles.stream().map(Role::getId).toList();
+                List<String> permissionsByRoles = getRolesPermissionsNames(rolesIds);
 
-            SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
-                    .username(username)
-                    .adminId(admin.getId())
-                    .permissions(permissionsByRoles)
-                    .build();
-            List<String> roleNames = roles.stream().map(Role::getName).toList();
-            securityPrinciple.setRoles(roleNames);
-            valueOperations.set(key, securityPrinciple, 15, TimeUnit.MINUTES);
-            return securityPrinciple;
-        } else {
-            return valueOperations.get(key);
+                permissionsByRoles.addAll(directPermissions);
+
+                SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
+                        .username(username)
+                        .adminId(admin.getId())
+                        .permissions(permissionsByRoles)
+                        .build();
+                List<String> roleNames = roles.stream().map(Role::getName).toList();
+                securityPrinciple.setRoles(roleNames);
+                valueOperations.set(key, securityPrinciple, 15, TimeUnit.MINUTES);
+                return securityPrinciple;
+            } else {
+                return valueOperations.get(key);
+            }
+        }catch (Exception e){
+            log.error("Exception on getting client principle at login process at time:{} , exception is:{}", System.currentTimeMillis(), e);
+            throw new BusinessException("Server error at login process");
         }
     }
 

@@ -12,6 +12,11 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
 
+
+    public Admin add(Admin admin){
+        return adminRepository.save(admin);
+    }
+
     public Admin getProfileByNationalId(String nationalId) {
         return adminRepository.findByNationalId(nationalId).orElseThrow(() -> new BusinessException("User not found"));
     }

@@ -1,6 +1,7 @@
 package com.meysam.common.customsecurity.service;
 
 
+import com.meysam.common.customsecurity.model.entity.AdminRole;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.repository.AdminRoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminRoleService {
 
-    private final AdminRoleRepository profileRoleRepository;
+    private final AdminRoleRepository adminRoleRepository;
+
+    public AdminRole add(AdminRole adminRole){
+        return adminRoleRepository.save(adminRole);
+    }
 
     public List<Role> getRoles(BigInteger profileId) {
-        return profileRoleRepository.findRolesByProfileId(profileId);
+        return adminRoleRepository.findRolesByProfileId(profileId);
     }
 }
