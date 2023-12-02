@@ -1,16 +1,16 @@
 package com.meysam.backoffice.model.entity;
 
+import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Table(name = "PROFILEROLE")
 @Data
 @Entity
-public class ProfileRole implements Serializable {
+public class AdminRole extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,26 +25,5 @@ public class ProfileRole implements Serializable {
 
     @NotNull(message = "invalid profile")
     @Column(name = "PROFILE")
-    Long profile;
-
-    @NotNull(message = "invalid is active")
-    @Column(name = "ISACTIVE")
-    Boolean isActive;
-
-    @NotNull(message = "invalid date time")
-    @Column(name = "CREATEDAT")
-    @Temporal(TemporalType.TIMESTAMP)
-    Date createdAt;
-
-    //    @NotNull
-    @Column(name = "CREATEDBY")
-    Long createdBy;
-
-    @Column(name = "MODIFIEDAT")
-    @Temporal(TemporalType.TIMESTAMP)
-    Date modifiedAt;
-
-    @Column(name = "MODIFIEDBY")
-    Long modifiedBy;
-
+    Long admin;
 }

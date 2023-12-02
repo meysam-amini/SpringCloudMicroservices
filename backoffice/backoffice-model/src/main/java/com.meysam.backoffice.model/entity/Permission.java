@@ -29,8 +29,4 @@ public class Permission implements Serializable {
     @Column(name = "CODE")
     String code;
 
-    @NotNull(message = "invalid general permission")
-    @Column(name = "GENERALPERMISSION")
-    Boolean generalPermission;
-
 }

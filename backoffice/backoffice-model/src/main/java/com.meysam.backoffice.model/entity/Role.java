@@ -1,19 +1,17 @@
 package com.meysam.backoffice.model.entity;
 
+import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.springframework.format.annotation.NumberFormat;
 
-import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 @Table(name = "ROLE")
 @Data
 @Entity
-public class Role implements Serializable {
+public class Role extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,21 +29,4 @@ public class Role implements Serializable {
     @Size(max = 20)
     @Column(name = "CODE")
     String code;
-
-    //    @NotNull(message = "invalid date time")
-    @Column(name = "CREATEDAT")
-    @Temporal(TemporalType.TIMESTAMP)
-    Date createdAt;
-
-    //    @NotNull
-    @Column(name = "CREATEDBY")
-    Long createdBy;
-
-    @Column(name = "MODIFIEDAT")
-    @Temporal(TemporalType.TIMESTAMP)
-    Date modifiedAt;
-
-    @Column(name = "MODIFIEDBY")
-    Long modifiedBy;
-
 }

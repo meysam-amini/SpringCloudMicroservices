@@ -1,16 +1,16 @@
 package com.meysam.backoffice.model.entity;
 
+import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Table(name = "ROLEPERMISSION")
 @Data
 @Entity
-public class RolePermission implements Serializable {
+public class RolePermission extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,21 +26,4 @@ public class RolePermission implements Serializable {
     @NotNull(message = "invalid permission")
     @Column(name = "PERMISSION")
     Long permission;
-
-    //    @NotNull(message = "invalid date time")
-    @Column(name = "CREATEDAT")
-    @Temporal(TemporalType.TIMESTAMP)
-    Date createdAt;
-
-    //    @NotNull
-    @Column(name = "CREATEDBY")
-    Long createdBy;
-
-    @Column(name = "MODIFIEDAT")
-    @Temporal(TemporalType.TIMESTAMP)
-    Date modifiedAt;
-
-    @Column(name = "MODIFIEDBY")
-    Long modifiedBy;
-
 }
