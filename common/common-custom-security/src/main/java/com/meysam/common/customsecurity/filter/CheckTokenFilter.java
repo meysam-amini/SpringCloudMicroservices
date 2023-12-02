@@ -53,7 +53,6 @@ public class CheckTokenFilter extends OncePerRequestFilter {
             return;
         }
         String authorizationToken = authorizationHeader.substring(7);
-        // TODO: 04.07.23 meysam : currently there is no benefit to store tokens because we can just store them based on token, so because of token are too long, it is not efficient
         if (securityService.checkToken(authorizationToken)) {
             OauthExtractedTokenDto oauthExtractedTokenDto = decodeToken(authorizationToken);
             ClientPrinciple clientPrinciple = ClientPrinciple.convertToClientPrinciple(oauthExtractedTokenDto);

@@ -6,6 +6,13 @@ server:
 spring:
   application:
     name: backoffice-ws
+  security:
+    enabled: true
+    ignored:
+      paths: >
+        /swagger-ui/**,
+        /public/**,
+        /api/public/**
 
 eureka:
   instance:
@@ -15,6 +22,19 @@ eureka:
       # the url by which the client apps communicate with Eureka server
       defaultZone: http://localhost:8010/eureka
 
+is:
+  test: false
+oauth:
+  client:
+    secret: rreJT7l3U5ZKIFVcqeeeEvzBB7a0tHWC
+api:
+  checkToken:
+    url: https://sso_service_base_path/check_token
+
+jwt:
+  secret: GlCUaHlZfK0qLMKBNcpAvdOpHrDoCi7sN0WgSv3T9FKUlK7Ycxc2YQ0Ql1hdufHuXOUTsJrYHSwKkA1mDnF1TX0XTxR5IWAlAoUAK3Ncz9HYfzFl2dt6ikqplqlz88CTP00Ya
+  token:
+    validity: 86400
 #logging:
 #  appender:
 #    console:
