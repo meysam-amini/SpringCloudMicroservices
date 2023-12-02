@@ -5,7 +5,7 @@ import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.dao.MemberRepository;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
-import com.meysam.common.service.api.AuthServiceClient;
+import com.meysam.common.service.api.UserAuthServiceClient;
 import com.meysam.common.service.api.MemberService;
 import com.meysam.common.service.api.WalletServiceClient;
 import com.meysam.common.utils.utils.PredicateUtils;
@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final LocaleMessageSourceService messageSourceService;
     private final WalletServiceClient walletServiceClient;
-    private final AuthServiceClient authServiceClient;
+    private final UserAuthServiceClient authServiceClient;
     private final EntityManager entityManager;
 
 

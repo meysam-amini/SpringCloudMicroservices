@@ -5,7 +5,7 @@ import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.ClientLoginRequestDto;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.RegisterUserRequestDto;
-import com.meysam.common.service.api.AuthServiceClient;
+import com.meysam.common.service.api.UserAuthServiceClient;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,19 +17,19 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AuthServiceFallBackFactory implements FallbackFactory<AuthServiceClient> {
+public class UserAuthServiceFallBackFactory implements FallbackFactory<UserAuthServiceClient> {
 
     private final LocaleMessageSourceService messageSourceService;
 
     @Override
-    public AuthServiceClient create(Throwable cause) {
+    public UserAuthServiceClient create(Throwable cause) {
         int status = ((FeignException) cause).status();
         String message = cause.getLocalizedMessage();
-        return new AuthServiceClientFallBack(cause,message,status, messageSourceService);
+        return new UserAuthServiceClientFallBack(cause,message,status, messageSourceService);
     }
 
     @RequiredArgsConstructor
-    public class AuthServiceClientFallBack implements AuthServiceClient {
+    public class UserAuthServiceClientFallBack implements UserAuthServiceClient {
 
         private final Throwable cause;
         private final String message;
