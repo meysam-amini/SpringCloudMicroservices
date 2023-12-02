@@ -43,9 +43,7 @@ public class PrincipleServiceImpl implements PrincipleService {
             log.error("Exception on connecting to Redis server for getting client principle at login process at time:{} , exception is:{}", System.currentTimeMillis(), e);
             throw new BusinessException("Server error at login process");
         }
-
         try {
-
             if (Boolean.FALSE.equals(hasKey)) {
                 Admin admin = null;
                 admin = getProfileByUsername(username);

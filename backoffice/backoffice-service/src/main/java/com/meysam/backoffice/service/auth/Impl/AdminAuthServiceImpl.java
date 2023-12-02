@@ -58,18 +58,13 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 
     }
 
+    @Transactional
     @Override
     public ResponseEntity register(RegisterAdminRequestDto registerAdminRequestDto) {
         //insert admin to Admin table after successful register if keycloak was used:
         //return authServiceClient.registerAdmin(registerUserRequestDto);
 
         //but we store admins' data on our side, not keycloak. so:
-        registerNewAdmin(registerAdminRequestDto);
-        return ResponseEntity.ok().body("register successful for username: "+ registerAdminRequestDto.getUsername());
-    }
-
-    @Transactional
-    public void registerNewAdmin(RegisterAdminRequestDto registerAdminRequestDto) {
         try {
             Role role = roleService.findRoleByName(registerAdminRequestDto.getRoleName());
             Admin admin = new Admin();
@@ -92,7 +87,9 @@ public class AdminAuthServiceImpl implements AdminAuthService {
             log.error("Exception on registering new admin process at time:{}, exception is:{}",System.currentTimeMillis(),e);
             throw new BusinessException(messageSourceService.getMessage("REGISTER_ASMIN_FAILED"));
         }
+        return ResponseEntity.ok().body("register successful for username: "+ registerAdminRequestDto.getUsername());
     }
+
 
     private String generateTokenForAdmin(String username) {
         SecurityPrinciple principle = principleService.getSecurityPrinciple(username);
