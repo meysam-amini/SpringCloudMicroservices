@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/protected")
+@RequestMapping("/permisions")
 @RequiredArgsConstructor
 public class PermissionController {
 
     private final AdminAuthService adminAuthService;
 
 
-    @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('PERMISSION_regiter_new_admin')")
-    public ResponseEntity registerNewAdmin(@Valid @RequestBody RegisterAdminRequestDto registerAdminRequestDto) {
+    @PostMapping(value = "add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('PERMISSION_add_permission')")
+    public ResponseEntity addNewPermission(@Valid @RequestBody RegisterAdminRequestDto registerAdminRequestDto) {
         return adminAuthService.register(registerAdminRequestDto);
     }
 
