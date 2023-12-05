@@ -24,6 +24,11 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>com.meysam.backoffice</groupId>
+            <artifactId>backoffice-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.meysam.common</groupId>
             <artifactId>common-service</artifactId>
             <version>1.0-SNAPSHOT</version>

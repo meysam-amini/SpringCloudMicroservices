@@ -15,14 +15,21 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableDiscoveryClient
 @ComponentScan(basePackages = {
-        "com.meysam.backoffice.*"
+        "com.meysam.backoffice.*",
+        "com.meysam.backoffice.service.permission.*"
 //        "com.meysam.users.*"
         ,"com.meysam.common.utils.*"
         ,"com.meysam.common.configs.*"
 //        ,"com.meysam.common.security"
         ,"com.meysam.common.service.*"
 })
-@EnableJpaRepositories(basePackages = "com.meysam.common.dao")
+@EnableJpaRepositories(basePackages = {
+        "com.meysam.common.dao",
+        "com.meysam.common.customsecurity.repository"
+
+}
+
+)
 @EntityScan(basePackages = "com.meysam.common.model.entity")
 @EnableFeignClients(basePackages = {"com.meysam.common.service.*"})
 @Slf4j
