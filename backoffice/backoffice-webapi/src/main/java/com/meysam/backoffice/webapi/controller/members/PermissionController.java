@@ -1,5 +1,6 @@
 package com.meysam.backoffice.webapi.controller.members;
 
+import com.meysam.backoffice.model.dto.AddPermissionDto;
 import com.meysam.backoffice.service.auth.api.AdminAuthService;
 import com.meysam.common.model.dto.RegisterAdminRequestDto;
 import jakarta.validation.Valid;
@@ -22,8 +23,8 @@ public class PermissionController {
 
     @PostMapping(value = "add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('PERMISSION_add_permission')")
-    public ResponseEntity addNewPermission(@Valid @RequestBody RegisterAdminRequestDto registerAdminRequestDto) {
-        return adminAuthService.register(registerAdminRequestDto);
+    public ResponseEntity addNewPermission(@Valid @RequestBody AddPermissionDto addPermissionDto) {
+        return null;
     }
 
 }
