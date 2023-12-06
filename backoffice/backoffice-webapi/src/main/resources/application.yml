@@ -58,3 +58,9 @@ jwt:
 #        url: localhost
 #        port: 5044
 
+
+#logging:
+#  level:
+#    com:
+#      netflix:
+#        discovery: OFF

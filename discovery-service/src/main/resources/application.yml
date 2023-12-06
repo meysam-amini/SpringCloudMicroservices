@@ -20,3 +20,7 @@ eureka:
     service-url:
       # the url by which the client apps communicate with Eureka server
       defaultZone: http://localhost:8010/eureka
+
+
+#  instance:
+#    lease-renewal-interval-in-seconds=10:
