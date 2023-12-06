@@ -1,7 +1,9 @@
 package com.meysam.auth.webapi;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -41,7 +43,16 @@ public class AuthWebApiApplication {
     public OpenAPI openAPI() {
         return new OpenAPI().info(new Info().title("SpringDoc example")
                 .description("SpringDoc application")
-                .version("v0.0.1"));
+                .version("v0.0.1"))
+                .components(
+                        new Components().addSecuritySchemes(
+                                "api",
+                                new SecurityScheme()
+                                        .scheme("bearer")
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .bearerFormat("jwt") //if it is your case
+                                        .name("api")
+                        ));
     }
 
 }
