@@ -21,7 +21,7 @@ public class CustomSecurityUtils {
             if (Objects.nonNull(authentication)) {
                 try {
                     SecurityPrinciple clientPrinciple = (SecurityPrinciple) authentication.getPrincipal();
-                    return Optional.ofNullable(clientPrinciple.getClientId());
+                    return Optional.ofNullable(clientPrinciple.getUsername());
                 } catch (Exception exception) {
                     log.error("can't cast client principle to ClientPrinciple dto");
                     throw exception;
@@ -33,7 +33,7 @@ public class CustomSecurityUtils {
 
     public static Optional<String> getClient(CustomAuthentication customAuthentication) {
         SecurityPrinciple clientPrinciple = (SecurityPrinciple) customAuthentication.getPrincipal();
-        return Optional.ofNullable(clientPrinciple.getClientId());
+        return Optional.ofNullable(clientPrinciple.getUsername());
     }
 
     public static String getClientThrowExceptionIfAbsent(CustomAuthentication customAuthentication) {
