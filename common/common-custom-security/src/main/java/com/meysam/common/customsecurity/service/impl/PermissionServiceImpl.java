@@ -1,9 +1,9 @@
-package com.meysam.backoffice.service.permission.impl;
+package com.meysam.common.customsecurity.service.impl;
 
-import com.meysam.backoffice.model.dto.AddPermissionDto;
-import com.meysam.backoffice.service.permission.api.PermissionService;
 import com.meysam.common.customsecurity.model.entity.Permission;
 import com.meysam.common.customsecurity.repository.PermissionRepository;
+import com.meysam.common.customsecurity.service.api.PermissionService;
+import com.meysam.common.model.dto.AddPermissionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,7 @@
-package com.meysam.backoffice.webapi.controller.members;
+package com.meysam.backoffice.webapi.system;
 
-import com.meysam.backoffice.model.dto.AddPermissionDto;
-import com.meysam.backoffice.service.auth.api.AdminAuthService;
-import com.meysam.common.model.dto.RegisterAdminRequestDto;
+import com.meysam.common.model.dto.AddPermissionDto;
+import com.meysam.common.customsecurity.service.api.PermissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PermissionController {
 
-    private final AdminAuthService adminAuthService;
+    private final PermissionService permissionService;
 
 
     @PostMapping(value = "add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

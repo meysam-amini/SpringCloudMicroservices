@@ -1,4 +1,4 @@
-package com.meysam.backoffice.model.dto;
+package com.meysam.common.model.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
