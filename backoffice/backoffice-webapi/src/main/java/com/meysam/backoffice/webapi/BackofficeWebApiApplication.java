@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableDiscoveryClient
 @ComponentScan(basePackages = {
         "com.meysam.backoffice.*",
+        "com.meysam.common.customsecurity.*",
         "com.meysam.backoffice.service.permission.*"
 //        "com.meysam.users.*"
         ,"com.meysam.common.utils.*"
