@@ -73,9 +73,6 @@ public class PrincipleServiceImpl implements PrincipleService {
         }
     }
 
-    private Admin getProfileByNationalId(String nationalId) {
-        return profileService.getProfileByNationalId(nationalId);
-    }
 
     private Admin getProfileByUsername(String usernam) {
         return profileService.getProfileByUsername(usernam);

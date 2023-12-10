@@ -29,7 +29,7 @@ public class TokenDecoder {
             log.error("can't read the parsed token");
             return null;
         }
-        //extract claims(nationalId,...)
+        //extract claims(username,...)
         JsonNode adminUsernameJsonNode = actualObj.get("username");
         JsonNode adminIdJsonNode = actualObj.get("profileId");
         JsonNode permissionsJsonNode = actualObj.get("permissions");

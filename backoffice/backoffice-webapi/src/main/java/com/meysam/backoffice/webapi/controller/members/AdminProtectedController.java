@@ -21,7 +21,7 @@ public class AdminProtectedController {
 
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('PERMISSION_regiter_new_admin')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_REGISTER_NEW_ADMIN')")
     public ResponseEntity registerNewAdmin(@Valid @RequestBody RegisterAdminRequestDto registerAdminRequestDto) {
         return adminAuthService.register(registerAdminRequestDto);
     }

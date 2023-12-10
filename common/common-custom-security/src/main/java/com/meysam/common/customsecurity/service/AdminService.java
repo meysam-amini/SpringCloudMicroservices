@@ -17,10 +17,6 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
-    public Admin getProfileByNationalId(String nationalId) {
-        return adminRepository.findByNationalId(nationalId).orElseThrow(() -> new BusinessException("User not found"));
-    }
-
     public Admin getProfileByUsername(String username) {
         return adminRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
     }
