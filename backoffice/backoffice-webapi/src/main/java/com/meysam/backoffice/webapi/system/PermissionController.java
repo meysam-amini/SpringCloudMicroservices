@@ -1,6 +1,6 @@
 package com.meysam.backoffice.webapi.system;
 
-import com.meysam.common.model.dto.AddPermissionDto;
+import com.meysam.common.customsecurity.model.dto.AddPermissionDto;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

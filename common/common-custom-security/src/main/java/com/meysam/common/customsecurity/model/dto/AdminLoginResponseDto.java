@@ -1,4 +1,4 @@
-package com.meysam.common.model.dto;
+package com.meysam.common.customsecurity.model.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
