@@ -2,7 +2,10 @@ package com.meysam.common.customsecurity.service.impl;
 
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
+import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
+import com.meysam.common.customsecurity.model.dto.AssignRolePermissionDto;
 import com.meysam.common.customsecurity.model.entity.Permission;
+import com.meysam.common.customsecurity.model.entity.RolePermission;
 import com.meysam.common.customsecurity.repository.PermissionRepository;
 import com.meysam.common.customsecurity.repository.RolePermissionRepository;
 import com.meysam.common.customsecurity.service.api.PermissionService;
@@ -34,5 +37,15 @@ public class PermissionServiceImpl implements PermissionService {
         permission.setCode(permissionDto.getCode());
         permission.setName(permissionDto.getName());
         return permissionRepository.save(permission);
+    }
+
+    @Override
+    public RolePermission assignPermissionToRole(AssignRolePermissionDto rolePermissionDto) {
+        return null;
+    }
+
+    @Override
+    public String assignPermissionToUsername(AssignDirectPermissionDto permissionDto) {
+        return null;
     }
 }
