@@ -1,6 +1,8 @@
 package com.meysam.backoffice.webapi.controller.members;
 
 import com.meysam.backoffice.service.auth.api.AdminAuthService;
+import com.meysam.common.customsecurity.model.SecurityPrinciple;
+import com.meysam.common.customsecurity.model.constants.SessionConstants;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import com.meysam.common.model.dto.AddPermissionDto;
 import com.meysam.common.model.dto.AdminLoginResponseDto;
@@ -11,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/protected")
@@ -26,8 +25,8 @@ public class AdminProtectedController {
 
 
     @PostMapping("log-out")
-    public ResponseEntity<AdminLoginResponseDto> logoutAdmin(@Valid @RequestBody LoginRequestDto loginRequestDto) {
-        return adminAuthService.login(loginRequestDto);
+    public ResponseEntity<String> logoutAdmin(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple) {
+        return adminAuthService.logout(securityPrinciple.getUsername());
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

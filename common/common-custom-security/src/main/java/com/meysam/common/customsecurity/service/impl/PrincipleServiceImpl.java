@@ -73,6 +73,19 @@ public class PrincipleServiceImpl implements PrincipleService {
         }
     }
 
+    @Override
+    public boolean removeSession(String username) {
+        ValueOperations<String, SecurityPrinciple> valueOperations = redisTemplate.opsForValue();
+        String key = username;
+        Boolean hasKey;
+        try {
+            return Boolean.TRUE.equals(valueOperations.getOperations().delete(key));
+        } catch (Exception e) {
+            log.error("Exception on connecting to Redis server for removing client principle at logout process at time:{} , exception is:{}", System.currentTimeMillis(), e);
+            throw new BusinessException("Server error at logout process");
+        }
+    }
+
 
     private Admin getProfileByUsername(String usernam) {
         return profileService.getAdminByUsername(usernam);

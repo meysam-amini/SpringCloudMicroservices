@@ -58,6 +58,17 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 
     }
 
+    @Override
+    public ResponseEntity<String> logout(String username) {
+        boolean loggedout;
+        loggedout = principleService.removeSession(username);
+        if(loggedout){
+            return ResponseEntity.ok(messageSourceService.getMessage("LOG_OUT_SUCCESS"));
+        }else {
+            return ResponseEntity.ok(messageSourceService.getMessage("SESSION_EXPIRED_ALREADY"));
+        }
+    }
+
     @Transactional
     @Override
     public ResponseEntity register(RegisterAdminRequestDto registerAdminRequestDto) {
