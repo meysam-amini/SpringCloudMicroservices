@@ -75,7 +75,7 @@ public class PrincipleServiceImpl implements PrincipleService {
 
 
     private Admin getProfileByUsername(String usernam) {
-        return profileService.getProfileByUsername(usernam);
+        return profileService.getAdminByUsername(usernam);
     }
 
     private List<String> getProfilePermissions(BigInteger profileId) {

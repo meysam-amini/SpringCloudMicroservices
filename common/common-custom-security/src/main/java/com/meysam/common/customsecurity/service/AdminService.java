@@ -17,7 +17,7 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
-    public Admin getProfileByUsername(String username) {
+    public Admin getAdminByUsername(String username) {
         return adminRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
     }
 }

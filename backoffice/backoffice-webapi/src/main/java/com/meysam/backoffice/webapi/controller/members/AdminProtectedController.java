@@ -3,6 +3,8 @@ package com.meysam.backoffice.webapi.controller.members;
 import com.meysam.backoffice.service.auth.api.AdminAuthService;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import com.meysam.common.model.dto.AddPermissionDto;
+import com.meysam.common.model.dto.AdminLoginResponseDto;
+import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.RegisterAdminRequestDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,11 @@ public class AdminProtectedController {
     private final AdminAuthService adminAuthService;
     private final PermissionService permissionService;
 
+
+    @PostMapping("log-out")
+    public ResponseEntity<AdminLoginResponseDto> logoutAdmin(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        return adminAuthService.login(loginRequestDto);
+    }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('PERMISSION_REGISTER_NEW_ADMIN')")
