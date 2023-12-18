@@ -54,7 +54,7 @@ notification:
     provider:
       authorization-header: Basic ##
       uri: https://sms.magfa.com/api/http/sms/v2/send
-    sender-number: 300097500059
+    sender-number: 123
   email:
     enabled: false
     provider:
