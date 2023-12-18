@@ -52,7 +52,7 @@ notification:
   sms:
     enabled: true
     provider:
-      authorization-header: Basic dGFuemltXzAwMDk1L21jbHNfaXRlOkM2b1ppQUdQSlFkQ0Q1TlU=
+      authorization-header: Basic ##
       uri: https://sms.magfa.com/api/http/sms/v2/send
     sender-number: 300097500059
   email:
