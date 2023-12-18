@@ -14,6 +14,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 @Configuration
@@ -25,17 +28,20 @@ public class WebSecurityConfig {
     private final SecurityService securityService;
     @Value(SecurityConstants.IGNORED_PATH_PROPERTY)
     private String[] ignoredPaths;
+    @Value(SecurityConstants.ENABLE_SECURITY)
+    private Boolean enableSecurity;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilterAfter(new CheckTokenFilter(securityService, ignoredPaths), ConcurrentSessionFilter.class);
+                .addFilterAfter(new CheckTokenFilter(enableSecurity,securityService, ignoredPaths), ConcurrentSessionFilter.class);
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.anonymous(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
+        http.cors();
 
         /*http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(ignoredPaths).permitAll()
@@ -43,4 +49,18 @@ public class WebSecurityConfig {
         return http.build();
 
     }
+
+
+    /*@Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedOriginPattern("*");
+        corsConfiguration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+        return urlBasedCorsConfigurationSource;
+    }*/
 }
