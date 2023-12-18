@@ -101,8 +101,6 @@ public class NotificationServiceImpl implements NotificationService {
             log.info("SMS with msg: "+msg+" sent to number: "+destinationPhoneNumber+" at time: "+System.currentTimeMillis());
         }catch (Exception e){
             log.error("Exception on calling sms provider at time:{}, exception is:{}",System.currentTimeMillis(),e);
-            throw new BusinessException(messageSourceService.getMessage("PROBLEM_ON_SENDING_SMS"));
-
         }
 
     }
