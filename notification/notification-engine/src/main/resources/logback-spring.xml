@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+        <include resource="com.meysam.logging/defaults.xml"/>
+
+    <springProperty scope="context" name="LOGBACK_URL" source="logging.appender.logstash.destination.url"/>
+    <springProperty scope="context" name="LOGBACK_PORT" source="logging.appender.logstash.destination.port"/>
+
+    <conversionRule conversionWord="tag" converterClass="com.meysam.common.configs.logback.LogConverterConfig"/>
+
+<!--    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        <destination>${LOGBACK_URL:- }:${LOGBACK_PORT:- }</destination>-->
+<!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+<!--            <providers>-->
+<!--                <timestamp/>-->
+<!--                <version/>-->
+<!--                <loggerName/>-->
+<!--                <pattern>-->
+<!--                    {-->
+<!--                    "tag": "%tag",-->
+<!--                    "level": "%level",-->
+<!--                    "thread": "%thread",-->
+<!--                    "app_name": "${appName}",-->
+<!--                    "app_port": "${appPort}",-->
+<!--                    "message": "%message - %exception"-->
+<!--                    }-->
+<!--                </pattern>-->
+<!--            </providers>-->
+<!--        </encoder>-->
+<!--        <keepAliveDuration>5 minutes</keepAliveDuration>-->
+<!--    </appender>-->
+
+    <Appenders>
+        <Socket name="Socket" host="localhost" port="5044">
+            <JsonLayout compact="true" eventEol="true"/>
+        </Socket>
+    </Appenders>
+
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="asyncConsole" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="console"/>
+    </appender>
+
+    <appender name="asyncSocketLogstash" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="logstash"/>
+    </appender>
+
+    <include resource="com.meysam.logging/appender-amqp.xml"/>
+
+    <root level="INFO">
+        <appender-ref ref="asyncConsole"/>
+<!--        <appender-ref ref="asyncRabbitmq"/>-->
+<!--        <appender-ref ref="asyncSocketLogstash"/>-->
+    </root>
+
+
+</configuration>

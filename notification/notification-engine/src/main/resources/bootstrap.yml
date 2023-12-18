@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8012
+      name: config-server
+
+## these propeties are used in logback-spring.xml and I had to put theme here
+## because they were not loading to springProperties from application.yml
+logging:
+  appender:
+    console:
+      enabled: false
+    file:
+      enabled: false
+    rabbit:
+      enabled: false
+      required: true
+      destination:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+        virtualHost: /
+        exchangeType: topic
+        exchangeName: logs
+    logstash:
+      enabled: true
+      destination:
+        url: localhost
+        port: 5044
