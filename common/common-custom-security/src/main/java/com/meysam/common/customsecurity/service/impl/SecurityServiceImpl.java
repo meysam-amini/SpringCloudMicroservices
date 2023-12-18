@@ -1,6 +1,7 @@
 package com.meysam.common.customsecurity.service.impl;
 
 import com.meysam.common.customsecurity.model.CheckTokenResult;
+import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.service.api.SecurityService;
 import com.meysam.common.customsecurity.utils.JwtUtil;
 import com.meysam.common.model.constants.GlobalConstants;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,6 +31,8 @@ public class SecurityServiceImpl implements SecurityService {
 
     private final RestTemplate simpleRestTemplate;
     private final JwtUtil jwtUtils;
+    private final RedisTemplate redisTemplate;
+
 
     @Value("${api.checkToken.url}")
     private String CHECK_TOKEN_URL;
@@ -56,6 +61,21 @@ public class SecurityServiceImpl implements SecurityService {
            log.info("exception in checkToken at time:{} , the exception is:{} ",System.currentTimeMillis(),e);
            return false;
        }
+    }
+
+    @Override
+    public boolean hasActiveSession(String username) {
+        ValueOperations<String, SecurityPrinciple> valueOperations = redisTemplate.opsForValue();
+        String key = username;
+        Boolean hasKey;
+        try {
+            hasKey = valueOperations.getOperations().hasKey(key);
+        } catch (Exception e) {
+            log.error("Exception on connecting to Redis server for getting Client principle at checking user's active session process at time:{} , exception is:{}", System.currentTimeMillis(), e);
+            return false;
+        }
+
+        return Boolean.TRUE.equals(hasKey);
     }
 
     private boolean callAuthServerCheckToken(String token){
