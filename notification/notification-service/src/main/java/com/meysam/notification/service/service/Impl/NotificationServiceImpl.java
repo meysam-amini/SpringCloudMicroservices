@@ -98,7 +98,8 @@ public class NotificationServiceImpl implements NotificationService {
                                 httpHeaders.set("Content-Type", "application/json");
                             }).body(BodyInserters.fromValue(requestDto))
                     .retrieve().bodyToMono(SendSMSResponseDto.class).block();
-            log.info("SMS with msg: "+msg+" sent to number: "+destinationPhoneNumber+" at time: "+System.currentTimeMillis());
+            //if response was ok :
+//            log.info("SMS with msg: "+msg+" sent to number: "+destinationPhoneNumber+" at time: "+System.currentTimeMillis());
         }catch (Exception e){
             log.error("Exception on calling sms provider at time:{}, exception is:{}",System.currentTimeMillis(),e);
         }
