@@ -138,7 +138,7 @@ public class OtpServiceImpl implements OtpService {
         if(valueOperations.getOperations().hasKey(wrongOtpCounterKey)){
             Integer count = Integer.valueOf(valueOperations.get(wrongOtpCounterKey));
             if(count<0){
-                throw new BusinessException(messageSourceService.getMessage("USER_BAN_OTP")+" for "+ valueOperations.getOperations().getExpire(wrongOtpCounterKey)+" seconds!");
+                throw new BusinessException("You are banned for "+ valueOperations.getOperations().getExpire(wrongOtpCounterKey)+" seconds!");
             }
         }
     }
