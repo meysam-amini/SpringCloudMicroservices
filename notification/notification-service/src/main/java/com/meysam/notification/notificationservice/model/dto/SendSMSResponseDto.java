@@ -1,4 +1,4 @@
-package com.meysam.notification.service.model.dto;
+package com.meysam.notification.notificationservice.model.dto;
 
 import lombok.*;
 

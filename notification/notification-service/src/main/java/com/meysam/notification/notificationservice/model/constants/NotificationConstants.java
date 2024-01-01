@@ -1,4 +1,4 @@
-package com.meysam.notification.service.model.constants;
+package com.meysam.notification.notificationservice.model.constants;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

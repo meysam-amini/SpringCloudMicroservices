@@ -1,7 +1,7 @@
-package com.meysam.notification.service.service.api;
+package com.meysam.notification.notificationservice.service.api;
 
 
-import com.meysam.notification.service.model.constants.NotificationConstants;
+import com.meysam.notification.notificationservice.model.constants.NotificationConstants;
 
 public interface NotificationService {
 

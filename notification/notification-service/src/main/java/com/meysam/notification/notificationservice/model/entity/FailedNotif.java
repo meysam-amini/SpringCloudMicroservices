@@ -1,4 +1,4 @@
-package com.meysam.notification.service.model.entity;
+package com.meysam.notification.notificationservice.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

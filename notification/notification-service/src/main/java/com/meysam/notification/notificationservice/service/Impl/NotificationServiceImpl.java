@@ -1,12 +1,12 @@
-package com.meysam.notification.service.service.Impl;
+package com.meysam.notification.notificationservice.service.Impl;
 
 
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
-import com.meysam.notification.service.model.constants.NotificationConstants;
-import com.meysam.notification.service.model.dto.SendSMSRequestDto;
-import com.meysam.notification.service.model.dto.SendSMSResponseDto;
-import com.meysam.notification.service.service.api.NotificationService;
+import com.meysam.notification.notificationservice.model.constants.NotificationConstants;
+import com.meysam.notification.notificationservice.model.dto.SendSMSRequestDto;
+import com.meysam.notification.notificationservice.model.dto.SendSMSResponseDto;
+import com.meysam.notification.notificationservice.service.api.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

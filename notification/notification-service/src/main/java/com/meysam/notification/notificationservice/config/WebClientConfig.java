@@ -1,4 +1,4 @@
-package com.meysam.notification.service.config;
+package com.meysam.notification.notificationservice.config;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
