@@ -15,4 +15,6 @@ public class Constants {
     public static String WRONG_OTP_COUNTS_PREFIX="OTP_COUNT_";
     //end of otp prefixes
 
+    public final static String CAPTCHA_PREFIX = "CAPTCHA_";
+
 }

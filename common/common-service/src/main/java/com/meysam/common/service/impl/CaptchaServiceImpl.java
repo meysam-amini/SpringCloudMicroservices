@@ -1,6 +1,7 @@
 package com.meysam.common.service.impl;
 
 import cn.apiclub.captcha.Captcha;
+import com.meysam.common.configs.constants.Constants;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.CaptchaDto;
@@ -18,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -42,8 +44,8 @@ public class CaptchaServiceImpl implements CaptchaService {
     public CaptchaDto generatePublicCaptcha(Integer width, Integer height, CaptchaOperation OP) {
 
         Captcha captcha = generateCaptcha(width,height);
-        String captchaId = AppUtils.getUUID();
-        String key = AppConstants.CAPTCHA_PREFIX+OP+captchaId;
+        String captchaId = UUID.randomUUID().toString();
+        String key = Constants.CAPTCHA_PREFIX+OP+captchaId;
         String value = captcha.getAnswer();
         setDataOnRedis(key,value,OP);
 
@@ -56,7 +58,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public void validatePublicCaptchaByCaptchaId(String answer, String captchaId , CaptchaOperation OP){
         if (Boolean.parseBoolean(CAPTCHA_ENABLED)) {
-            String key = AppConstants.CAPTCHA_PREFIX + OP + captchaId;
+            String key = Constants.CAPTCHA_PREFIX + OP + captchaId;
             String dataOnRedis = getDataFromRedis(key, OP);
             if (Objects.isNull(dataOnRedis)||!dataOnRedis.equals(answer)) {
                 throw new BusinessException(messageSourceService.getMessage("CAPTCHA_ANSWER_IS_WRONG"));
@@ -68,7 +70,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     public void generateCaptchaByUsername(Integer width, Integer height, CaptchaOperation OP,String username) {
 
         Captcha captcha = generateCaptcha(width,height);
-        String key = AppConstants.CAPTCHA_PREFIX+OP+username;
+        String key = Constants.CAPTCHA_PREFIX+OP+username;
         String value = captcha.getAnswer();
         setDataOnRedis(key,value,OP);
 
@@ -77,7 +79,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public void validateCaptchaByUsername(String answer,String username,CaptchaOperation OP){
         if (Boolean.parseBoolean(CAPTCHA_ENABLED)) {
-            String key = AppConstants.CAPTCHA_PREFIX + OP + username;
+            String key = Constants.CAPTCHA_PREFIX + OP + username;
             String dataOnRedis = getDataFromRedis(key, OP);
             if (Objects.isNull(dataOnRedis)||!dataOnRedis.equals(answer)) {
                 throw new BusinessException(messageSourceService.getMessage("CAPTCHA_ANSWER_IS_WRONG"));
@@ -88,7 +90,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public void removePublicCaptcha(String captchaId, CaptchaOperation OP) {
         if (Boolean.parseBoolean(CAPTCHA_ENABLED)){
-            String key = AppConstants.CAPTCHA_PREFIX+OP+captchaId;
+            String key = Constants.CAPTCHA_PREFIX+OP+captchaId;
             removeDataFromRedis(key,OP);
         }
     }
@@ -96,7 +98,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public void removeCaptchaByUsername(String username, CaptchaOperation OP) {
         if (Boolean.parseBoolean(CAPTCHA_ENABLED)){
-            String key = AppConstants.CAPTCHA_PREFIX+OP+username;
+            String key = Constants.CAPTCHA_PREFIX+OP+username;
             removeDataFromRedis(key,OP);
         }
     }

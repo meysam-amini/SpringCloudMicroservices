@@ -2,6 +2,7 @@ package com.meysam.common.service.api;
 
 
 import com.meysam.common.model.dto.CaptchaDto;
+import com.meysam.common.model.enums.CaptchaOperation;
 
 public interface CaptchaService {
 
