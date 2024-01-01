@@ -40,6 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final LocaleMessageSourceService messageSourceService;
     private final WebClient webClient;
+    private final FailedNotifOutBoxService failedNotifOutBoxService;
 
 
     public NotificationServiceImpl(LocaleMessageSourceService messageSourceService, WebClient webClient) {
