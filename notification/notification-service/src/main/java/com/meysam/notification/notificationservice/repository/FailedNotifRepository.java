@@ -1,5 +1,6 @@
 package com.meysam.notification.notificationservice.repository;
 
+import com.meysam.common.dao.BaseRepository;
 import com.meysam.notification.notificationservice.model.entity.FailedNotif;
 import org.springframework.stereotype.Repository;
 @Repository
