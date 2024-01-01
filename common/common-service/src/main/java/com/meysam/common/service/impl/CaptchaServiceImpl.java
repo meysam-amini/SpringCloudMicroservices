@@ -7,6 +7,7 @@ import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.model.dto.CaptchaDto;
 import com.meysam.common.model.enums.CaptchaOperation;
 import com.meysam.common.service.api.CaptchaService;
+import com.meysam.common.utils.utils.CaptchaUtil;
 import jakarta.xml.bind.DatatypeConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
