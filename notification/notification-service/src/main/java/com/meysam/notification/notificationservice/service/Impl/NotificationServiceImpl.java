@@ -7,6 +7,7 @@ import com.meysam.notification.notificationservice.model.constants.NotificationC
 import com.meysam.notification.notificationservice.model.dto.FailedSMSDto;
 import com.meysam.notification.notificationservice.model.dto.SendSMSRequestDto;
 import com.meysam.notification.notificationservice.model.dto.SendSMSResponseDto;
+import com.meysam.notification.notificationservice.service.api.FailedNotifOutBoxService;
 import com.meysam.notification.notificationservice.service.api.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,9 +44,10 @@ public class NotificationServiceImpl implements NotificationService {
     private final FailedNotifOutBoxService failedNotifOutBoxService;
 
 
-    public NotificationServiceImpl(LocaleMessageSourceService messageSourceService, WebClient webClient) {
+    public NotificationServiceImpl(LocaleMessageSourceService messageSourceService, WebClient webClient, FailedNotifOutBoxService failedNotifOutBoxService) {
         this.messageSourceService = messageSourceService;
         this.webClient = webClient;
+        this.failedNotifOutBoxService = failedNotifOutBoxService;
     }
 
 
@@ -102,7 +104,7 @@ public class NotificationServiceImpl implements NotificationService {
                             }).body(BodyInserters.fromValue(requestDto))
                     .retrieve().bodyToMono(SendSMSResponseDto.class).block();
             if(smsResponseDto.getStatus()==0)
-                log.info("SMS with msg: "+msg+" sent to number: "+destinationPhoneNumber+" at time: "+System.currentTimeMillis()+ " response was: "+response);
+                log.info("SMS with msg: "+msg+" sent to number: "+destinationPhoneNumber+" at time: "+System.currentTimeMillis()+ " response was: "+smsResponseDto.toString());
             else
                 saveFailedSmsToOutBox(requestDto);
         }catch (Exception e){
