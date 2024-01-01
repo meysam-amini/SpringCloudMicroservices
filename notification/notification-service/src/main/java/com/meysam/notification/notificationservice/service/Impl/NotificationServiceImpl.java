@@ -4,6 +4,7 @@ package com.meysam.notification.notificationservice.service.Impl;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.notification.notificationservice.model.constants.NotificationConstants;
+import com.meysam.notification.notificationservice.model.dto.FailedSMSDto;
 import com.meysam.notification.notificationservice.model.dto.SendSMSRequestDto;
 import com.meysam.notification.notificationservice.model.dto.SendSMSResponseDto;
 import com.meysam.notification.notificationservice.service.api.NotificationService;
@@ -39,6 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final LocaleMessageSourceService messageSourceService;
     private final WebClient webClient;
+
 
     public NotificationServiceImpl(LocaleMessageSourceService messageSourceService, WebClient webClient) {
         this.messageSourceService = messageSourceService;
@@ -98,11 +100,26 @@ public class NotificationServiceImpl implements NotificationService {
                                 httpHeaders.set("Content-Type", "application/json");
                             }).body(BodyInserters.fromValue(requestDto))
                     .retrieve().bodyToMono(SendSMSResponseDto.class).block();
-            //if response was ok :
-//            log.info("SMS with msg: "+msg+" sent to number: "+destinationPhoneNumber+" at time: "+System.currentTimeMillis());
+            if(smsResponseDto.getStatus()==0)
+                log.info("SMS with msg: "+msg+" sent to number: "+destinationPhoneNumber+" at time: "+System.currentTimeMillis()+ " response was: "+response);
+            else
+                saveFailedSmsToOutBox(requestDto);
         }catch (Exception e){
             log.error("Exception on calling sms provider at time:{}, exception is:{}",System.currentTimeMillis(),e);
+//            throw new BusinessException(messageSourceService.getMessage("PROBLEM_ON_SENDING_SMS"));
+            saveFailedSmsToOutBox(requestDto);
         }
 
+    }
+
+    private void saveFailedSmsToOutBox(SendSMSRequestDto requestDto) {
+        //should set the retry limit for sending sms
+        FailedSMSDto failedSMSDto = FailedSMSDto.builder()
+                .message(requestDto.getMessages().get(0))
+                .sender(requestDto.getSenders().get(0))
+                .recipient(requestDto.getRecipients().get(0))
+                .type(NotificationConstants.NotificationType.SMS.name())
+                .build();
+        failedNotifOutBoxService.save(failedSMSDto);
     }
 }
