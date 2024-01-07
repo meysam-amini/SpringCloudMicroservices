@@ -1,9 +1,9 @@
 package com.meysam.common.outbox.service.api;
 
+import com.meysam.common.outbox.model.entity.OutBox;
+import com.meysam.common.outbox.model.enums.OutboxEventStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.taba.common.model.model.entity.notification.OutBox;
-import org.taba.common.model.model.enums.OutboxEventStatus;
 
 import java.util.List;
 

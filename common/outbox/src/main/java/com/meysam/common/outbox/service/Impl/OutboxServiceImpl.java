@@ -1,5 +1,8 @@
 package com.meysam.common.outbox.service.Impl;
 
+import com.meysam.common.outbox.model.entity.OutBox;
+import com.meysam.common.outbox.model.enums.OutboxEventStatus;
+import com.meysam.common.outbox.repository.OutboxRepository;
 import com.meysam.common.outbox.service.api.OutboxService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,10 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.taba.common.model.model.entity.notification.OutBox;
-import org.taba.common.model.model.enums.OutboxEventStatus;
-import org.taba.common.util.util.PaginationUtils;
-import org.taba.notification.notificationservice.repository.OutboxRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
