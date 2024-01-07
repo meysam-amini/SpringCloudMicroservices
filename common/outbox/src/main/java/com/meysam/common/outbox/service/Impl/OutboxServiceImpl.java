@@ -4,6 +4,7 @@ import com.meysam.common.outbox.model.entity.OutBox;
 import com.meysam.common.outbox.model.enums.OutboxEventStatus;
 import com.meysam.common.outbox.repository.OutboxRepository;
 import com.meysam.common.outbox.service.api.OutboxService;
+import com.meysam.common.utils.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
