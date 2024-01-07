@@ -1,5 +1,6 @@
 package com.meysam.common.outbox.model.entity;
 
+import com.meysam.common.outbox.model.enums.OutboxEventStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class OutBox {
     private Long id;
 
     @Column(name = "STATUS")
-    private OutboxEventStatus status=OutboxEventStatus.UNSENT;
+    private OutboxEventStatus status= OutboxEventStatus.UNSENT;
 
     @Column(name = "CREATEDDATE")
     @CreationTimestamp
