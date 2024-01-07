@@ -1,4 +1,4 @@
-package com.meysam.common.outbox.service;
+package com.meysam.common.outbox.service.api;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

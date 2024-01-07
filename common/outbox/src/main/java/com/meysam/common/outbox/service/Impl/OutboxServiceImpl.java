@@ -1,5 +1,6 @@
-package com.meysam.common.outbox.service;
+package com.meysam.common.outbox.service.Impl;
 
+import com.meysam.common.outbox.service.api.OutboxService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
