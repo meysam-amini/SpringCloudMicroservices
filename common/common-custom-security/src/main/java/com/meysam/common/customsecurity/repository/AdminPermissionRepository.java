@@ -19,8 +19,8 @@ public interface AdminPermissionRepository extends BaseRepository<AdminPermissio
     List<AdminPermission> findAllByAdmin(BigInteger admin);
 
     @Query(value = "select p.name from Permission p where p.id in (select ap.permission from AdminPermission ap where ap.admin =:adminId)")
-    List<String> findPermissionsNamesByAdmin(@Param("profileId") BigInteger adminId);
+    List<String> findPermissionsNamesByAdmin(@Param("adminId") BigInteger adminId);
 
-    Optional<AdminPermission> findByAdminAndPermission(BigInteger admin, Long permission);
+    Optional<AdminPermission> findByAdminAndPermission(BigInteger admin, BigInteger permission);
 
 }

@@ -14,9 +14,9 @@ import java.util.Optional;
 @Repository
 public interface AdminRoleRepository extends BaseRepository<AdminRole> {
 
-    Optional<AdminRole> findByProfileAndRole(BigInteger admin, BigInteger role);
+    Optional<AdminRole> findByAdminAndRole(BigInteger admin, BigInteger role);
 
-    List<AdminRole> findAllByProfile(BigInteger admin);
+    List<AdminRole> findAllByAdmin(BigInteger admin);
 
     @Query(value = "select r from Role r where r.id in (select pr.role from AdminRole pr where pr.admin=:adminId)")
     List<Role> findRolesByProfileId(@Param("adminId") BigInteger adminId);
