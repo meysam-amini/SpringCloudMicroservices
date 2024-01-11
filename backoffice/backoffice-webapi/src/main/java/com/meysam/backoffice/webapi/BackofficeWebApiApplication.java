@@ -17,7 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = {
         "com.meysam.backoffice.*",
         "com.meysam.common.customsecurity.*",
-        "com.meysam.backoffice.service.permission.*"
+        "com.meysam.backoffice.service.auth.*"
 //        "com.meysam.users.*"
         ,"com.meysam.common.utils.*"
         ,"com.meysam.common.configs.*"
@@ -31,8 +31,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 }
 
 )
-@EntityScan(basePackages = "com.meysam.common.model.entity")
-@EnableFeignClients(basePackages = {"com.meysam.common.service.*"})
+@EntityScan(basePackages =
+        {
+                "com.meysam.common.model.entity",
+                "com.meysam.common.customsecurity.model.entity"
+
+        })
+//@EnableFeignClients(basePackages = {"com.meysam.common.service.*"})
 @Slf4j
 public class BackofficeWebApiApplication {
 

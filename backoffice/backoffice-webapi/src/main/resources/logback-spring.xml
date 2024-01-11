@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
         <include resource="com.meysam.logging/defaults.xml"/>
+        <include resource="com.meysam.logging/logging-configurable.xml"/>
 
     <springProperty scope="context" name="LOGBACK_URL" source="logging.appender.logstash.destination.url"/>
     <springProperty scope="context" name="LOGBACK_PORT" source="logging.appender.logstash.destination.port"/>
