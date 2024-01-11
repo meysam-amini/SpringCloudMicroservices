@@ -17,10 +17,7 @@ public class Admin extends BaseEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private BigInteger id;
+    
 
     @Size(max = 50)
     @Column(name = "FIRSTNAME")

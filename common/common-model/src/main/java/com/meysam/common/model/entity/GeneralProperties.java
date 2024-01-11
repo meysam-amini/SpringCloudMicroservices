@@ -16,10 +16,6 @@ import java.math.BigInteger;
 @Table
 public class GeneralProperties extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigInteger Id;
-
     @NotBlank
     @Column(unique = true)
     private String settingKey;

@@ -1,5 +1,6 @@
 package com.meysam.common.model.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +9,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Version;
 import java.util.Date;
 
 @Getter
@@ -20,6 +18,10 @@ import java.util.Date;
 @MappedSuperclass
 public class BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private long id;
 
     @Version
     @Column(nullable = false)

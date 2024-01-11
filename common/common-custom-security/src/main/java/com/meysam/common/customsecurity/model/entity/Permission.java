@@ -16,10 +16,7 @@ public class Permission extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private BigInteger id;
+    
 
     @NotNull(message = "invalid name")
     @Size(max = 50)

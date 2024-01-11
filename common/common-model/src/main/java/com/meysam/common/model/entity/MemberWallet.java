@@ -14,9 +14,6 @@ import java.math.BigInteger;
 @Table(uniqueConstraints = {@UniqueConstraint(name = "memberwallet",columnNames = {"member_id","coin_unit"})})
 public class MemberWallet extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigInteger Id;
 
     @JoinColumn(name = "member_id")
     @ManyToOne(cascade =  CascadeType.ALL,fetch = FetchType.EAGER)

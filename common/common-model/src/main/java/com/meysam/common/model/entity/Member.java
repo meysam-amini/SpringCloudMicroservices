@@ -17,9 +17,7 @@ import java.math.BigInteger;
 @Table
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigInteger Id;
+    
 
     @Column(nullable = false , unique = true)
     private String username;

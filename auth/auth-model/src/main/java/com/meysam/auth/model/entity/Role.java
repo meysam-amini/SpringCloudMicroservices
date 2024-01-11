@@ -16,5 +16,5 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigDecimal Id;
+    private long Id;
 }
