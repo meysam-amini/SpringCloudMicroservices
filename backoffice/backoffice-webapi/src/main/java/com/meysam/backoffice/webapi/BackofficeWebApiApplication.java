@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         ,"com.meysam.common.utils.*"
         ,"com.meysam.common.configs.*"
 //        ,"com.meysam.common.security"
-        ,"com.meysam.common.service.*"
+//        ,"com.meysam.common.service.*"
 })
 @EnableJpaRepositories(basePackages = {
         "com.meysam.common.dao",

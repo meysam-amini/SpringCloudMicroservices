@@ -36,9 +36,11 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Value("${api.checkToken.url}")
     private String CHECK_TOKEN_URL;
-    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
+    //if keycloak used:
+//    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
     private String CLIENT_ID;
-    @Value("${oauth.client.secret}")
+    //if keycloak used:
+//    @Value("${oauth.client.secret}")
     private String CLIENT_SECRET;
     @Value(GlobalConstants.IS_TEST_PROPERTY)
     public boolean isTest;

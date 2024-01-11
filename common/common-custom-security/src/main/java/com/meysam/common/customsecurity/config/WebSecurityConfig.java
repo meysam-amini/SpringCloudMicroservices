@@ -29,12 +29,12 @@ public class WebSecurityConfig {
     @Value(SecurityConstants.IGNORED_PATH_PROPERTY)
     private String[] ignoredPaths;
     @Value(SecurityConstants.ENABLE_SECURITY)
-    private Boolean enableSecurity;
+    private String enableSecurity;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilterAfter(new CheckTokenFilter(enableSecurity,securityService, ignoredPaths), ConcurrentSessionFilter.class);
+                .addFilterAfter(new CheckTokenFilter(Boolean.parseBoolean(enableSecurity),securityService, ignoredPaths), ConcurrentSessionFilter.class);
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
