@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <included>
-<!--    <springProperty name="LOGBACK_URL" source="logging.appender.logstash.destination.url"/>-->
-<!--    <springProperty name="LOGBACK_PORT" source="logging.appender.logstash.destination.port"/>-->
+    <springProperty name="LOGSTASH_URL" source="logging.appender.logstash.destination.url"/>
+    <springProperty name="LOGSTASH_PORT" source="logging.appender.logstash.destination.port"/>
     <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
 <!--        <destination>localhost:5000</destination>-->
-        <destination>localhost:5044</destination>
-<!--        <destination>${LOGBACK_URL}:${LOGBACK_PORT}</destination>-->
+<!--        <destination>localhost:5044</destination>-->
+        <destination>${LOGSTASH_URL}:${LOGSTASH_PORT}</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <providers>
                 <timestamp/>
