@@ -50,7 +50,7 @@ public class PrincipleServiceImpl implements PrincipleService {
                 List<String> directPermissions = getProfilePermissions(admin.getId());
 
                 List<Role> roles = getRolesNames(admin.getId());
-                List<BigInteger> rolesIds = roles.stream().map(Role::getId).toList();
+                List<Long> rolesIds = roles.stream().map(Role::getId).toList();
                 List<String> permissionsByRoles = getRolesPermissionsNames(rolesIds);
 
                 permissionsByRoles.addAll(directPermissions);
@@ -91,15 +91,15 @@ public class PrincipleServiceImpl implements PrincipleService {
         return profileService.getAdminByUsername(usernam);
     }
 
-    private List<String> getProfilePermissions(BigInteger profileId) {
+    private List<String> getProfilePermissions(Long profileId) {
         return profilePermissionService.getPermissions(profileId);
     }
 
-    private List<String> getRolesPermissionsNames(List<BigInteger> rolesIds) {
+    private List<String> getRolesPermissionsNames(List<Long> rolesIds) {
         return rolePermissionService.getPermissions(rolesIds);
     }
 
-    private List<Role> getRolesNames(BigInteger profileId) {
+    private List<Role> getRolesNames(Long profileId) {
         return profileRoleService.getRoles(profileId);
     }
 }

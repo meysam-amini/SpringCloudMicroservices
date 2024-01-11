@@ -14,13 +14,13 @@ import java.util.Optional;
 @Repository
 public interface AdminRoleRepository extends BaseRepository<AdminRole> {
 
-    Optional<AdminRole> findByAdminAndRole(BigInteger admin, BigInteger role);
+    Optional<AdminRole> findByAdminAndRole(Long admin, Long role);
 
-    List<AdminRole> findAllByAdmin(BigInteger admin);
+    List<AdminRole> findAllByAdmin(Long admin);
 
     @Query(value = "select r from Role r where r.id in (select pr.role from AdminRole pr where pr.admin=:adminId)")
-    List<Role> findRolesByProfileId(@Param("adminId") BigInteger adminId);
+    List<Role> findRolesByProfileId(@Param("adminId") Long adminId);
 
-    Optional<AdminRole> findByRole(BigInteger role);
+    Optional<AdminRole> findByRole(Long role);
 
 }

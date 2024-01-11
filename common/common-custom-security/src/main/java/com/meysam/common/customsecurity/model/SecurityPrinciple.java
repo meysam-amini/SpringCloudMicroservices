@@ -12,5 +12,5 @@ public class SecurityPrinciple {
     private List<String> roles;
     private List<String> permissions;
     private String username;
-    private BigInteger adminId;
+    private Long adminId;
 }

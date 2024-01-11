@@ -15,7 +15,7 @@ public class RolePermissionService {
 
     private final RolePermissionRepository rolePermissionRepository;
 
-    public List<String> getPermissions(List<BigInteger> rolesIds) {
+    public List<String> getPermissions(List<Long> rolesIds) {
         return rolePermissionRepository.findAllPermissionsNamesByRoles(rolesIds);
     }
 }

@@ -21,7 +21,7 @@ public class AdminRoleService {
         return adminRoleRepository.save(adminRole);
     }
 
-    public List<Role> getRoles(BigInteger profileId) {
+    public List<Role> getRoles(Long profileId) {
         return adminRoleRepository.findRolesByProfileId(profileId);
     }
 }

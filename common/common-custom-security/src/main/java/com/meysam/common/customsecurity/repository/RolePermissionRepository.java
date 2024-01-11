@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface RolePermissionRepository extends BaseRepository<RolePermission> {
-    Optional<RolePermission> findByPermissionAndRole(BigInteger permission, BigInteger Role);
+    Optional<RolePermission> findByPermissionAndRole(Long permission, Long Role);
 
-    List<RolePermission> findByPermission(BigInteger permission);
+    List<RolePermission> findByPermission(Long permission);
 
-    Optional<RolePermission> findByRole(BigInteger role);
+    Optional<RolePermission> findByRole(Long role);
 
     @Query("select p.name from Permission p where p.id in(select rp.permission from RolePermission rp where rp.role in(:rolesIds))")
-    List<String> findAllPermissionsNamesByRoles(List<BigInteger> rolesIds);
+    List<String> findAllPermissionsNamesByRoles(List<Long> rolesIds);
 }

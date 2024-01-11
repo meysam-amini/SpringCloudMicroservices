@@ -15,7 +15,7 @@ public class AdminPermissionService {
 
     private final AdminPermissionRepository adminPermissionRepository;
 
-    public List<String> getPermissions(BigInteger adminId) {
+    public List<String> getPermissions(Long adminId) {
         return adminPermissionRepository.findPermissionsNamesByAdmin(adminId);
     }
 }
