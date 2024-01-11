@@ -9,7 +9,7 @@ spring:
 logging:
   appender:
     console:
-      enabled: false
+      enabled: true
     file:
       enabled: false
     rabbit:
@@ -24,7 +24,7 @@ logging:
         exchangeType: topic
         exchangeName: logs
     logstash:
-      enabled: true
+      enabled: false
       destination:
         url: localhost
         port: 5044
