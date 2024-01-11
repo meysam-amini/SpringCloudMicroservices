@@ -18,9 +18,9 @@ public interface AdminRepository extends BaseRepository<Admin> {
 
     Optional<Admin> findByNationalId(String nationalId);
 
-    Optional<Admin> findByUsernameAndPasswordAndIsActive(String username, String pass, Boolean active);
+    Optional<Admin> findByUsernameAndPassword(String username, String pass);
 
-    Optional<Admin> findByNationalIdAndPasswordAndIsActive(String nationalId, String pass, Boolean active);
+    Optional<Admin> findByNationalIdAndPassword(String nationalId, String pass);
 
     Optional<Admin> findByUsername(String username);
 }
