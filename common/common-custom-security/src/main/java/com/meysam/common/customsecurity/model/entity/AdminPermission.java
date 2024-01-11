@@ -17,11 +17,11 @@ public class AdminPermission extends BaseEntity implements Serializable {
 
     @NotNull(message = "invalid permission")
     @Column(name = "PERMISSION")
-    BigInteger permission;
+    Long permission;
 
     @NotNull(message = "invalid profile")
     @Column(name = "admin")
-    BigInteger admin;
+    Long admin;
 
 
 }

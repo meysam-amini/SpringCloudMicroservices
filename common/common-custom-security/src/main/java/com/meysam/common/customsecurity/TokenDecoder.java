@@ -36,7 +36,7 @@ public class TokenDecoder {
         JsonNode rolesJsonNode = actualObj.get("roles");
         SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
                 .username(adminUsernameJsonNode.asText())
-                .adminId(BigInteger.valueOf(Long.parseLong(adminIdJsonNode.asText())))
+                .adminId(Long.parseLong(adminIdJsonNode.asText()))
                 .permissions(Arrays.stream(permissionsJsonNode.asText().split(",")).toList())
                 .roles(Arrays.stream(rolesJsonNode.asText().split(",")).toList())
                 .build();

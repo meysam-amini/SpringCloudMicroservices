@@ -19,9 +19,9 @@ public class AdminRole extends BaseEntity implements Serializable {
 
     @NotNull(message = "invalid role")
     @Column(name = "ROLE")
-    BigInteger role;
+    Long role;
 
     @NotNull(message = "invalid profile")
     @Column(name = "admin")
-    BigInteger admin;
+    Long admin;
 }

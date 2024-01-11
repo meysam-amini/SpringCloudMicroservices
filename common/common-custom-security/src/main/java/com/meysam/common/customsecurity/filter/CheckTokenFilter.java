@@ -1,5 +1,6 @@
 package com.meysam.common.customsecurity.filter;
 
+import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.customsecurity.TokenDecoder;
 import com.meysam.common.customsecurity.model.CustomSecurityContext;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
@@ -57,9 +58,13 @@ public class CheckTokenFilter extends OncePerRequestFilter {
             }
             String authorizationToken = authorizationHeader.substring(7);
             if (securityService.checkToken(authorizationToken)) {
+                SecurityPrinciple clientPrinciple=null;
                 try {
-                    SecurityPrinciple clientPrinciple = decodeToken(authorizationToken);
-
+                     clientPrinciple= decodeToken(authorizationToken);
+                }catch (Exception e){
+                    log.error("token is valid or isTest is true, but decoding or casting token encounter exception at time:{}, the exception is : {}",System.currentTimeMillis(), e);
+                    unauthenticated("Token is invalid ",response);
+                }
                     if(!securityService.hasActiveSession(clientPrinciple.getUsername())){
                         unauthenticated("You have been logged out already",response);
                         return;
@@ -67,12 +72,14 @@ public class CheckTokenFilter extends OncePerRequestFilter {
                     SecurityContext securityContext = new CustomSecurityContext(clientPrinciple);
                     SecurityContextHolder.setContext(securityContext);
                     request.getSession().setAttribute(SessionConstants.CLIENT_SESSION, clientPrinciple);
-                    filterChain.doFilter(request, response);
-                }catch (Exception e){
-                    log.error("token is valid or isTest is true, but decoding or casting token encounter exception at time:{}, the exception is : {}",System.currentTimeMillis(), e);
-                    unauthenticated("Token is invalid ",response);
-                }
-
+                    try {
+                        filterChain.doFilter(request, response);
+                    }catch (BusinessException e){
+                        throw e;
+                    }catch (Exception e){
+                        log.error("encounter exception in checkTokenFilter at time:{}, the exception is : {}",System.currentTimeMillis(), e);
+                        throw new BusinessException("Internal Server Error");
+                    }
                 SecurityContextHolder.clearContext();
             }
             else {

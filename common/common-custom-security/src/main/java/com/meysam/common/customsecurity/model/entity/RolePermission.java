@@ -17,9 +17,9 @@ public class RolePermission extends BaseEntity implements Serializable {
 
     @NotNull(message = "invalid role")
     @Column(name = "ROLE")
-    BigInteger role;
+    Long role;
 
     @NotNull(message = "invalid permission")
     @Column(name = "PERMISSION")
-    BigInteger permission;
+    Long permission;
 }

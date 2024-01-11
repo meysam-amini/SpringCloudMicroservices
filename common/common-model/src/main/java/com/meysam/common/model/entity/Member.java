@@ -15,9 +15,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Entity
 @Table
-public class Member {
-
-    
+public class Member extends BaseEntity{
 
     @Column(nullable = false , unique = true)
     private String username;
