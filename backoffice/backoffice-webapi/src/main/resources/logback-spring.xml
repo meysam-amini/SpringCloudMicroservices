@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
+
     <include resource="com.meysam.logging/logging-configurable.xml"/>
 
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="asyncConsole" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="console"/>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="asyncConsole"/>
+        <!--        <appender-ref ref="asyncRabbitmq"/>-->
+        <!--        <appender-ref ref="asyncSocketLogstash"/>-->
+    </root>
 </configuration>

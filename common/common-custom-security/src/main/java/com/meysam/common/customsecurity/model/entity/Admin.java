@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 
-@Table(name = "PROFILE")
+@Table(name = "ADMIN")
 @Data
 @Entity
 public class Admin extends BaseEntity implements Serializable{

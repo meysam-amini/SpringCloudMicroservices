@@ -33,7 +33,7 @@ import java.util.Map;
 public class AdminAuthServiceImpl implements AdminAuthService {
 
     private final LocaleMessageSourceService messageSourceService;
-    private final AdminAuthServiceClient authServiceClient;
+//    private final AdminAuthServiceClient authServiceClient;
     private final PrincipleService principleService;
     private final JwtUtil jwtUtils;
     private final AdminService adminService;

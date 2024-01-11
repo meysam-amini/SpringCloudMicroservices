@@ -1,5 +1,6 @@
 package com.meysam.common.customsecurity.model.entity;
 
+import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,7 +12,7 @@ import java.math.BigInteger;
 @Table(name = "PERMISSION")
 @Data
 @Entity
-public class Permission implements Serializable {
+public class Permission extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

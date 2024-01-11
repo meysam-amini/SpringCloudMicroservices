@@ -8,7 +8,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.math.BigInteger;
 
-@Table(name = "PROFILEROLE")
+@Table(name = "ADMINROLE")
 @Data
 @Entity
 public class AdminRole extends BaseEntity implements Serializable {
