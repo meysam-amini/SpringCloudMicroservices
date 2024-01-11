@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
     <include resource="com.meysam.logging/logging-configurable.xml"/>
-<!--    <conversionRule conversionWord="tag" converterClass="com.meysam.common.configs.logback.LogConverterConfig"/>-->
-
-    <Appenders>
-        <Socket name="Socket" host="localhost" port="5044">
-            <JsonLayout compact="true" eventEol="true"/>
-        </Socket>
-    </Appenders>
-
-
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
-        </encoder>
-    </appender>
-
-    <appender name="asyncConsole" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="console"/>
-    </appender>
-
-    <appender name="asyncSocketLogstash" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="logstash"/>
-    </appender>
-
-    <include resource="com.meysam.logging/appender-amqp.xml"/>
-
-    <root level="INFO">
-        <appender-ref ref="asyncConsole"/>
-        <!--        <appender-ref ref="asyncRabbitmq"/>-->
-        <!--        <appender-ref ref="asyncSocketLogstash"/>-->
-    </root>
-
 
 </configuration>
