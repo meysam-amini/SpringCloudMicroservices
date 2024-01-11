@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
-        <include resource="com.meysam.logging/defaults.xml"/>
-        <include resource="com.meysam.logging/logging-configurable.xml"/>
+    <include resource="com.meysam.logging/logging-configurable.xml"/>
 
     <springProperty scope="context" name="LOGBACK_URL" source="logging.appender.logstash.destination.url"/>
     <springProperty scope="context" name="LOGBACK_PORT" source="logging.appender.logstash.destination.port"/>
 
     <conversionRule conversionWord="tag" converterClass="com.meysam.common.configs.logback.LogConverterConfig"/>
 
-<!--    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
-<!--        <destination>${LOGBACK_URL:- }:${LOGBACK_PORT:- }</destination>-->
-<!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
-<!--            <providers>-->
-<!--                <timestamp/>-->
-<!--                <version/>-->
-<!--                <loggerName/>-->
-<!--                <pattern>-->
-<!--                    {-->
-<!--                    "tag": "%tag",-->
-<!--                    "level": "%level",-->
-<!--                    "thread": "%thread",-->
-<!--                    "app_name": "${appName}",-->
-<!--                    "app_port": "${appPort}",-->
-<!--                    "message": "%message - %exception"-->
-<!--                    }-->
-<!--                </pattern>-->
-<!--            </providers>-->
-<!--        </encoder>-->
-<!--        <keepAliveDuration>5 minutes</keepAliveDuration>-->
-<!--    </appender>-->
+    <!--    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+    <!--        <destination>${LOGBACK_URL:- }:${LOGBACK_PORT:- }</destination>-->
+    <!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+    <!--            <providers>-->
+    <!--                <timestamp/>-->
+    <!--                <version/>-->
+    <!--                <loggerName/>-->
+    <!--                <pattern>-->
+    <!--                    {-->
+    <!--                    "tag": "%tag",-->
+    <!--                    "level": "%level",-->
+    <!--                    "thread": "%thread",-->
+    <!--                    "app_name": "${appName}",-->
+    <!--                    "app_port": "${appPort}",-->
+    <!--                    "message": "%message - %exception"-->
+    <!--                    }-->
+    <!--                </pattern>-->
+    <!--            </providers>-->
+    <!--        </encoder>-->
+    <!--        <keepAliveDuration>5 minutes</keepAliveDuration>-->
+    <!--    </appender>-->
 
     <Appenders>
         <Socket name="Socket" host="localhost" port="5044">
@@ -55,8 +54,8 @@
 
     <root level="INFO">
         <appender-ref ref="asyncConsole"/>
-<!--        <appender-ref ref="asyncRabbitmq"/>-->
-<!--        <appender-ref ref="asyncSocketLogstash"/>-->
+        <!--        <appender-ref ref="asyncRabbitmq"/>-->
+        <!--        <appender-ref ref="asyncSocketLogstash"/>-->
     </root>
 
 
