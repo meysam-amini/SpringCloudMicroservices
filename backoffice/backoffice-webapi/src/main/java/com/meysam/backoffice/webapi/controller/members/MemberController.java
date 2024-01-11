@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 public class MemberController {
 
-    private final MemberService memberService;
+//    private final MemberService memberService;
 
     @Value("${test.refresh.bus:default}")
     private String testBusrefresh;
@@ -35,6 +35,7 @@ public class MemberController {
 
     @PostMapping("page-query")
     public ResponseEntity<Page<MemberDto>> pageQuery(MemberFilterDto memberFilterDto){
-        return ResponseEntity.ok(memberService.pageQuery(memberFilterDto));
+//        return ResponseEntity.ok(memberService.pageQuery(memberFilterDto));
+        return null;
     }
 }
