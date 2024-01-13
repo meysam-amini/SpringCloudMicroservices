@@ -17,7 +17,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class OutBox {
 
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "STATUS")
     private OutboxEventStatus status= OutboxEventStatus.UNSENT;
