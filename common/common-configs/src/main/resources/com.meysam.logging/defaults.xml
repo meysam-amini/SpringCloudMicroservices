@@ -6,7 +6,5 @@
     <springProperty scope="context" name="appName" source="spring.application.name"/>
     <springProperty scope="context" name="appPort" source="server.port"/>
     <springProperty scope="context" name="consoleEnabled" source="logging.appender.console.enabled"/>
-    <springProperty scope="context" name="fileEnabled" source="logging.appender.file.enabled"/>
-    <springProperty scope="context" name="amqpEnabled" source="logging.appender.rabbit.enabled"/>
     <springProperty scope="context" name="logstashEnabled" source="logging.appender.logstash.enabled"/>
 </included>

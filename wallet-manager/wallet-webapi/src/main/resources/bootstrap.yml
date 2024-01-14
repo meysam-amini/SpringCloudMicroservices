@@ -3,3 +3,26 @@ spring:
     config:
       uri: http://localhost:8012
       name: config-server
+
+logging:
+  appender:
+    console:
+      enabled: true
+    file:
+      enabled: false
+    rabbit:
+      enabled: false
+      required: true
+      destination:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+        virtualHost: /
+        exchangeType: topic
+        exchangeName: logs
+    logstash:
+      enabled: false
+      destination:
+        url:
+        port:

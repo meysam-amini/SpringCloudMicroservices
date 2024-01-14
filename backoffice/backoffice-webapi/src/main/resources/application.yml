@@ -13,6 +13,23 @@ spring:
         /swagger-ui/**,
         /public/**,
         /api/public/**
+  datasource:
+    driverClassName: org.postgresql.Driver
+    #    url: jdbc:h2:mem:testdb
+    url: jdbc:postgresql://127.0.0.1:5432/scm
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 eureka:
   instance:
@@ -61,7 +78,7 @@ jwt:
 
 #logging:
 #  level:
-#    root: debug
+#    root: INFO
 #    com:
 #      netflix:
 #        discovery: OFF

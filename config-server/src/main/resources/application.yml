@@ -20,7 +20,7 @@ spring:
         enabled: false
       server:
         native:
-          search-locations: file:/home/meysam/Meysam_Workspace/github/repositories/MyConfigServer-main
+          search-locations: D:\Meysam-workspace\github\MyConfigServer-main
 #        git:
 #          uri: https://github.com/meysam-amini/MyConfigServer
 #          username: username=meysamamini7394@gmail.com
@@ -76,32 +76,32 @@ management:
 #            issuer-uri: http://127.0.0.1:8080/realms/meysam
 #            user-name-attribute: preferred_username
 #  #################RABBITMQ#####################
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 #  ##############DATA SOURCE####################
-#  #  h2:
-#  #    console:
-#  #      enabled: true
-#  datasource:
-#    driverClassName: org.postgresql.Driver
-#    #    url: jdbc:h2:mem:testdb
-#    url: jdbc:postgresql://127.0.0.1:5432/postgres
-#    username: admin
-#    password: password
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    generate-ddl: true
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        jdbc:
-#          lob:
-#            non_contextual_creation: true
+  #  h2:
+  #    console:
+  #      enabled: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    #    url: jdbc:h2:mem:testdb
+    url: jdbc:postgresql://127.0.0.1:5432/scm
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 #  #################REDIS########################
 #  data:
 #    redis:

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <included>
-    <springProperty name="LOGSTASH_URL" source="logging.appender.logstash.destination.url"/>
-    <springProperty name="LOGSTASH_PORT" source="logging.appender.logstash.destination.port"/>
+
+    <springProperty name="LOGBACK_URL" source="logging.appender.logstash.destination.url"/>
+    <springProperty name="LOGBACK_PORT" source="logging.appender.logstash.destination.port"/>
     <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-<!--        <destination>localhost:5000</destination>-->
-<!--        <destination>localhost:5044</destination>-->
-        <destination>${LOGSTASH_URL}:${LOGSTASH_PORT}</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        <destination>${LOGBACK_URL:- }:${LOGBACK_PORT:- }</destination>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <timestamp/>
                 <version/>
@@ -15,7 +14,7 @@
                 <pattern>
                     <pattern>
                         {
-<!--                        "metadata":"mymetadata",-->
+                        "metadata":"scm",
                         "level": "%level",
                         "thread": "%thread",
                         "app_name": "${appName}",
@@ -26,12 +25,11 @@
                 </pattern>
             </providers>
         </encoder>
+        <keepAliveDuration>5 minutes</keepAliveDuration>
     </appender>
 
     <appender name="asyncLogstash" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="logstash"/>
     </appender>
-
-
 
 </included>

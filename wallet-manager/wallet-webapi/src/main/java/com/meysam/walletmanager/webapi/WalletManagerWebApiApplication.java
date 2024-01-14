@@ -20,11 +20,10 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
         ,"com.meysam.common.configs.*"
         ,"com.meysam.common.service.*"
         ,"com.meysam.walletmanager.*"
-        ,"com.meysam.users.service.*"
 })
 @EnableJpaRepositories(basePackages={"com.meysam.walletmanager.dao","com.meysam.common.dao"})
 @EntityScan(basePackages = "com.meysam.common.model.entity")
-@EnableFeignClients(basePackages = {"com.meysam.users.service.*","com.meysam.common.service.*"})
+@EnableFeignClients(basePackages = {"com.meysam.common.service.*"})
 public class WalletManagerWebApiApplication {
 
     public static void main(String []args){

@@ -24,7 +24,7 @@ logging:
         exchangeType: topic
         exchangeName: logs
     logstash:
-      enabled: false
+      enabled: true
       destination:
-        url: localhost
+        url: 10.2.10.27
         port: 5044
