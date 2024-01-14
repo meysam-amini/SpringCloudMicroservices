@@ -1,44 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <included>
-    <include resource="com.meysam.logging/defaults.xml"/>
-    <if condition='property("consoleEnabled").equalsIgnoreCase("TRUE")'>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+
+    <springProperty  name="appName" source="spring.application.name"/>
+    <springProperty  name="appPort" source="server.port"/>
+    <springProperty  name="consoleEnabled" source="logging.appender.console.enabled"/>
+    <springProperty  name="logstashEnabled" source="logging.appender.logstash.enabled"/>
+
+
+    <if condition='property("consoleEnabled").equalsIgnoreCase("true")'>
         <then>
             <include resource="com.meysam.logging/appender-console.xml"/>
         </then>
     </if>
-    <if condition='property("fileEnabled").equalsIgnoreCase("TRUE")'>
-        <then>
-            <include resource="com.meysam.logging/appender-file.xml"/>
-        </then>
-    </if>
-    <if condition='property("amqpEnabled").equalsIgnoreCase("TRUE")'>
-        <then>
-            <include resource="com.meysam.logging/appender-amqp.xml"/>
-        </then>
-    </if>
-    <if condition='property("logstashEnabled").equalsIgnoreCase("TRUE")'>
+    <if condition='property("logstashEnabled").equalsIgnoreCase("true")'>
         <then>
             <include resource="com.meysam.logging/appender-logstash.xml"/>
         </then>
     </if>
     <root level="INFO">
-        <if condition='property("consoleEnabled").equalsIgnoreCase("TRUE")'>
+        <if condition='property("consoleEnabled").equalsIgnoreCase("true")'>
             <then>
                 <appender-ref ref="asyncConsole"/>
             </then>
         </if>
-        <if condition='property("fileEnabled").equalsIgnoreCase("TRUE")'>
-            <then>
-                <appender-ref ref="logFile"/>
-            </then>
-        </if>
-        <if condition='property("amqpEnabled").equalsIgnoreCase("TRUE")'>
-            <then>
-                <appender-ref ref="asyncRabbitmq"/>
-            </then>
-        </if>
-        <if condition='property("logstashEnabled").equalsIgnoreCase("TRUE")'>
+        <if condition='property("logstashEnabled").equalsIgnoreCase("true")'>
             <then>
                 <appender-ref ref="asyncLogstash"/>
             </then>

@@ -10,6 +10,11 @@ logging:
   appender:
     console:
       enabled: true
+    logstash:
+      enabled: true
+      destination:
+        url:
+        port:
     file:
       enabled: false
     rabbit:
@@ -23,8 +28,3 @@ logging:
         virtualHost: /
         exchangeType: topic
         exchangeName: logs
-    logstash:
-      enabled: true
-      destination:
-        url: 10.2.10.27
-        port: 5044
