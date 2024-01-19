@@ -22,7 +22,6 @@ public class MemberFilterDto extends PageQueryBaseModel {
     private String firstName;
     private String lastName;
 
-    @JsonIgnore
     @Override
     public List<BooleanExpression> getBooleanExpressions() {
         List<BooleanExpression> booleanExpressionList = new ArrayList<>();
