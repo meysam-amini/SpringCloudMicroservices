@@ -1,5 +1,6 @@
 package com.meysam.common.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.meysam.common.model.entity.QMember;
 import com.meysam.common.model.pagination.PageQueryBaseModel;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -21,6 +22,7 @@ public class MemberFilterDto extends PageQueryBaseModel {
     private String firstName;
     private String lastName;
 
+    @JsonIgnore
     @Override
     public List<BooleanExpression> getBooleanExpressions() {
         List<BooleanExpression> booleanExpressionList = new ArrayList<>();
