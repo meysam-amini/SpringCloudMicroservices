@@ -31,20 +31,20 @@ spring:
           lob:
             non_contextual_creation: true
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      password: ######
-      connect-timeout: 10000
-      timeout: 10000
-      jedis:
-        pool:
-          enabled: true
-          max-active: 300
-          max-wait: 5000
-          max-idle: 100
-          min-idle: 20
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+#      password: ######
+#      connect-timeout: 10000
+#      timeout: 10000
+#      jedis:
+#        pool:
+#          enabled: true
+#          max-active: 300
+#          max-wait: 5000
+#          max-idle: 100
+#          min-idle: 20
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.utility.DockerImageName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,6 +24,19 @@ public class AdminControllerTest {
     private  AdminAuthService adminAuthService;
     @Mock
     private  PermissionService permissionService;
+
+    static {
+        GenericContainer<?> redis =
+                new GenericContainer<>(DockerImageName.parse("redis:6")).withExposedPorts(6379);
+        redis.start();
+        System.setProperty("spring.data.redis.host", redis.getHost());
+        System.setProperty("spring.data.redis.port", redis.getMappedPort(6379).toString());
+        System.setProperty("spring.data.redis.connect-timeout", "10000");
+        System.setProperty("spring.data.redis.timeout", "1000");
+        System.setProperty("spring.data.redis.jedis.pool.min-idle", "20");
+        System.setProperty("spring.data.redis.jedis.pool.max-idle", "100");
+
+    }
 
     @Test
     public void loginTest(){
@@ -34,7 +49,8 @@ public class AdminControllerTest {
             assertEquals(ResponseEntity.ok(),response.getStatusCode());
 
         }catch (Exception e){
-            assertEquals(BusinessException.class,e.getCause().getClass());
+//            assertEquals(BusinessException.class,e);
+            assertEquals("User not found", e.getMessage());
         }
     }
 

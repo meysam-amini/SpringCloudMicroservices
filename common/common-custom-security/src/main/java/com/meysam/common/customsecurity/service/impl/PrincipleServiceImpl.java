@@ -67,7 +67,11 @@ public class PrincipleServiceImpl implements PrincipleService {
             } else {
                 return valueOperations.get(key);
             }
-        }catch (Exception e){
+        }
+        catch (BusinessException e){
+            throw e;
+        }
+        catch (Exception e){
             log.error("Exception on getting client principle at login process at time:{} , exception is:{}", System.currentTimeMillis(), e);
             throw new BusinessException("Server error at login process");
         }
