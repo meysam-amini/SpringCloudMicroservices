@@ -16,9 +16,9 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     #    url: jdbc:h2:mem:testdb
-    url: jdbc:postgresql://127.0.0.1:5432/scm
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: admin
+    password: password
 
   jpa:
     hibernate:
@@ -31,6 +31,20 @@ spring:
           lob:
             non_contextual_creation: true
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ######
+      connect-timeout: 10000
+      timeout: 10000
+      jedis:
+        pool:
+          enabled: true
+          max-active: 300
+          max-wait: 5000
+          max-idle: 100
+          min-idle: 20
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
