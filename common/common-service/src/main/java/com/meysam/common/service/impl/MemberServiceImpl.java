@@ -80,7 +80,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findById(BigInteger id) {
+    public Member findById(Long id) {
         return memberRepository.findById(id).orElse(null);
     }
 

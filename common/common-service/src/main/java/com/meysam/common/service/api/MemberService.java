@@ -14,7 +14,7 @@ public interface MemberService/* extends UserDetailsService*/ {
   ResponseEntity register(RegisterUserRequestDto registerUserRequestDto);
   Member findByUserName(String username);
   Page<MemberDto> pageQuery(MemberFilterDto memberFilterDto);
-  Member findById(BigInteger id);
+  Member findById(Long id);
   List<Member> findAll();
   UserWalletsDto getUserWallets(String token,String username);
   ResponseEntity<String> createMemberWalletAddress(String token,MemberWalletDto memberWalletDto);
