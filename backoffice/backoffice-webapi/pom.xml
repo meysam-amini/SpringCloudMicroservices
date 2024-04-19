@@ -110,11 +110,31 @@
                 </executions>
             </plugin>
             <plugin>
+                <!--Maven has two plugins to run UTs and ITs: Surefire and Failsafe plugin, respectively. -->
+                <!--The Maven Surefire Plugin is designed to run the unit tests of your application.
+                According to the documentation, the plugin will run every test class with the following name patterns:
+
+                **/Test*
+                **/*Test
+                **/*Tests
+                **/*TestCase
+                -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skipTests>${skip.ut}</skipTests>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!--The Maven Failsafe Plugin is designed to run the Integration Tests of your application.
+
+                If you have a look at the documentation, you can see that in order to run the ITs, your classes must follow this naming convention:
+
+                    **/IT*
+                    **/*IT
+                    **/*ITCase-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
