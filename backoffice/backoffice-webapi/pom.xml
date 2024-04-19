@@ -122,6 +122,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <!--Then, just pass the flag like this and the magic is done:
+
+
+                    *What we need to do here is to find a way to run the verify cycle while skipping the unit test phase.
+                    mvn -Dskip.ut=true verify
+
+                    By doing this, you are actually setting the skipTests variable to true in the Surefire plugin without any effect on the Failsafe plugin.-->
                     <skipTests>${skip.ut}</skipTests>
                 </configuration>
             </plugin>
