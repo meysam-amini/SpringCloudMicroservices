@@ -15,7 +15,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class PrincipleServiceImpl implements PrincipleService {
 
     private final RedisTemplate redisTemplate;
-    private final AdminService profileService;
+    private final AdminService adminService;
     private final AdminPermissionService profilePermissionService;
     private final AdminRoleService profileRoleService;
     private final RolePermissionService rolePermissionService;
@@ -92,7 +91,7 @@ public class PrincipleServiceImpl implements PrincipleService {
 
 
     private Admin getProfileByUsername(String usernam) {
-        return profileService.getAdminByUsername(usernam);
+        return adminService.getAdminByUsername(usernam);
     }
 
     private List<String> getProfilePermissions(Long profileId) {
