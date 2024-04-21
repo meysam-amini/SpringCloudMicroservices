@@ -22,7 +22,7 @@ public class AdminControllerIT {
 
     @Autowired
     private  AdminAuthService adminAuthService;
-    @MockBean
+    @Autowired
     private  PermissionService permissionService;
 
     //postgres
@@ -34,11 +34,6 @@ public class AdminControllerIT {
     //redis
     static GenericContainer<?> redis =
             new GenericContainer<>(DockerImageName.parse("redis:6")).withExposedPorts(6379);
-
-    static {
-
-
-    }
 
     @BeforeAll
     static void beforeAll(){
