@@ -114,12 +114,20 @@
             <plugin>
                 <!--Maven has two plugins to run UTs and ITs: Surefire and Failsafe plugin, respectively. -->
                 <!--The Maven Surefire Plugin is designed to run the unit tests of your application.
+
+                The plugin usage is straightforward. Just run any maven command that runs the test phase of the build lifecycle (e.g. mvn test).
+
                 According to the documentation, the plugin will run every test class with the following name patterns:
 
                 **/Test*
                 **/*Test
                 **/*Tests
                 **/*TestCase
+
+
+                 in order to run only the UTs, you can run the test lifecycle, since it will not get to the phase where the ITs run(verify).
+                 mvn test
+
                 -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
