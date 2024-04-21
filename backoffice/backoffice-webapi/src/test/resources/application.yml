@@ -13,23 +13,23 @@ spring:
         /swagger-ui/**,
         /public/**,
         /api/public/**
-  datasource:
-    driverClassName: org.postgresql.Driver
-    #    url: jdbc:h2:mem:testdb
-    url: jdbc:postgresql://127.0.0.1:5432/postgres
-    username: admin
-    password: password
+#  datasource:
+#    driverClassName: org.postgresql.Driver
+#    #    url: jdbc:h2:mem:testdb
+#    url: jdbc:postgresql://127.0.0.1:5432/postgres
+#    username: admin
+#    password: password
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    generate-ddl: true
-    show-sql: true
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    generate-ddl: true
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        jdbc:
+#          lob:
+#            non_contextual_creation: true
 
 #  data:
 #    redis:
