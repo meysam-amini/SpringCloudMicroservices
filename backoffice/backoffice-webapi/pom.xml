@@ -89,6 +89,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--The main idea behind Testcontainers is to provide an environment
+        for integration testing that deals with all of the infrastructure our tests need, -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
