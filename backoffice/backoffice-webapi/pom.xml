@@ -149,7 +149,17 @@
 
                     **/IT*
                     **/*IT
-                    **/*ITCase-->
+                    **/*ITCase
+
+                    The plugin usage is a bit trickier when compared to the Surefire one. The maven lifecycle for integration test is made of 4 different phases:
+
+                    pre-integration-test: used to set up the IT environment
+                    integration-test: used for running the ITs
+                    post-integration-test: used to tearing down the IT environment
+                    verify: used to check the result of the ITs
+
+                    *The plugin runs during the integration-test and verify phases. Having said that, you can run your ITs by running mvn verify.
+                    -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
