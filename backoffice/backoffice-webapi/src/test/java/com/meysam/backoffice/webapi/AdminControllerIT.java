@@ -1,18 +1,13 @@
 package com.meysam.backoffice.webapi;
 
 import com.meysam.backoffice.service.auth.api.AdminAuthService;
-import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import com.meysam.common.model.dto.LoginRequestDto;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -20,7 +15,7 @@ import org.testcontainers.utility.DockerImageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class AdminControllerTest {
+public class AdminControllerIT {
 
     @Mock
     private  AdminAuthService adminAuthService;
