@@ -16,9 +16,9 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     #    url: jdbc:h2:mem:testdb
-    url: jdbc:postgresql://127.0.0.1:5432/scm
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: admin
+    password: password
 
   jpa:
     hibernate:

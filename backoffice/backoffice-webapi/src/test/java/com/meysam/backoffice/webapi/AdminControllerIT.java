@@ -26,6 +26,7 @@ public class AdminControllerIT {
     private  PermissionService permissionService;
 
     static {
+        //redis
         GenericContainer<?> redis =
                 new GenericContainer<>(DockerImageName.parse("redis:6")).withExposedPorts(6379);
         redis.start();
@@ -35,6 +36,10 @@ public class AdminControllerIT {
         System.setProperty("spring.data.redis.timeout", "1000");
         System.setProperty("spring.data.redis.jedis.pool.min-idle", "20");
         System.setProperty("spring.data.redis.jedis.pool.max-idle", "100");
+        //postgres
+        GenericContainer<?> postgres =
+                new GenericContainer<>(DockerImageName.parse("postgres:14.2")).withExposedPorts(6379);
+
 
     }
 
