@@ -1,13 +1,38 @@
+image: maven:3.8.6-jdk-11
+
 stages:
   - build
   - test
+  - deploy
 
-job_build:
+cache:
+  paths:
+    - .m2/repository
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode --errors --fail-at-end --show-version"
+
+before_script:
+  - echo "Setting up Maven environment"
+  - mvn $MAVEN_CLI_OPTS --version
+
+build:
   stage: build
   script:
-    - echo "Building the project"
+    - mvn $MAVEN_CLI_OPTS clean install
+  artifacts:
+    paths:
+      - target/*.jar
 
-job_test:
+test:
   stage: test
   script:
-    - echo "Running tests"
+    - mvn $MAVEN_CLI_OPTS test
+
+deploy:
+  stage: deploy
+  only:
+    - main
+  script:
+    - echo "Deploy to production server"
+    # You can add scp, rsync, or other deployment scripts here
