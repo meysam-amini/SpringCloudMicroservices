@@ -18,6 +18,8 @@ before_script:
 
 build:
   stage: build
+  tags:
+    - maven
   script:
     - mvn $MAVEN_CLI_OPTS clean install
   artifacts:
@@ -26,11 +28,15 @@ build:
 
 test:
   stage: test
+  tags:
+    - maven
   script:
     - mvn $MAVEN_CLI_OPTS test
 
 deploy:
   stage: deploy
+  tags:
+    - maven
   only:
     - main
   script:
