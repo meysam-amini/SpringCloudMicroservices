@@ -42,5 +42,5 @@ deploy:
   only:
     - main
   script:
-    - echo "Deploy to production server..."
+    - echo "Deploy to production server...."
     # You can add scp, rsync, or other deployment scripts here
