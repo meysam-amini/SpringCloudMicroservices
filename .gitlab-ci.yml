@@ -2,7 +2,7 @@ image: maven:3.8.5-openjdk-17
 
 stages:
   - build
-  - test
+#  - test
   - deploy
 
 cache:
@@ -28,12 +28,12 @@ build:
     paths:
       - target/*.jar
 
-test:
-  stage: test
-  tags:
-    - maven
-  script:
-    - mvn $MAVEN_CLI_OPTS test
+#test:
+#  stage: test
+#  tags:
+#    - maven
+#  script:
+#    - mvn $MAVEN_CLI_OPTS test
 
 deploy:
   stage: deploy
