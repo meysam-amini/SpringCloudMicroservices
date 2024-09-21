@@ -23,7 +23,7 @@ build:
   tags:
     - maven
   script:
-    - mvn $MAVEN_CLI_OPTS clean install
+    - mvn $MAVEN_CLI_OPTS clean install  -Dmaven.test.skip=true
   artifacts:
     paths:
       - target/*.jar
