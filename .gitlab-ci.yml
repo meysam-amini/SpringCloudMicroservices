@@ -2,7 +2,8 @@ image: maven:3.8.5-openjdk-17
 
 stages:
   - build
-#  - test
+  - unit_tests
+  - integration_tests
   - deploy
 
 cache:
@@ -14,26 +15,40 @@ variables:
 #  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode --errors --fail-at-end --show-version"
 
 before_script:
-  - git remote set-url origin http://163.5.94.91/meysam-team/springcloudmicroservices.git
-  - echo "Setting up Maven environment"
-  - mvn $MAVEN_CLI_OPTS --version
+#  - git remote set-url origin http://163.5.94.91/meysam-team/springcloudmicroservices.git
+#  - echo "Setting up Maven environment"
+#  - mvn $MAVEN_CLI_OPTS --version
 
 build:
   stage: build
   tags:
     - maven
   script:
-    - mvn $MAVEN_CLI_OPTS clean install  -Dmaven.test.skip=true
+#    - mvn $MAVEN_CLI_OPTS clean package  -Dmaven.test.skip=true
+    - mvn clean package  -Dmaven.test.skip=true
   artifacts:
     paths:
       - target/*.jar
 
-#test:
-#  stage: test
-#  tags:
-#    - maven
-#  script:
-#    - mvn $MAVEN_CLI_OPTS test
+unit_tests:
+  stage: unit_tests
+  tags:
+    - maven
+  script:
+    - echo "Running Unit Tests..."
+    - mvn test
+  only:
+    - dev
+
+
+integration_tests:
+  stage: integration_tests
+  script:
+    - echo "Running Integration Tests...
+    - mvn -Dskip.ut=true verify
+  only:
+    - main
+
 
 deploy:
   stage: deploy
