@@ -42,7 +42,7 @@ unit_tests:
 
 
 integration_tests:
-  stage: integration_test
+  stage: integration_tests
   script:
     - echo "Running Integration Tests...
     - mvn -Dskip.ut=true verify
