@@ -56,10 +56,14 @@ integration_tests:
     DOCKER_DRIVER: overlay2          # Specify Docker driver if necessary
 
   before_script:
-    - apt-get update && apt-get install -y curl python3 python3-pip docker.io  # Use apt-get for Debian-based images
-    - curl --version  # Verify curl is installed
-    - docker --version  # Verify Docker CLI is installed
-    - mvn --version  # Verify Maven is available
+    - apt-get update
+    - apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+    - curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+    - apt-get update
+    - apt-get install -y docker-ce-cli  # Install Docker CLI
+    - docker --version  # Check if Docker CLI is installed
+    - mvn --version  # Check if Maven is installed
   script:
     - echo "Running Integration Tests..."
     - mvn -Dskip.ut=true verify
