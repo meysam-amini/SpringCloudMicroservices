@@ -8,6 +8,7 @@ import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
 import com.meysam.common.customsecurity.service.RolePermissionService;
 import com.meysam.common.customsecurity.service.RoleService;
 import com.meysam.common.customsecurity.service.api.PermissionService;
+import com.meysam.common.service.api.ProfilePermissionService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
