@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "PROFILEROLE")
 @Data
 @Entity
-public class ProfileRole implements Serializable {
+public class AdminRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
