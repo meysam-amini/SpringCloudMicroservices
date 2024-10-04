@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class LogAspect {
 
 
-    @Around(value = "@annotation(org.taba.backoffice.config.aspect.log.annotation.MethodLog)")
+    @Around(value = "@annotation(com.meysam.backoffice.webapi.config.aspect.log.annotation.MethodLog)")
     public Object loggerPointCut(ProceedingJoinPoint joinPoint) throws Throwable {
         long trackingCode = System.identityHashCode(joinPoint.getArgs());
         String methodName = joinPoint.getSignature().getName();
