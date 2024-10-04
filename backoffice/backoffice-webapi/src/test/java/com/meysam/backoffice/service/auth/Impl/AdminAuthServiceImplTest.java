@@ -56,8 +56,12 @@ class AdminAuthServiceImplTest {
     private RoleService roleService;
 
     @BeforeAll
-    void beforAll(){
+    static void beforeAll() {
         log.info("Running Unit Tests...");
+    }
+
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
