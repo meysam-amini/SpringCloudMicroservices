@@ -56,7 +56,10 @@ integration_tests:
     DOCKER_DRIVER: overlay2          # Specify Docker driver if necessary
 
   before_script:
-    - apk add --no-cache curl python3 py3-pip docker-cli  # Install necessary packages
+    - apt-get update && apt-get install -y curl python3 python3-pip docker.io  # Use apt-get for Debian-based images
+    - curl --version  # Verify curl is installed
+    - docker --version  # Verify Docker CLI is installed
+    - mvn --version  # Verify Maven is available
   script:
     - echo "Running Integration Tests..."
     - mvn -Dskip.ut=true verify
