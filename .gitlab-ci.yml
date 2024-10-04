@@ -46,7 +46,7 @@ integration_tests:
   tags:
     - maven
   script:
-    - echo "Running Integration Tests...
+    - echo "Running Integration Tests..."
     - mvn -Dskip.ut=true verify
   only:
     - main
