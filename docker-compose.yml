@@ -33,18 +33,18 @@ services:
   #    networks:
   #      - meysam-docker
   
-  #  redis:
-  #    container_name: redis
-  #    image: redis:6
-  #    ports:
-  #      - "6379:6379"
-  #    restart: always
-  #    command:
-  #      - redis-server
-  #    volumes:
-  #      - ./redis_data:/data
-  #    networks:
-  #      - meysam-docker
+  redis:
+    container_name: redis
+    image: redis:6
+    ports:
+      - "6379:6379"
+    restart: always
+    command:
+      - redis-server
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - meysam-docker
 
 #  rabbitmq:
 #    container_name: rabbitmq
@@ -60,31 +60,31 @@ services:
 #      - meysam-docker
 
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.0
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - 22181:2181
-    networks:
-      - meysam-docker      
-  
-  kafka:
-    image: confluentinc/cp-kafka:7.4.0
-    depends_on:
-      - zookeeper
-    ports:
-      - 29092:29092
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    networks:
-      - meysam-docker
+#  zookeeper:
+#    image: confluentinc/cp-zookeeper:7.4.0
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#    ports:
+#      - 22181:2181
+#    networks:
+#      - meysam-docker
+#
+#  kafka:
+#    image: confluentinc/cp-kafka:7.4.0
+#    depends_on:
+#      - zookeeper
+#    ports:
+#      - 29092:29092
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+#      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#    networks:
+#      - meysam-docker
       
 #  keycloak:
 #    container_name: keycloak
@@ -126,29 +126,29 @@ services:
   #    networks:
   #      - meysam-docker
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.3
-    container_name: elasticsearch
-    hostname: elasticsearch
-    restart: unless-stopped
-    #    ulimits:
-    #      memlock:
-    #        soft: -1
-    #        hard: -1
-    volumes:
-      - elastic_data:/usr/share/elasticsearch/data
-    #    depends_on:
-    #      - rabbitmq
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      bootstrap.memory_lock: "true"
-      discovery.type: "single-node"
-      xpack.security.enabled: "false"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-      - meysam-docker
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.3
+#    container_name: elasticsearch
+#    hostname: elasticsearch
+#    restart: unless-stopped
+#    #    ulimits:
+#    #      memlock:
+#    #        soft: -1
+#    #        hard: -1
+#    volumes:
+#      - elastic_data:/usr/share/elasticsearch/data
+#    #    depends_on:
+#    #      - rabbitmq
+#    environment:
+#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+#      bootstrap.memory_lock: "true"
+#      discovery.type: "single-node"
+#      xpack.security.enabled: "false"
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+#    networks:
+#      - meysam-docker
 #
 #  logstash:
 #    image: docker.elastic.co/logstash/logstash:8.3.3
@@ -195,7 +195,7 @@ volumes:
 #  pgadmin_data:
   elastic_data:
     driver: local
-#  redis_data:
+  redis_data:
 
 networks:
   meysam-docker:

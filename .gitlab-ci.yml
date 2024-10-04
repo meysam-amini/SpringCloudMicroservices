@@ -45,21 +45,6 @@ integration_tests:
   stage: integration_tests
   tags:
     - maven
-  image: maven:3.8.5-openjdk-17  # Make sure you're using a Docker image
-  services:
-    - docker:20.10.16-dind  # Docker in Docker service
-
-  variables:
-    DOCKER_TLS_CERTDIR: ""   # Disable Docker TLS (if necessary)
-    TESTCONTAINERS_RYUK_DISABLED: "true"  # Testcontainers might try to use Ryuk, disabling it helps in GitLab
-    DOCKER_HOST: tcp://docker:2375  # Point to the Docker daemon inside the DinD service
-    DOCKER_DRIVER: overlay2          # Specify Docker driver if necessary
-
-  before_script:
-    - apt-get update && apt-get install -y curl python3 python3-pip docker.io  # Use apt-get for Debian-based images
-    - curl --version  # Verify curl is installed
-    - docker --version  # Verify Docker CLI is installed
-    - mvn --version  # Verify Maven is available
   script:
     - echo "Running Integration Tests..."
     - mvn -Dskip.ut=true verify

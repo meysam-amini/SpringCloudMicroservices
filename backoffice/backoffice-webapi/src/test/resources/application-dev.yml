@@ -1,0 +1,49 @@
+server:
+  port: ${DEV_SERVER_PORT:9999}
+
+spring:
+  application:
+    name: backoffice-ws
+  profiles:
+    active: native
+  security:
+    enabled: ${DEV_SPRING_SECURITY_ENABLED:true}
+    ignored:
+      paths: ${DEV_SPRING_SECURITY_IGNORED_PATHS:/swagger-ui/**,/public/**,/api/public/**}
+
+  datasource:
+    driverClassName: ${DEV_SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+    url: ${DEV_SPRING_DATASOURCE_URL:jdbc:postgresql://127.0.0.1:5432/postgres}
+    username: ${DEV_SPRING_DATASOURCE_USERNAME:admin}
+    password: ${DEV_SPRING_DATASOURCE_PASSWORD:password}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DEV_SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: ${DEV_SPRING_JPA_SHOW_SQL:true}
+
+  data:
+    redis:
+      host: ${DEV_SPRING_DATA_REDIS_HOST:localhost}
+      port: ${DEV_SPRING_DATA_REDIS_PORT:6379}
+      password: ${DEV_SPRING_DATA_REDIS_PASSWORD:######}
+
+  rabbitmq:
+    host: ${DEV_SPRING_RABBITMQ_HOST:localhost}
+    port: ${DEV_SPRING_RABBITMQ_PORT:5672}
+    username: ${DEV_SPRING_RABBITMQ_USERNAME:guest}
+    password: ${DEV_SPRING_RABBITMQ_PASSWORD:guest}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DEV_EUREKA_DEFAULT_ZONE:http://localhost:8010/eureka}
+
+oauth:
+  client:
+    secret: ${DEV_OAUTH_CLIENT_SECRET:rreJT7l3U5ZKIFVcqeeeEvzBB7a0tHWC}
+
+jwt:
+  secret: ${DEV_JWT_SECRET:GlCUaHlZfK0qLMKBNcpAvdOpHrDoCi7sN0WgSv3T9FKUlK7Ycxc2YQ0Ql1hdufHuXOUTsJrYHSwKkA1mDnF1TX0XTxR5IWAlAoUAK3Ncz9HYfzFl2dt6ikqplqlz88CTP00Ya}
+  token:
+    validity: ${DEV_JWT_TOKEN_VALIDITY:86400}
