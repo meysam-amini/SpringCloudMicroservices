@@ -60,7 +60,6 @@ integration_tests:
     - curl --version  # Verify curl is installed
     - docker --version  # Verify Docker CLI is installed
     - mvn --version  # Verify Maven is available
-    -
   script:
     - echo "Running Integration Tests..."
     - mvn -Dskip.ut=true verify
