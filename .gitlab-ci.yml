@@ -45,7 +45,7 @@ integration_tests:
   stage: integration_tests
   tags:
     - maven
-  image: docker:20.10.16  # Make sure you're using a Docker image
+  image: maven:3.8.5-openjdk-17  # Make sure you're using a Docker image
   services:
     - docker:20.10.16-dind  # Docker in Docker service
 
