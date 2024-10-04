@@ -1,0 +1,198 @@
+# a random port number will be assigned for each instance of app:
+server:
+  port: 9999
+#${PORT:0}
+
+spring:
+  application:
+    name: backoffice-ws
+  profiles:
+    active: native
+  security:
+    enabled: true
+    ignored:
+      paths: >
+        /swagger-ui/**,
+        /public/**,
+        /api/public/**
+
+  #  ##############DATA SOURCE####################
+  #  h2:
+  #    console:
+  #      enabled: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    #    url: jdbc:h2:mem:testdb
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: admin
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  #  #################REDIS########################
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ######
+      connect-timeout: 10000
+      timeout: 10000
+      jedis:
+        pool:
+          enabled: true
+          max-active: 300
+          max-wait: 5000
+          max-idle: 100
+          min-idle: 20
+
+  #  #################RABBITMQ#####################
+  rabbitmq:
+    #    host: host.minikube.internal
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  #  #################EUREKA#####################
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      # the url by which the client apps communicate with Eureka server
+      defaultZone: http://localhost:8010/eureka
+
+  #  ##################SECURITY#####################
+  #
+  #  security:
+  #    oauth2:
+  #      resourceserver:
+  #        jwt:
+  #          issuer-uri: http://127.0.0.1:8080/realms/meysam
+  #      client:
+  #        registration:
+  #          keycloak:
+  #            client-id: spring-cloud-microservices
+  #            #            authorization-grant-type: password
+  #            scope: openid
+  #        provider:
+  #          keycloak:
+  #            issuer-uri: http://127.0.0.1:8080/realms/meysam
+  #            user-name-attribute: preferred_username
+
+
+is:
+  test: false
+oauth:
+  client:
+    secret: rreJT7l3U5ZKIFVcqeeeEvzBB7a0tHWC
+api:
+  checkToken:
+    url: https://sso_service_base_path/check_token
+
+jwt:
+  secret: GlCUaHlZfK0qLMKBNcpAvdOpHrDoCi7sN0WgSv3T9FKUlK7Ycxc2YQ0Ql1hdufHuXOUTsJrYHSwKkA1mDnF1TX0XTxR5IWAlAoUAK3Ncz9HYfzFl2dt6ikqplqlz88CTP00Ya
+  token:
+    validity: 86400
+
+
+  #  ##################LOGGING#####################
+
+  #logging:
+  #  appender:
+  #    console:
+  #      enabled: false
+  #    file:
+  #      enabled: false
+  #    rabbit:
+  #      enabled: false
+  #      required: true
+  #      destination:
+  #        host: localhost
+  #        port: 5672
+  #        username: guest
+  #        password: guest
+  #        virtualHost: /
+  #        exchangeType: topic
+  #        exchangeName: logs
+  #    logstash:
+  #      enabled: true
+  #      destination:
+  #        url: localhost
+  #        port: 5044
+
+
+  #logging:
+  #  level:
+  #    root: INFO
+  #    com:
+  #      netflix:
+  #        discovery: OFF
+
+  #  ##################CONFIG-SERVER#####################
+
+  cloud:
+    config:
+      bus:
+        enabled: true
+      import-check:
+        enabled: false
+      server:
+        native:
+          search-locations: D:\Meysam-workspace\github\MyConfigServer-main
+  #        git:
+  #          uri: https://github.com/meysam-amini/MyConfigServer
+  #          username: username=meysamamini7394@gmail.com
+  #          password: ########################
+  #          default-label: main
+  #          clone-on-start: true
+  #          timeout: 1000
+
+  #  ##################FEIGN#####################
+
+
+  #
+  #spring:
+  #  cloud:
+  #    openfeign:
+  #      circuitbreaker:
+  #        enabled: true
+  #        alphanumeric-ids:
+  #          enabled: true
+  #      httpclient:
+  #        connection-timeout: 15000
+  #      client:
+  #        config:
+  #          default:
+  #            readTimeout: 15000
+  #            connect-timeout: 15000
+  #  autoconfigure:
+  #    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  #  messages:
+  #    #i18n
+  #    basename: messages/messages
+  #  detools:
+  #    restart:
+  #      enabled: true
+
+
+###############################################
+#logging:
+#  level:
+#    root: debug
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
