@@ -43,6 +43,18 @@ unit_tests:
 
 integration_tests:
   stage: integration_tests
+  image: docker:20.10.16  # Make sure you're using a Docker image
+  services:
+    - docker:20.10.16-dind  # Docker in Docker service
+
+  variables:
+    DOCKER_TLS_CERTDIR: ""   # Disable Docker TLS (if necessary)
+    TESTCONTAINERS_RYUK_DISABLED: "true"  # Testcontainers might try to use Ryuk, disabling it helps in GitLab
+    DOCKER_HOST: tcp://docker:2375  # Point to the Docker daemon inside the DinD service
+    DOCKER_DRIVER: overlay2          # Specify Docker driver if necessary
+
+  before_script:
+    - apk add --no-cache curl python3 py3-pip docker-cli  # Install necessary packages
   tags:
     - maven
   script:
