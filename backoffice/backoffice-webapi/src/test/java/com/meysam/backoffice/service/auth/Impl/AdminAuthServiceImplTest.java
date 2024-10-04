@@ -14,6 +14,8 @@ import com.meysam.common.customsecurity.service.RoleService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import com.meysam.common.customsecurity.utils.JwtUtil;
 import com.meysam.common.model.dto.LoginRequestDto;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,6 +30,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Slf4j
 class AdminAuthServiceImplTest {
 
 
@@ -51,6 +54,11 @@ class AdminAuthServiceImplTest {
 
     @Mock
     private RoleService roleService;
+
+    @BeforeAll
+    static void beforeAll() {
+        log.info("Running Unit Tests...");
+    }
 
     @BeforeEach
     void setUp() {

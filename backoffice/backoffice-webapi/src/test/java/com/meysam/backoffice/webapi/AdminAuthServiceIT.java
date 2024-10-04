@@ -4,9 +4,11 @@ import com.meysam.backoffice.service.auth.api.AdminAuthService;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import com.meysam.common.model.dto.LoginRequestDto;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.testcontainers.utility.DockerImageName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Slf4j
 @SpringBootTest
 public class AdminAuthServiceIT {
 
@@ -36,6 +39,8 @@ public class AdminAuthServiceIT {
 
     @BeforeAll
     static void beforeAll(){
+        log.info("Running Integration Tests...");
+
         redis.start();
         System.setProperty("spring.data.redis.host", redis.getHost());
         System.setProperty("spring.data.redis.port", redis.getMappedPort(6379).toString());
