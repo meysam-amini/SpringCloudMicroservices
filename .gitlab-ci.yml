@@ -24,8 +24,8 @@ build:
   tags:
     - maven
   script:
-#    - mvn $MAVEN_CLI_OPTS clean package  -Dmaven.test.skip=true
-    - mvn clean package  -Dmaven.test.skip=true
+    - echo "Building the project with dev profile..."
+    - mvn clean package -Pdev -Dmaven.test.skip=true
   artifacts:
     paths:
       - target/*.jar
@@ -40,17 +40,15 @@ unit_tests:
   only:
     - dev
 
-
 integration_tests:
   stage: integration_tests
   tags:
     - maven
   script:
-    - echo "Running Integration Tests..."
-    - mvn -Dskip.ut=true verify
+    - echo "Running Integration Tests with dev profile..."
+    - mvn -Pdev -Dskip.ut=true verify
   only:
     - main
-
 
 deploy:
   stage: deploy
@@ -59,5 +57,6 @@ deploy:
   only:
     - main
   script:
-    - echo "Deploy to production server...."
-    # You can add scp, rsync, or other deployment scripts here
+    - echo "Deploying to production server with prod profile..."
+    - mvn clean package -Pprod -Dmaven.test.skip=true
+    # Add your deployment scripts here
