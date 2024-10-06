@@ -13,7 +13,7 @@ spring:
 
   datasource:
     driverClassName: ${DEV_SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
-    url: ${DEV_SPRING_DATASOURCE_URL:jdbc:postgresql://127.0.0.1:5432/postgres}
+    url: ${DEV_SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/postgres}
     username: ${DEV_SPRING_DATASOURCE_USERNAME:admin}
     password: ${DEV_SPRING_DATASOURCE_PASSWORD:password}
 
@@ -24,12 +24,12 @@ spring:
 
   data:
     redis:
-      host: ${DEV_SPRING_DATA_REDIS_HOST:localhost}
+      host: ${DEV_SPRING_DATA_REDIS_HOST:redis}
       port: ${DEV_SPRING_DATA_REDIS_PORT:6379}
       password: ${DEV_SPRING_DATA_REDIS_PASSWORD:######}
 
   rabbitmq:
-    host: ${DEV_SPRING_RABBITMQ_HOST:localhost}
+    host: ${DEV_SPRING_RABBITMQ_HOST:rabbitmq}
     port: ${DEV_SPRING_RABBITMQ_PORT:5672}
     username: ${DEV_SPRING_RABBITMQ_USERNAME:guest}
     password: ${DEV_SPRING_RABBITMQ_PASSWORD:guest}
