@@ -29,6 +29,13 @@ build:
   artifacts:
     paths:
       - target/*.jar
+  only:
+    changes:
+      - src/**/*
+#      - Dockerfile
+      - pom.xml
+    refs:
+      - dev
 
 unit_tests:
   stage: unit_tests
@@ -38,7 +45,12 @@ unit_tests:
     - echo "Running Unit Tests..."
     - mvn test
   only:
-    - dev
+    changes:
+      - src/**/*
+      #      - Dockerfile
+      - pom.xml
+    refs:
+      - dev
 
 integration_tests:
   stage: integration_tests
