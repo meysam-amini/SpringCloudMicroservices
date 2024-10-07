@@ -24,7 +24,7 @@ spring:
 
   data:
     redis:
-      host: ${DEV_SPRING_DATA_REDIS_HOST:127.0.0.1}
+      host: ${DEV_SPRING_DATA_REDIS_HOST:redis}
       port: ${DEV_SPRING_DATA_REDIS_PORT:6379}
       password: ${DEV_SPRING_DATA_REDIS_PASSWORD:######}
       connect-timeout: ${DEV_SPRING_DATA_REDIS_CONNECT_TIMEOUT:10000}
