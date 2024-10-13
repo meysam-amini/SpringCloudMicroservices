@@ -4,8 +4,8 @@ server:
 spring:
   application:
     name: backoffice-ws
-  profiles:
-    active: native
+#  profiles:
+#    active: native
   security:
     enabled: ${DEV_SPRING_SECURITY_ENABLED:true}
     ignored:
