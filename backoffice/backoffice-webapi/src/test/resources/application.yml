@@ -48,6 +48,9 @@ eureka:
     service-url:
       defaultZone: ${DEV_EUREKA_DEFAULT_ZONE:http://localhost:8010/eureka}
 
+is:
+  test: false
+
 oauth:
   client:
     secret: ${DEV_OAUTH_CLIENT_SECRET:rreJT7l3U5ZKIFVcqeeeEvzBB7a0tHWC}
@@ -56,3 +59,7 @@ jwt:
   secret: ${DEV_JWT_SECRET:GlCUaHlZfK0qLMKBNcpAvdOpHrDoCi7sN0WgSv3T9FKUlK7Ycxc2YQ0Ql1hdufHuXOUTsJrYHSwKkA1mDnF1TX0XTxR5IWAlAoUAK3Ncz9HYfzFl2dt6ikqplqlz88CTP00Ya}
   token:
     validity: ${DEV_JWT_TOKEN_VALIDITY:86400}
+
+api:
+  checkToken:
+    url: https://sso_service_base_path/check_token

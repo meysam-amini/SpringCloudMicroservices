@@ -13,7 +13,7 @@ spring:
 
   datasource:
     driverClassName: ${DEV_SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
-    url: ${DEV_SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/postgres}
+    url: ${DEV_SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
     username: ${DEV_SPRING_DATASOURCE_USERNAME:admin}
     password: ${DEV_SPRING_DATASOURCE_PASSWORD:password}
 
@@ -24,7 +24,7 @@ spring:
 
   data:
     redis:
-      host: ${DEV_SPRING_DATA_REDIS_HOST:127.0.0.1}
+      host: ${DEV_SPRING_DATA_REDIS_HOST:localhost}
       port: ${DEV_SPRING_DATA_REDIS_PORT:6379}
       password: ${DEV_SPRING_DATA_REDIS_PASSWORD:######}
       connect-timeout: ${DEV_SPRING_DATA_REDIS_CONNECT_TIMEOUT:10000}
@@ -38,7 +38,7 @@ spring:
           min-idle: ${DEV_SPRING_DATA_REDIS_POOL_MIN_IDLE:20}
 
   rabbitmq:
-    host: ${DEV_SPRING_RABBITMQ_HOST:rabbitmq}
+    host: ${DEV_SPRING_RABBITMQ_HOST:localhost}
     port: ${DEV_SPRING_RABBITMQ_PORT:5672}
     username: ${DEV_SPRING_RABBITMQ_USERNAME:guest}
     password: ${DEV_SPRING_RABBITMQ_PASSWORD:guest}
@@ -48,6 +48,9 @@ eureka:
     service-url:
       defaultZone: ${DEV_EUREKA_DEFAULT_ZONE:http://localhost:8010/eureka}
 
+is:
+  test: false
+
 oauth:
   client:
     secret: ${DEV_OAUTH_CLIENT_SECRET:rreJT7l3U5ZKIFVcqeeeEvzBB7a0tHWC}
@@ -56,3 +59,7 @@ jwt:
   secret: ${DEV_JWT_SECRET:GlCUaHlZfK0qLMKBNcpAvdOpHrDoCi7sN0WgSv3T9FKUlK7Ycxc2YQ0Ql1hdufHuXOUTsJrYHSwKkA1mDnF1TX0XTxR5IWAlAoUAK3Ncz9HYfzFl2dt6ikqplqlz88CTP00Ya}
   token:
     validity: ${DEV_JWT_TOKEN_VALIDITY:86400}
+
+api:
+  checkToken:
+    url: https://sso_service_base_path/check_token
