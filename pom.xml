@@ -97,23 +97,23 @@
 <!--            <properties>-->
 <!--                <spring.profiles.active>dev</spring.profiles.active>-->
 <!--            </properties>-->
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <!-- Include only files necessary for the dev profile -->
-                            <include>application-dev.yml</include>
-                            <include>**/*</include> <!-- Other common resources -->
-                        </includes>
-                        <excludes>
-                            <!-- Optionally exclude other environment-specific files -->
-                            <exclude>application-prod.yml</exclude>
-                            <exclude>application.yml</exclude>
-                        </excludes>
-                    </resource>
-                </resources>
-            </build>
+<!--            <build>-->
+<!--                <resources>-->
+<!--                    <resource>-->
+<!--                        <directory>src/main/resources</directory>-->
+<!--                        <includes>-->
+<!--                            &lt;!&ndash; Include only files necessary for the dev profile &ndash;&gt;-->
+<!--                            <include>application-dev.yml</include>-->
+<!--                            <include>**/*</include> &lt;!&ndash; Other common resources &ndash;&gt;-->
+<!--                        </includes>-->
+<!--                        <excludes>-->
+<!--                            &lt;!&ndash; Optionally exclude other environment-specific files &ndash;&gt;-->
+<!--                            <exclude>application-prod.yml</exclude>-->
+<!--                            <exclude>application.yml</exclude>-->
+<!--                        </excludes>-->
+<!--                    </resource>-->
+<!--                </resources>-->
+<!--            </build>-->
         </profile>
         <profile>
             <id>prod</id>
