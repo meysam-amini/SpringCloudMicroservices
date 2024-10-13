@@ -94,15 +94,32 @@
     <profiles>
         <profile>
             <id>dev</id>
-            <properties>
-                <spring.profiles.active>dev</spring.profiles.active>
-            </properties>
+<!--            <properties>-->
+<!--                <spring.profiles.active>dev</spring.profiles.active>-->
+<!--            </properties>-->
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <!-- Include only files necessary for the dev profile -->
+                            <include>application-dev.yml</include>
+                            <include>**/*</include> <!-- Other common resources -->
+                        </includes>
+                        <excludes>
+                            <!-- Optionally exclude other environment-specific files -->
+                            <exclude>application-prod.yml</exclude>
+                            <exclude>application.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
         </profile>
         <profile>
             <id>prod</id>
-            <properties>
-                <spring.profiles.active>prod</spring.profiles.active>
-            </properties>
+<!--            <properties>-->
+<!--                <spring.profiles.active>prod</spring.profiles.active>-->
+<!--            </properties>-->
         </profile>
     </profiles>
 <build>
