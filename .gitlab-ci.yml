@@ -20,6 +20,7 @@ cache:
 
 before_script:
   - export $(grep -v '^#' root/meysam/projects/springcloudmicroservices/.env | xargs)
+  - env | grep DEV_
 #  - docker network create meysam-docker
 #  - echo "Docker network 'meysam-docker' created."
 #  - git remote set-url origin http://163.5.94.91/meysam-team/springcloudmicroservices.git
