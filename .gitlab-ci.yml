@@ -58,6 +58,7 @@ integration_tests:
     - maven
   script:
     - echo "Running Integration Tests with dev profile..."
+    - ping postgres
     - mvn -Pdev -Dskip.ut=true verify
   only:
     - main
