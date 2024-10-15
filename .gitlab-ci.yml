@@ -6,8 +6,8 @@ stages:
   - integration_tests
   - deploy
 
-#services:
-#  - docker:dind
+services:
+  - docker:dind
 
 cache:
   paths:
