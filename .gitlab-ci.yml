@@ -63,7 +63,9 @@ integration_tests:
     - maven
   script:
     - echo "Running Integration Tests with dev profile..."
-    - ping postgres
+    - echo "Waiting for PostgreSQL to be ready..."
+    - until nc -z postgres 5432; do echo "Waiting for PostgreSQL..."; sleep 5; done
+    - echo "PostgreSQL is up!"
     - mvn -Pdev -Dskip.ut=true verify
   only:
     - main
