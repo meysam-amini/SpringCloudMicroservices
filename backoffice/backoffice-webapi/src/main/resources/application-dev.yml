@@ -13,7 +13,7 @@ spring:
 
   datasource:
     driverClassName: ${DEV_SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
-    url: ${DEV_SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/postgres}
+    url: ${DEV_SPRING_DATASOURCE_URL:jdbc:postgresql://163.5.94.91:5432/postgres}
     username: ${DEV_SPRING_DATASOURCE_USERNAME:admin}
     password: ${DEV_SPRING_DATASOURCE_PASSWORD:password}
 
@@ -24,7 +24,7 @@ spring:
 
   data:
     redis:
-      host: ${DEV_SPRING_DATA_REDIS_HOST:redis}
+      host: ${DEV_SPRING_DATA_REDIS_HOST:163.5.94.91}
       port: ${DEV_SPRING_DATA_REDIS_PORT:6379}
       password: ${DEV_SPRING_DATA_REDIS_PASSWORD:######}
       connect-timeout: ${DEV_SPRING_DATA_REDIS_CONNECT_TIMEOUT:10000}
@@ -38,7 +38,7 @@ spring:
           min-idle: ${DEV_SPRING_DATA_REDIS_POOL_MIN_IDLE:20}
 
   rabbitmq:
-    host: ${DEV_SPRING_RABBITMQ_HOST:localhost}
+    host: ${DEV_SPRING_RABBITMQ_HOST:163.5.94.91}
     port: ${DEV_SPRING_RABBITMQ_PORT:5672}
     username: ${DEV_SPRING_RABBITMQ_USERNAME:guest}
     password: ${DEV_SPRING_RABBITMQ_PASSWORD:guest}
