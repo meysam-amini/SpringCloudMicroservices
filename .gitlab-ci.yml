@@ -18,8 +18,8 @@ variables:
 #  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode --errors --fail-at-end --show-version"
 
 before_script:
-  - docker network create meysam-docker
-  - echo "Docker network 'meysam-docker' created."
+#  - docker network create meysam-docker
+#  - echo "Docker network 'meysam-docker' created."
 #  - git remote set-url origin http://163.5.94.91/meysam-team/springcloudmicroservices.git
 #  - echo "Setting up Maven environment"
 #  - mvn $MAVEN_CLI_OPTS --version
