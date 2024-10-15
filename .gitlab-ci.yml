@@ -6,15 +6,21 @@ stages:
   - integration_tests
   - deploy
 
+#services:
+#  - docker:dind
+
 cache:
   paths:
     - .m2/repository
 
-variables:
-  MAVEN_CLI_OPTS: ""
+#variables:
+#  MAVEN_CLI_OPTS: ""
+#  DOCKER_DRIVER: overlay2
 #  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode --errors --fail-at-end --show-version"
 
 before_script:
+#  - docker network create meysam-docker
+#  - echo "Docker network 'meysam-docker' created."
 #  - git remote set-url origin http://163.5.94.91/meysam-team/springcloudmicroservices.git
 #  - echo "Setting up Maven environment"
 #  - mvn $MAVEN_CLI_OPTS --version
@@ -58,7 +64,6 @@ integration_tests:
     - maven
   script:
     - echo "Running Integration Tests with dev profile..."
-    - ping postgres
     - mvn -Pdev -Dskip.ut=true verify
   only:
     - main
