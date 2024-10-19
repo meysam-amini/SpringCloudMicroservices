@@ -3,13 +3,14 @@ package com.meysam.common.customsecurity.model.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter@Setter@Builder
 public class AssignRolePermissionDto {
 
-    @NotNull(message = "invalid permission code")
-    private String permissionCode;
-    @NotNull(message = "invalid role code")
+
+    private List<String> permissions;
     private String roleCode;
 }

@@ -1,26 +1,19 @@
-package com.meysam.common.service.impl;
+package com.meysam.common.customsecurity.service;
 
 
-import com.meysam.common.service.api.PermissionService;
-import com.meysam.common.service.api.ProfilePermissionService;
-import com.meysam.common.service.api.RolePermissionService;
+import com.meysam.common.configs.exception.BusinessException;
+import com.meysam.common.customsecurity.model.dto.AllRolePermissionsDTO;
+import com.meysam.common.customsecurity.model.dto.PermissionDTO;
+import com.meysam.common.customsecurity.model.dto.RoleDTO;
+import com.meysam.common.customsecurity.model.dto.RolesPermissionsDTO;
+import com.meysam.common.customsecurity.model.entity.ProfilePermission;
+import com.meysam.common.customsecurity.model.entity.Role;
+import com.meysam.common.customsecurity.repository.AdminPermissionRepository;
+import com.meysam.common.customsecurity.service.api.AdminPermissionService;
+import com.meysam.common.customsecurity.service.api.AdminRoleService;
+import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.taba.common.configs.exceptions.BusinessException;
-import org.taba.common.configs.messages.LocaleMessageSourceService;
-import org.taba.common.dao.repository.auth.ProfilePermissionRepository;
-import org.taba.common.dao.repository.auth.ProfileRepository;
-import org.taba.common.model.model.dto.RoleDTO;
-import org.taba.common.model.model.dto.auth.AllRolePermissionsDTO;
-import org.taba.common.model.model.dto.auth.PermissionDTO;
-import org.taba.common.model.model.dto.auth.RolesPermissionsDTO;
-import org.taba.common.model.model.entity.auth.Permission;
-import org.taba.common.model.model.entity.auth.Profile;
-import org.taba.common.model.model.entity.auth.ProfilePermission;
-import org.taba.common.model.model.entity.auth.Role;
-import org.taba.common.service.auth.api.*;
-import org.taba.common.util.mapper.auth.RoleMapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,26 +21,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
-public class ProfilePermissionServiceImpl implements ProfilePermissionService {
+public class AdminPermissionServiceImpl implements AdminPermissionService {
 
-    private final PermissionService permissionService;
-    private final LocaleMessageSourceService messageSourceService;
-    private final ProfilePermissionRepository profilePermissionRepository;
-    private final ProfileRepository profileRepository;
-    private final ProfileRoleService profileRoleService;
-    private final RoleService roleService;
+    private final AdminPermissionRepository adminPermissionRepository;
+    private final AdminRoleService adminRoleService;
     private final RolePermissionService rolePermissionService;
-    private final RoleMapper roleMapper;
 
-
+    public List<String> getPermissions(Long adminId) {
+        return adminPermissionRepository.findPermissionsNamesByAdmin(adminId);
+    }
 
     @Override
     public List<PermissionDTO> getAllRolePermissions(Long profileId) {
         List<PermissionDTO> permissions = getProfilePermissions(profileId);
-        List<Role> roles = profileRoleService.getRoles(profileId);
+        List<Role> roles = adminRoleService.getRoles(profileId);
         if(!roles.isEmpty()){
             permissions.addAll(rolePermissionService.getPermissions(roles.stream().map(Role::getId).collect(Collectors.toList())));
         }
@@ -56,7 +46,7 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
 
     @Override
     public AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId) {
-        List<Role> roles = profileRoleService.getRoles(profileId);
+        List<Role> roles = adminRoleService.getRoles(profileId);
         return AllRolePermissionsDTO.builder()
                 .rolePermissions(getPermissions(roleMapper.toDtoList(roles)))
                 .directPermissions(profilePermissionRepository.findAllPermissionsByProfile(profileId))

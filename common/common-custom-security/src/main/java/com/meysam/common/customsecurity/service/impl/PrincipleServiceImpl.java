@@ -4,10 +4,10 @@ import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.AdminPermissionService;
-import com.meysam.common.customsecurity.service.AdminRoleService;
-import com.meysam.common.customsecurity.service.AdminService;
-import com.meysam.common.customsecurity.service.RolePermissionService;
+import com.meysam.common.customsecurity.service.AdminPermissionServiceImpl;
+import com.meysam.common.customsecurity.service.api.AdminRoleService;
+import com.meysam.common.customsecurity.service.api.AdminService;
+import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class PrincipleServiceImpl implements PrincipleService {
 
     private final RedisTemplate redisTemplate;
     private final AdminService adminService;
-    private final AdminPermissionService profilePermissionService;
+    private final AdminPermissionServiceImpl profilePermissionService;
     private final AdminRoleService profileRoleService;
     private final RolePermissionService rolePermissionService;
 

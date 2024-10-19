@@ -1,17 +1,24 @@
-package com.meysam.common.service.impl;
+package com.meysam.common.customsecurity.service.impl;
 
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
-import com.meysam.common.service.api.PermissionService;
-import com.meysam.common.service.api.RolePermissionService;
-import com.meysam.common.service.api.RoleService;
+import com.meysam.common.customsecurity.model.dto.AssignRolePermissionDto;
+import com.meysam.common.customsecurity.model.dto.PermissionDTO;
+import com.meysam.common.customsecurity.model.entity.Permission;
+import com.meysam.common.customsecurity.model.entity.Role;
+import com.meysam.common.customsecurity.model.entity.RolePermission;
+import com.meysam.common.customsecurity.repository.RolePermissionRepository;
+import com.meysam.common.customsecurity.service.api.PermissionService;
+import com.meysam.common.customsecurity.service.api.RolePermissionService;
+import com.meysam.common.customsecurity.service.api.RoleService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.security.Permission;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RolePermissionServiceImpl implements RolePermissionService {

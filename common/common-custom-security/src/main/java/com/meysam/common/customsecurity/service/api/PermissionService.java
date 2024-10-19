@@ -8,6 +8,7 @@ import com.meysam.common.customsecurity.model.dto.AddPermissionDto;
 
 
 public interface PermissionService {
+    Permission findEntityByCode(String code);
     Permission addPermission(AddPermissionDto permissionDto);
     RolePermission assignPermissionToRole(AssignRolePermissionDto rolePermissionDto);
     String assignPermissionToUsername(AssignDirectPermissionDto permissionDto);

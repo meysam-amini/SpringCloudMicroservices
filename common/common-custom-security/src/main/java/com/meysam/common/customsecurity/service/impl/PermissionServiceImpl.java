@@ -24,6 +24,12 @@ public class PermissionServiceImpl implements PermissionService {
     private final RolePermissionRepository rolePermissionRepository;
     private final LocaleMessageSourceService messageSourceService;
 
+
+    @Override
+    public Permission findEntityByCode(String code) {
+        return permissionRepository.findByCode(code).orElse(null);
+    }
+
     @Transactional
     @Override
     public Permission addPermission(AddPermissionDto permissionDto) {

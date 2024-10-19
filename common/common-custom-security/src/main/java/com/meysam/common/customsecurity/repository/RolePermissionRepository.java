@@ -1,5 +1,6 @@
 package com.meysam.common.customsecurity.repository;
 
+import com.meysam.common.customsecurity.model.dto.PermissionDTO;
 import com.meysam.common.customsecurity.model.entity.RolePermission;
 import com.meysam.common.dao.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +22,7 @@ public interface RolePermissionRepository extends BaseRepository<RolePermission>
     @Query("select p.name from Permission p where p.id in(select rp.permission from RolePermission rp where rp.role in(:rolesIds))")
     List<String> findAllPermissionsNamesByRoles(List<Long> rolesIds);
 
-    @Query("select new org.taba.common.model.model.dto.auth.PermissionDTO(p.id,p.name,p.code,p.enKey) from Permission p where p.id in(select rp.permission from RolePermission rp where rp.role in(:rolesIds))")
+    @Query("select new com.meysam.common.customsecurity.model.dto.PermissionDTO(p.id,p.name,p.code,p.enKey) from Permission p where p.id in(select rp.permission from RolePermission rp where rp.role in(:rolesIds))")
     List<PermissionDTO> findAllPermissionsByRoles(List<Long> rolesIds);
 
 
