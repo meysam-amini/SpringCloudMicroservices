@@ -5,11 +5,8 @@ import com.meysam.backoffice.webapi.config.aspect.log.annotation.MethodLog;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
 import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
-import com.meysam.common.customsecurity.service.api.RolePermissionService;
-import com.meysam.common.customsecurity.service.api.AdminPermissionService;
-import com.meysam.common.customsecurity.service.api.AdminService;
-import com.meysam.common.customsecurity.service.api.RoleService;
-import com.meysam.common.customsecurity.service.api.PermissionService;
+import com.meysam.common.customsecurity.model.dto.RestResponseDTO;
+import com.meysam.common.customsecurity.service.api.*;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +23,7 @@ public class PermissionManagementController {
     private final AdminService adminService;
     private final RoleService roleService;
     private final AdminPermissionService adminPermissionService;
-    private final ProfileRoleService profileRoleService;
+    private final AdminRoleService adminRoleService;
     private final RolePermissionService rolePermissionService;
     private final PermissionService permissionService;
     private final LocaleMessageSourceService messageSourceService;
@@ -44,8 +41,8 @@ public class PermissionManagementController {
     @MethodLog
     @PostMapping(value = "assign-profile-role")
     @PreAuthorize("hasAnyAuthority('PERMISSION_ROLE_MANAGEMENT')")
-    public ResponseEntity<RestResponseDTO<?>> assignRole(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) ClientPrinciple clientPrinciple,@RequestBody AssignProfileRoleDto assignProfileRoleDto) {
-        profileRoleService.assignRolesToProfile(assignProfileRoleDto.getRoles(),assignProfileRoleDto.getUsername());
+    public ResponseEntity<RestResponseDTO<?>> assignRole(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) ClientPrinciple clientPrinciple, @RequestBody AssignProfileRoleDto assignProfileRoleDto) {
+        adminRoleService.assignRolesToProfile(assignProfileRoleDto.getRoles(),assignProfileRoleDto.getUsername());
         return ResponseEntity.ok(RestResponseDTO.generate(false,0,messageSourceService.getMessage("ROLE_ASSIGNED_SUCCESSFULLY")));
     }
 
