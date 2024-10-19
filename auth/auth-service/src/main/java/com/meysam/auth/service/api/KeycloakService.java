@@ -1,7 +1,7 @@
 package com.meysam.auth.service.api;
 
-import com.meysam.auth.model.entity.Role;
 import com.meysam.auth.model.enums.MemberLevel;
+import com.meysam.common.model.auth.entity.Role;
 import com.meysam.common.model.dto.ClientLoginRequestDto;
 import com.meysam.common.model.dto.LoginRequestDto;
 import com.meysam.common.model.dto.LoginResponseDto;

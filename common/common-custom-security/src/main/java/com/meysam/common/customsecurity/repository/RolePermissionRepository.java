@@ -20,4 +20,10 @@ public interface RolePermissionRepository extends BaseRepository<RolePermission>
 
     @Query("select p.name from Permission p where p.id in(select rp.permission from RolePermission rp where rp.role in(:rolesIds))")
     List<String> findAllPermissionsNamesByRoles(List<Long> rolesIds);
+
+    @Query("select new org.taba.common.model.model.dto.auth.PermissionDTO(p.id,p.name,p.code,p.enKey) from Permission p where p.id in(select rp.permission from RolePermission rp where rp.role in(:rolesIds))")
+    List<PermissionDTO> findAllPermissionsByRoles(List<Long> rolesIds);
+
+
+    boolean existsByRoleAndPermission(Long role,Long permission);
 }
