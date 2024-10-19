@@ -7,7 +7,7 @@ import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.AdminPermissionServiceImpl;
 import com.meysam.common.customsecurity.service.api.AdminRoleService;
 import com.meysam.common.customsecurity.service.api.AdminService;
-import com.meysam.common.customsecurity.service.RolePermissionService;
+import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
