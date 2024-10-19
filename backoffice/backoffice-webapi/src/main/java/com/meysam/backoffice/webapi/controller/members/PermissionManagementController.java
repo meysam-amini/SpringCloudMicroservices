@@ -6,6 +6,7 @@ import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
 import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
 import com.meysam.common.customsecurity.service.RolePermissionService;
+import com.meysam.common.customsecurity.service.api.AdminService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PermissionManagementController {
 
-    private final ProfileService profileService;
+    private final AdminService adminService;
     private final RoleService roleService;
     private final ProfilePermissionService profilePermissionService;
     private final ProfileRoleService profileRoleService;
