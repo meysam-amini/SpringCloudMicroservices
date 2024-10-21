@@ -2,17 +2,19 @@ package com.meysam.common.customsecurity.service.impl;
 
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
-import com.meysam.common.customsecurity.model.dto.ProfileDTO;
-import com.meysam.common.customsecurity.model.dto.ResetPasswordDTO;
-import com.meysam.common.customsecurity.model.dto.UserInfoDto;
+import com.meysam.common.customsecurity.model.dto.*;
 import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Profile;
+import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
 import com.meysam.common.customsecurity.repository.AdminRepository;
+import com.meysam.common.customsecurity.service.api.AdminPermissionService;
+import com.meysam.common.customsecurity.service.api.AdminRoleService;
 import com.meysam.common.customsecurity.service.api.AdminService;
 import com.meysam.common.model.enums.CaptchaOperation;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,23 +29,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
 
-    private final AdminRepository repository;
+    private final AdminRepository adminRepository;
     private final RedisTemplate redisTemplate;
-    private final ProfileRoleService profileRoleService;
-    private final RoleMapper roleMapper;
+    private final AdminRoleService adminRoleService;
     private final RolePermissionServiceImpl rolePermissionServiceImpl;
-    private final ProfilePermissionServiceImpl profilePermissionServiceImpl;
+    private final AdminPermissionService adminPermissionService;
     private final OtpService otpService;
     private final PasswordEncoder passwordEncoder;
     private final LocaleMessageSourceService messageSourceService;
     private final CaptchaService captchaService;
-    private final MilitaryServiceStatusService militaryService;
+    private final ModelMapper modelMapper;
 
     @Value("${otp.resetpassword.enabled:#{true}}")
     private String OTP_RESET_PASS_ENABLED;
@@ -60,15 +62,17 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ProfileDTO findById(Long profileId) {
-        Profile profile = repository.findById(profileId).orElseThrow(() -> new BusinessException("profile not found"));
-        ProfileDTO profileDTO = mapper.toDto(profile);
-        List<Role> roles = profileRoleService.getRoles(profileId);
+        Profile profile = adminRepository.findById(profileId).orElseThrow(() -> new BusinessException("profile not found"));
+        ProfileDTO profileDTO = modelMapper.map(profile,ProfileDTO.class);
+        List<Role> roles = adminRoleService.getRoles(profileId);
         List<Long> rolesIds = roles.stream().map(Role::getId).toList();
         List<String> permissionsByRoles = rolePermissionServiceImpl.getPermissionsNames(rolesIds);
-        List<String> directPermissions = profilePermissionServiceImpl.getAllRolePermissions(profileId)
+        List<String> directPermissions = adminPermissionService.getAllRolePermissions(profileId)
                 .stream().map(PermissionDTO::getName).toList();
         permissionsByRoles.addAll(directPermissions);
-        profileDTO.setRoles(roleMapper.toDtoList(roles));
+        profileDTO.setRoles(roles.stream()
+                .map(role -> modelMapper.map(role, RoleDTO.class))
+                .collect(Collectors.toList()));
         profileDTO.setPermissions(permissionsByRoles);
 
         ValueOperations<String, ProfileDTO> valueOperations2 = redisTemplate.opsForValue();
@@ -79,7 +83,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ProfileDTO findByIdFullInfo(Long profileId) {
-        Profile profile = repository.findById(profileId)
+        Profile profile = adminRepository.findById(profileId)
                 .orElseThrow(() -> new BusinessException("profile not found"));
         ProfileDTO dto = mapper.toDto(profile);
         return fillInfo(dto);
@@ -112,7 +116,7 @@ public class AdminServiceImpl implements AdminService {
             otpService.validateOtpCode(username, OtpConstants.OtpType.SMS_,OtpConstants.OtpOperation.RESET_PASS_,resetPasswordDTO.getOtpCode());
         }
         profile.setPassword(passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
-        repository.save(profile);
+        adminRepository.save(profile);
         if(Boolean.parseBoolean(OTP_RESET_PASS_ENABLED)){
             //check whether otp is set to email or sms
             otpService.removeCachedOtpCodeAndWrongOtpCount(username, OtpConstants.OtpType.SMS_, OtpConstants.OtpOperation.RESET_PASS_);
@@ -122,7 +126,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     @Override
     public Profile addProfile(RegisterUserDto registerUserDto) {
-        if(repository.existsByUsernameOrNationalId(registerUserDto.getUsername(),registerUserDto.getNationalId())){
+        if(adminRepository.existsByUsernameOrNationalId(registerUserDto.getUsername(),registerUserDto.getNationalId())){
             throw new BusinessException(messageSourceService.getMessage("USER_ALREADY_EXISTS_BY_NATIONAL_ID_OR_USERNAME"));
         }
         Profile profile = new Profile();
@@ -141,17 +145,17 @@ public class AdminServiceImpl implements AdminService {
         profile.setOrganizationName(registerUserDto.getOrganizationName());
         profile.setBirthDate(registerUserDto.getBirthDate());
         profile.setZoneCode(registerUserDto.getZoneCode());
-        return repository.save(profile);
+        return adminRepository.save(profile);
     }
 
     @Override
     public List<ProfileDTO> findAllByListOfIds(List<Long> listOfIds) {
-        return mapper.toDtoList(repository.findAllByIdIn(listOfIds));
+        return mapper.toDtoList(adminRepository.findAllByIdIn(listOfIds));
     }
 
     @Override
     public Page<ProfileDTO> findAll(Predicate predicate, Pageable pageable) {
-        return repository.findAll(predicate,pageable).map(mapper::toDto);
+        return adminRepository.findAll(predicate,pageable).map(mapper::toDto);
     }
 
     private ProfileDTO fillInfo(ProfileDTO dto) {
@@ -171,14 +175,14 @@ public class AdminServiceImpl implements AdminService {
     public ProfileDTO save(ProfileDTO profileDTO) {
         Profile entity = mapper.toEntity(profileDTO);
         entity.setPassword(" - ");
-        Profile saved = repository.save(entity);
+        Profile saved = adminRepository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
     @Transactional
     public UserInfoDto update(ProfileDTO dto, Long profileId) {
-        Profile profile = repository.findById(profileId).orElseThrow(() -> new BusinessException("Profile not found"));
+        Profile profile = adminRepository.findById(profileId).orElseThrow(() -> new BusinessException("Profile not found"));
         profile.setPhysicalCondition(dto.getPhysicalCondition());
         profile.setReligion(dto.getReligion());
         profile.setUserType(dto.getUserType());
@@ -198,13 +202,13 @@ public class AdminServiceImpl implements AdminService {
         profile.setZoneCode(dto.getZoneCode());
         profile.setIsPermittedToReceiveByEmail(dto.getIsPermittedToReceiveByEmail());
         profile.setIsPermittedToReceiveByFax(dto.getIsPermittedToReceiveByFax());
-        ProfileResponseDto profileResponseDto = mapper.convertProfileEntityToProfileDto(repository.save(profile), null, null);
+        ProfileResponseDto profileResponseDto = mapper.convertProfileEntityToProfileDto(adminRepository.save(profile), null, null);
         return profileResponseDto.getUserInfo();
     }
 
     @Override
     public ProfileDTO getProfileByUsername(String username) {
-        Profile profile = repository.findByUsername(username).orElseThrow(() -> {
+        Profile profile = adminRepository.findByUsername(username).orElseThrow(() -> {
             log.error("User with username :{} not found at time :{}", username, System.currentTimeMillis());
             return new BusinessException("User not found");
         });
@@ -213,7 +217,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Profile getProfileEntityByUsername(String username) {
-        return repository.findByUsername(username)
+        return adminRepository.findByUsername(username)
                 .orElse(null);
     }
 
@@ -256,7 +260,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ProfileDTO getProfileByNationalId(String nationalId) {
-        Optional<Profile> profileOptional = repository.findByNationalId(nationalId);
+        Optional<Profile> profileOptional = adminRepository.findByNationalId(nationalId);
         if (!profileOptional.isPresent())
             return null;
 
