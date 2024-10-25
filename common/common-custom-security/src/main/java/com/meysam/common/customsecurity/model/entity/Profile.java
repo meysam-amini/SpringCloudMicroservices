@@ -1,5 +1,6 @@
 package com.meysam.common.customsecurity.model.entity;
 
+import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -3,7 +3,6 @@ package com.meysam.common.customsecurity.service.impl;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.dto.*;
-import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,8 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -53,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
     private String OTP_RESET_PASS_ENABLED;
 
 
-    public Admin getAdminByUsername(String username) {
+    public Profile getAdminByUsername(String username) {
         return profileRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
     }
 
@@ -72,18 +68,7 @@ public class AdminServiceImpl implements AdminService {
                 .collect(Collectors.toList()));
         profileDTO.setPermissions(permissionsByRoles);
 
-        ValueOperations<String, ProfileDTO> valueOperations2 = redisTemplate.opsForValue();
-        valueOperations2.set(AppConstants.RedisPrefix.PROFILE_INFO_PREFIX_BY_ID + profile.getId(), profileDTO, 60, TimeUnit.MINUTES);
-        valueOperations2.set(AppConstants.RedisPrefix.PROFILE_INFO_PREFIX_BY_NATIONAL_CODE + profile.getNationalId(), profileDTO, 60, TimeUnit.MINUTES);
         return profileDTO;
-    }
-
-    @Override
-    public ProfileDTO findByIdFullInfo(Long profileId) {
-        Profile profile = profileRepository.findById(profileId)
-                .orElseThrow(() -> new BusinessException("profile not found"));
-        ProfileDTO dto = mapper.toDto(profile);
-        return fillInfo(dto);
     }
 
     @Override

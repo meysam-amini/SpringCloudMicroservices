@@ -1,6 +1,7 @@
 package com.meysam.common.customsecurity.service.api;
 
 import com.meysam.common.customsecurity.model.dto.ProfileDTO;
+import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
 import com.meysam.common.customsecurity.model.dto.ResetPasswordDTO;
 import com.meysam.common.customsecurity.model.dto.UserInfoDto;
 import com.meysam.common.customsecurity.model.entity.Admin;
@@ -15,9 +16,7 @@ import java.util.List;
 
 public interface AdminService {
 
-    public Admin add(Admin admin);
-
-    public Admin getAdminByUsername(String username);
+    public Profile getAdminByUsername(String username);
 
     ProfileDTO findById(Long profileId);
     ProfileDTO save(ProfileDTO profileDTO);
@@ -25,7 +24,6 @@ public interface AdminService {
     ProfileDTO getProfileByUsername(String username);
     Profile getProfileEntityByUsername(String username);
 
-    ProfileDTO findByIdFullInfo(Long profileId);
     ResponseEntity<?> sendOtpForResetPass(String username, String captchaAnswer, CaptchaOperation captchaOperation);
     void resetPassword(String username, ResetPasswordDTO resetPasswordDTO);
 
