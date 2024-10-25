@@ -3,23 +3,22 @@ package com.meysam.common.customsecurity.service.impl;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.dto.*;
-import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
-import com.meysam.common.customsecurity.repository.AdminRepository;
+import com.meysam.common.customsecurity.repository.ProfileRepository;
 import com.meysam.common.customsecurity.service.api.AdminPermissionService;
 import com.meysam.common.customsecurity.service.api.AdminRoleService;
 import com.meysam.common.customsecurity.service.api.AdminService;
 import com.meysam.common.model.enums.CaptchaOperation;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,16 +26,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
 
-    private final AdminRepository adminRepository;
+    private final ProfileRepository profileRepository;
     private final RedisTemplate redisTemplate;
     private final AdminRoleService adminRoleService;
     private final RolePermissionServiceImpl rolePermissionServiceImpl;
@@ -51,18 +49,13 @@ public class AdminServiceImpl implements AdminService {
     private String OTP_RESET_PASS_ENABLED;
 
 
-
-    public Admin add(Admin admin){
-        return adminRepository.save(admin);
-    }
-
-    public Admin getAdminByUsername(String username) {
-        return adminRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
+    public Profile getAdminByUsername(String username) {
+        return profileRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
     }
 
     @Override
     public ProfileDTO findById(Long profileId) {
-        Profile profile = adminRepository.findById(profileId).orElseThrow(() -> new BusinessException("profile not found"));
+        Profile profile = profileRepository.findById(profileId).orElseThrow(() -> new BusinessException("profile not found"));
         ProfileDTO profileDTO = modelMapper.map(profile,ProfileDTO.class);
         List<Role> roles = adminRoleService.getRoles(profileId);
         List<Long> rolesIds = roles.stream().map(Role::getId).toList();
@@ -75,18 +68,7 @@ public class AdminServiceImpl implements AdminService {
                 .collect(Collectors.toList()));
         profileDTO.setPermissions(permissionsByRoles);
 
-        ValueOperations<String, ProfileDTO> valueOperations2 = redisTemplate.opsForValue();
-        valueOperations2.set(AppConstants.RedisPrefix.PROFILE_INFO_PREFIX_BY_ID + profile.getId(), profileDTO, 60, TimeUnit.MINUTES);
-        valueOperations2.set(AppConstants.RedisPrefix.PROFILE_INFO_PREFIX_BY_NATIONAL_CODE + profile.getNationalId(), profileDTO, 60, TimeUnit.MINUTES);
         return profileDTO;
-    }
-
-    @Override
-    public ProfileDTO findByIdFullInfo(Long profileId) {
-        Profile profile = adminRepository.findById(profileId)
-                .orElseThrow(() -> new BusinessException("profile not found"));
-        ProfileDTO dto = mapper.toDto(profile);
-        return fillInfo(dto);
     }
 
     @Override
@@ -116,7 +98,7 @@ public class AdminServiceImpl implements AdminService {
             otpService.validateOtpCode(username, OtpConstants.OtpType.SMS_,OtpConstants.OtpOperation.RESET_PASS_,resetPasswordDTO.getOtpCode());
         }
         profile.setPassword(passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
-        adminRepository.save(profile);
+        profileRepository.save(profile);
         if(Boolean.parseBoolean(OTP_RESET_PASS_ENABLED)){
             //check whether otp is set to email or sms
             otpService.removeCachedOtpCodeAndWrongOtpCount(username, OtpConstants.OtpType.SMS_, OtpConstants.OtpOperation.RESET_PASS_);
@@ -126,7 +108,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     @Override
     public Profile addProfile(RegisterUserDto registerUserDto) {
-        if(adminRepository.existsByUsernameOrNationalId(registerUserDto.getUsername(),registerUserDto.getNationalId())){
+        if(profileRepository.existsByUsernameOrNationalId(registerUserDto.getUsername(),registerUserDto.getNationalId())){
             throw new BusinessException(messageSourceService.getMessage("USER_ALREADY_EXISTS_BY_NATIONAL_ID_OR_USERNAME"));
         }
         Profile profile = new Profile();
@@ -145,17 +127,17 @@ public class AdminServiceImpl implements AdminService {
         profile.setOrganizationName(registerUserDto.getOrganizationName());
         profile.setBirthDate(registerUserDto.getBirthDate());
         profile.setZoneCode(registerUserDto.getZoneCode());
-        return adminRepository.save(profile);
+        return profileRepository.save(profile);
     }
 
     @Override
     public List<ProfileDTO> findAllByListOfIds(List<Long> listOfIds) {
-        return mapper.toDtoList(adminRepository.findAllByIdIn(listOfIds));
+        return mapper.toDtoList(profileRepository.findAllByIdIn(listOfIds));
     }
 
     @Override
     public Page<ProfileDTO> findAll(Predicate predicate, Pageable pageable) {
-        return adminRepository.findAll(predicate,pageable).map(mapper::toDto);
+        return profileRepository.findAll(predicate,pageable).map(mapper::toDto);
     }
 
     private ProfileDTO fillInfo(ProfileDTO dto) {
@@ -175,14 +157,14 @@ public class AdminServiceImpl implements AdminService {
     public ProfileDTO save(ProfileDTO profileDTO) {
         Profile entity = mapper.toEntity(profileDTO);
         entity.setPassword(" - ");
-        Profile saved = adminRepository.save(entity);
+        Profile saved = profileRepository.save(entity);
         return mapper.toDto(saved);
     }
 
     @Override
     @Transactional
     public UserInfoDto update(ProfileDTO dto, Long profileId) {
-        Profile profile = adminRepository.findById(profileId).orElseThrow(() -> new BusinessException("Profile not found"));
+        Profile profile = profileRepository.findById(profileId).orElseThrow(() -> new BusinessException("Profile not found"));
         profile.setPhysicalCondition(dto.getPhysicalCondition());
         profile.setReligion(dto.getReligion());
         profile.setUserType(dto.getUserType());
@@ -202,13 +184,13 @@ public class AdminServiceImpl implements AdminService {
         profile.setZoneCode(dto.getZoneCode());
         profile.setIsPermittedToReceiveByEmail(dto.getIsPermittedToReceiveByEmail());
         profile.setIsPermittedToReceiveByFax(dto.getIsPermittedToReceiveByFax());
-        ProfileResponseDto profileResponseDto = mapper.convertProfileEntityToProfileDto(adminRepository.save(profile), null, null);
+        ProfileResponseDto profileResponseDto = mapper.convertProfileEntityToProfileDto(profileRepository.save(profile), null, null);
         return profileResponseDto.getUserInfo();
     }
 
     @Override
     public ProfileDTO getProfileByUsername(String username) {
-        Profile profile = adminRepository.findByUsername(username).orElseThrow(() -> {
+        Profile profile = profileRepository.findByUsername(username).orElseThrow(() -> {
             log.error("User with username :{} not found at time :{}", username, System.currentTimeMillis());
             return new BusinessException("User not found");
         });
@@ -217,57 +199,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Profile getProfileEntityByUsername(String username) {
-        return adminRepository.findByUsername(username)
+        return profileRepository.findByUsername(username)
                 .orElse(null);
-    }
-
-    @Override
-    public boolean hasPermission(String permission, Long profileId) {
-        ProfileDTO profileDTO = findById(profileId);
-        return checkPermission(profileDTO, permission);
-    }
-
-    private boolean checkPermission(ProfileDTO profileDTO, String permission) {
-        List<String> roleSet = profileDTO.getPermissions();
-        if (Objects.isNull(roleSet))
-            return false;
-
-        for (String role : roleSet) {
-            if (role.equals(permission)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public ProfileDTO getProfileIdAndNameAndLastnameByNationalCode(String nationalId) {
-        ProfileDTO profile = getProfileByNationalId(nationalId);
-        if(Objects.isNull(profile))
-            throw new BusinessException("user not found");
-
-        String name = profile.getFirstName();
-        String lastname = profile.getLastName();
-        Long profileId = profile.getId();
-        ProfileDTO profileDTO = new ProfileDTO();
-        profileDTO.setId(profileId);
-        profileDTO.setFirstName(name);
-        profileDTO.setLastName(lastname);
-        profileDTO.setNationalId(nationalId);
-        profileDTO.setId(profileId);
-        return profileDTO;
-    }
-
-    @Override
-    public ProfileDTO getProfileByNationalId(String nationalId) {
-        Optional<Profile> profileOptional = adminRepository.findByNationalId(nationalId);
-        if (!profileOptional.isPresent())
-            return null;
-
-        Profile profile = profileOptional.get();
-        ValueOperations<String, ProfileDTO> valueOperations2 = redisTemplate.opsForValue();
-        valueOperations2.set(AppConstants.RedisPrefix.PROFILE_INFO_PREFIX_BY_NATIONAL_CODE + profile.getNationalId(), mapper.toDto(profile), 60, TimeUnit.MINUTES);
-        valueOperations2.set(AppConstants.RedisPrefix.PROFILE_INFO_PREFIX_BY_ID + profile.getId(), mapper.toDto(profile), 60, TimeUnit.MINUTES);
-        return mapper.toDto(profile);
     }
 }

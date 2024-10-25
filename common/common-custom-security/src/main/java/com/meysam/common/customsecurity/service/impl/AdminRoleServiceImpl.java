@@ -8,7 +8,7 @@ import com.meysam.common.customsecurity.model.dto.RoleDTO;
 import com.meysam.common.customsecurity.model.entity.AdminRole;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.repository.AdminRepository;
+import com.meysam.common.customsecurity.repository.ProfileRepository;
 import com.meysam.common.customsecurity.repository.AdminRoleRepository;
 import com.meysam.common.customsecurity.service.api.AdminRoleService;
 import com.meysam.common.customsecurity.service.api.RoleService;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class AdminRoleServiceImpl implements AdminRoleService {
 
     private final AdminRoleRepository adminRoleRepository;
-    private final AdminRepository adminRepository;
+    private final ProfileRepository adminRepository;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
 
