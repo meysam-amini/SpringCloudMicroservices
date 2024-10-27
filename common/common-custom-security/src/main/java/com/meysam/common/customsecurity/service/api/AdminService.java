@@ -3,8 +3,6 @@ package com.meysam.common.customsecurity.service.api;
 import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
 import com.meysam.common.customsecurity.model.dto.ResetPasswordDTO;
-import com.meysam.common.customsecurity.model.dto.UserInfoDto;
-import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.model.enums.CaptchaOperation;
 import com.querydsl.core.types.Predicate;
@@ -20,7 +18,7 @@ public interface AdminService {
 
     ProfileDTO findById(Long profileId);
     ProfileDTO save(ProfileDTO profileDTO);
-    UserInfoDto update(ProfileDTO dto, Long profileId);
+    ProfileDTO update(ProfileDTO dto, Long profileId);
     ProfileDTO getProfileByUsername(String username);
     Profile getProfileEntityByUsername(String username);
 

@@ -134,38 +134,31 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ProfileDTO> findAllByListOfIds(List<Long> listOfIds) {
-        return mapper.toDtoList(profileRepository.findAllByIdIn(listOfIds));
+        return profileRepository.findAllByIdIn(listOfIds).stream()
+                .map(profile -> modelMapper.map(profile,ProfileDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public Page<ProfileDTO> findAll(Predicate predicate, Pageable pageable) {
-        return profileRepository.findAll(predicate,pageable).map(mapper::toDto);
+        return profileRepository.findAll(predicate,pageable)
+                .map(profile -> modelMapper.map(profile,ProfileDTO.class));
     }
 
-    private ProfileDTO fillInfo(ProfileDTO dto) {
-        if (Objects.nonNull(dto.getMaritalStatus()))
-            dto.setMaritalStatusDesc(MaritalStatusEnum.getById(dto.getMaritalStatus()).getDesc());
-
-        if (Objects.nonNull(dto.getMilitaryServiceStatus())) {
-            GeneralBaseInfoDTO militaryDto = militaryService.findById(dto.getMilitaryServiceStatus());
-            if (Objects.nonNull(militaryDto))
-                dto.setMilitaryServiceStatusDesc(militaryDto.getName());
-        }
-        return dto;
-    }
 
     @Override
     @Transactional
     public ProfileDTO save(ProfileDTO profileDTO) {
-        Profile entity = mapper.toEntity(profileDTO);
+        Profile entity = modelMapper.map(profileDTO, Profile.class);
         entity.setPassword(" - ");
         Profile saved = profileRepository.save(entity);
-        return mapper.toDto(saved);
+        profileDTO.setId(saved.getId());
+        return profileDTO;
     }
 
     @Override
     @Transactional
-    public UserInfoDto update(ProfileDTO dto, Long profileId) {
+    public ProfileDTO update(ProfileDTO dto, Long profileId) {
         Profile profile = profileRepository.findById(profileId).orElseThrow(() -> new BusinessException("Profile not found"));
         profile.setPhysicalCondition(dto.getPhysicalCondition());
         profile.setReligion(dto.getReligion());
@@ -186,8 +179,7 @@ public class AdminServiceImpl implements AdminService {
         profile.setZoneCode(dto.getZoneCode());
         profile.setIsPermittedToReceiveByEmail(dto.getIsPermittedToReceiveByEmail());
         profile.setIsPermittedToReceiveByFax(dto.getIsPermittedToReceiveByFax());
-        ProfileResponseDto profileResponseDto = mapper.convertProfileEntityToProfileDto(profileRepository.save(profile), null, null);
-        return profileResponseDto.getUserInfo();
+        return modelMapper.map(profileRepository.save(profile),ProfileDTO.class);
     }
 
     @Override
@@ -196,7 +188,7 @@ public class AdminServiceImpl implements AdminService {
             log.error("User with username :{} not found at time :{}", username, System.currentTimeMillis());
             return new BusinessException("User not found");
         });
-        return mapper.toDto(profile);
+        return modelMapper.map(profile,ProfileDTO.class);
     }
 
     @Override
