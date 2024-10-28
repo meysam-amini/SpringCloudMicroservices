@@ -2,17 +2,20 @@ package com.meysam.common.customsecurity.service;
 
 
 import com.meysam.common.configs.exception.BusinessException;
+import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.dto.AllRolePermissionsDTO;
 import com.meysam.common.customsecurity.model.dto.PermissionDTO;
 import com.meysam.common.customsecurity.model.dto.RoleDTO;
 import com.meysam.common.customsecurity.model.dto.RolesPermissionsDTO;
+import com.meysam.common.customsecurity.model.entity.Permission;
+import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.ProfilePermission;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.repository.ProfilePermissionRepository;
-import com.meysam.common.customsecurity.service.api.ProfilePermissionService;
-import com.meysam.common.customsecurity.service.api.ProfileRoleService;
-import com.meysam.common.customsecurity.service.api.RolePermissionService;
+import com.meysam.common.customsecurity.repository.ProfileRepository;
+import com.meysam.common.customsecurity.service.api.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -23,23 +26,25 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProfilePermissionServiceImpl implements ProfilePermissionService {
-
+    private final PermissionService permissionService;
+    private final LocaleMessageSourceService messageSourceService;
     private final ProfilePermissionRepository profilePermissionRepository;
-    private final ProfileRoleService adminRoleService;
+    private final ProfileRepository profileRepository;
+    private final ProfileRoleService profileRoleService;
+    private final RoleService roleService;
     private final RolePermissionService rolePermissionService;
-    private final ModelMapper modelMapper;
+    private final ModelMapper roleMapper;
 
-    public List<String> getPermissions(long profileId) {
-        return profilePermissionRepository.findPermissionsNamesByAdmin(profileId);
-    }
+
 
     @Override
-    public List<PermissionDTO> getAllRolePermissions(long profileId) {
+    public List<PermissionDTO> getAllRolePermissions(Long profileId) {
         List<PermissionDTO> permissions = getProfilePermissions(profileId);
-        List<Role> roles = adminRoleService.getRoles(profileId);
+        List<Role> roles = profileRoleService.getRoles(profileId);
         if(!roles.isEmpty()){
             permissions.addAll(rolePermissionService.getPermissions(roles.stream().map(Role::getId).collect(Collectors.toList())));
         }
@@ -48,12 +53,9 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
 
     @Override
     public AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId) {
-        List<Role> roles = adminRoleService.getRoles(profileId);
+        List<Role> roles = profileRoleService.getRoles(profileId);
         return AllRolePermissionsDTO.builder()
-                .rolePermissions(getPermissions
-                        (roles.stream()
-                                .map(role -> modelMapper.map(role,RoleDTO.class))
-                                .collect(Collectors.toList())))
+                .rolePermissions(getPermissions(roles.stream().map(role -> roleMapper.map(role,RoleDTO.class)).collect(Collectors.toList())))
                 .directPermissions(profilePermissionRepository.findAllPermissionsByProfile(profileId))
                 .build();
     }
