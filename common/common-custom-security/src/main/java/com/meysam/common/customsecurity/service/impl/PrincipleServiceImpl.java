@@ -6,7 +6,7 @@ import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.AdminPermissionServiceImpl;
 import com.meysam.common.customsecurity.service.api.AdminRoleService;
-import com.meysam.common.customsecurity.service.api.AdminService;
+import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class PrincipleServiceImpl implements PrincipleService {
 
     private final RedisTemplate redisTemplate;
-    private final AdminService adminService;
+    private final ProfileService adminService;
     private final AdminPermissionServiceImpl profilePermissionService;
     private final AdminRoleService profileRoleService;
     private final RolePermissionService rolePermissionService;
@@ -91,7 +91,7 @@ public class PrincipleServiceImpl implements PrincipleService {
 
 
     private Admin getProfileByUsername(String usernam) {
-        return adminService.getAdminByUsername(usernam);
+        return adminService.getProfileByUsername(usernam);
     }
 
     private List<String> getProfilePermissions(Long profileId) {

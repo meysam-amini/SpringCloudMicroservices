@@ -10,7 +10,7 @@ import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.AdminRole;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.api.AdminRoleService;
-import com.meysam.common.customsecurity.service.api.AdminService;
+import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import com.meysam.common.customsecurity.utils.JwtUtil;
@@ -35,7 +35,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 //    private final AdminAuthServiceClient authServiceClient;
     private final PrincipleService principleService;
     private final JwtUtil jwtUtils;
-    private final AdminService adminService;
+    private final ProfileService adminService;
     private final AdminRoleService adminRoleService;
     private final RoleService roleService;
 

@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements ProfileService {
 
 
     private final ProfileRepository profileRepository;
@@ -47,10 +47,6 @@ public class AdminServiceImpl implements AdminService {
     @Value("${otp.resetpassword.enabled:#{true}}")
     private String OTP_RESET_PASS_ENABLED;
 
-
-    public Profile getAdminByUsername(String username) {
-        return profileRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
-    }
 
     @Override
     public ProfileDTO findById(Long profileId) {

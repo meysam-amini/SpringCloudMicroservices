@@ -9,7 +9,7 @@ import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.AdminRole;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.api.AdminRoleService;
-import com.meysam.common.customsecurity.service.api.AdminService;
+import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import com.meysam.common.customsecurity.utils.JwtUtil;
@@ -47,7 +47,7 @@ class AdminAuthServiceImplTest {
     private JwtUtil jwtUtil;
 
     @Mock
-    private AdminService adminService;
+    private ProfileService adminService;
 
     @Mock
     private AdminRoleService adminRoleService;
