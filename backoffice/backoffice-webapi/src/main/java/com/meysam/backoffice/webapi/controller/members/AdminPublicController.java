@@ -1,6 +1,6 @@
 package com.meysam.backoffice.webapi.controller.members;
 
-import com.meysam.backoffice.service.auth.api.AdminAuthService;
+import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.model.dto.*;
 import jakarta.validation.Valid;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AdminPublicController {
 
-    private final AdminAuthService adminAuthService;
+    private final ProfileAuthService adminAuthService;
 
     @PostMapping(value = "login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminLoginResponseDto> loginAdmin(@Valid @RequestBody LoginRequestDto loginRequestDto) {

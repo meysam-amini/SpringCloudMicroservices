@@ -35,7 +35,7 @@ class AdminAuthServiceImplTest {
 
 
     @InjectMocks
-    private AdminAuthServiceImpl adminAuthService;
+    private ProfileAuthServiceImpl adminAuthService;
 
     @Mock
     private LocaleMessageSourceService messageSourceService;

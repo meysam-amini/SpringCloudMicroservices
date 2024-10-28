@@ -1,6 +1,6 @@
 package com.meysam.backoffice.service.auth.Impl;
 
-import com.meysam.backoffice.service.auth.api.AdminAuthService;
+import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
@@ -29,7 +29,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AdminAuthServiceImpl implements AdminAuthService {
+public class ProfileAuthServiceImpl implements ProfileAuthService {
 
     private final LocaleMessageSourceService messageSourceService;
 //    private final AdminAuthServiceClient authServiceClient;

@@ -1,6 +1,6 @@
 package com.meysam.backoffice.webapi;
 
-import com.meysam.backoffice.service.auth.api.AdminAuthService;
+import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import com.meysam.common.model.dto.LoginRequestDto;
@@ -8,14 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.utility.DockerImageName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AdminAuthServiceIT {
 
     @Autowired
-    private  AdminAuthService adminAuthService;
+    private ProfileAuthService adminAuthService;
     @Autowired
     private  PermissionService permissionService;
 

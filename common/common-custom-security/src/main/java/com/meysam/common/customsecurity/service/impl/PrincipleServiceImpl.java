@@ -47,7 +47,7 @@ public class PrincipleServiceImpl implements PrincipleService {
                 profile = getProfileByUsername(username);
 
                 List<Role> roles = getRolesNames(profile.getId());
-                List<Long> rolesIds = roles.stream().map(Role::getId).toList();
+//                List<Long> rolesIds = roles.stream().map(Role::getId).toList();
                 List<String> permissions = getPermissions(profile.getId());
 
                 SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
