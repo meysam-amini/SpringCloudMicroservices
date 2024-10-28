@@ -6,9 +6,9 @@ import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import com.meysam.common.customsecurity.model.entity.Admin;
-import com.meysam.common.customsecurity.model.entity.AdminRole;
+import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
+import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
@@ -50,7 +50,7 @@ class AdminAuthServiceImplTest {
     private ProfileService adminService;
 
     @Mock
-    private AdminRoleService adminRoleService;
+    private ProfileRoleService adminRoleService;
 
     @Mock
     private RoleService roleService;
@@ -121,7 +121,7 @@ class AdminAuthServiceImplTest {
 
         assertEquals("register successful for username: johndoe", response.getBody());
         verify(adminService).add(any(Admin.class));
-        verify(adminRoleService).add(any(AdminRole.class));
+        verify(adminRoleService).add(any(ProfileRole.class));
     }
 
     @Test

@@ -2,10 +2,10 @@ package com.meysam.common.customsecurity.service.impl;
 
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
-import com.meysam.common.customsecurity.model.entity.Admin;
+import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.AdminPermissionServiceImpl;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
+import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
@@ -26,7 +26,7 @@ public class PrincipleServiceImpl implements PrincipleService {
     private final RedisTemplate redisTemplate;
     private final ProfileService adminService;
     private final AdminPermissionServiceImpl profilePermissionService;
-    private final AdminRoleService profileRoleService;
+    private final ProfileRoleService profileRoleService;
     private final RolePermissionService rolePermissionService;
 
 
@@ -44,11 +44,11 @@ public class PrincipleServiceImpl implements PrincipleService {
         }
         try {
             if (Boolean.FALSE.equals(hasKey)) {
-                Admin admin = null;
-                admin = getProfileByUsername(username);
-                List<String> directPermissions = getProfilePermissions(admin.getId());
+                ProfileDTO profile = null;
+                profile = getProfileByUsername(username);
+                List<String> directPermissions = getProfilePermissions(profile.getId());
 
-                List<Role> roles = getRolesNames(admin.getId());
+                List<Role> roles = getRolesNames(profile.getId());
                 List<Long> rolesIds = roles.stream().map(Role::getId).toList();
                 List<String> permissionsByRoles = getRolesPermissionsNames(rolesIds);
 
@@ -56,7 +56,7 @@ public class PrincipleServiceImpl implements PrincipleService {
 
                 SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
                         .username(username)
-                        .adminId(admin.getId())
+                        .adminId(profile.getId())
                         .permissions(permissionsByRoles)
                         .build();
                 List<String> roleNames = roles.stream().map(Role::getName).toList();
@@ -90,8 +90,8 @@ public class PrincipleServiceImpl implements PrincipleService {
     }
 
 
-    private Admin getProfileByUsername(String usernam) {
-        return adminService.getProfileByUsername(usernam);
+    private ProfileDTO getProfileByUsername(String username) {
+        return adminService.getProfileByUsername(username);
     }
 
     private List<String> getProfilePermissions(Long profileId) {
@@ -99,7 +99,7 @@ public class PrincipleServiceImpl implements PrincipleService {
     }
 
     private List<String> getRolesPermissionsNames(List<Long> rolesIds) {
-        return rolePermissionService.getPermissions(rolesIds);
+        return rolePermissionService.getPermissions(rolesIds).stream();
     }
 
     private List<Role> getRolesNames(Long profileId) {

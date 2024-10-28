@@ -1,6 +1,5 @@
 package com.meysam.common.customsecurity.repository;
 
-import com.meysam.common.customsecurity.model.entity.AdminRole;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.dao.BaseRepository;
@@ -12,16 +11,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AdminRoleRepository extends BaseRepository<AdminRole> {
+public interface AdminRoleRepository extends BaseRepository<ProfileRole> {
 
-    Optional<AdminRole> findByAdminAndRole(long admin, long role);
+    Optional<ProfileRole> findByAdminAndRole(long admin, long role);
 
-    List<AdminRole> findAllByAdmin(long admin);
+    List<ProfileRole> findAllByAdmin(long admin);
 
     @Query(value = "select r from Role r where r.id in (select pr.role from AdminRole pr where pr.admin=:adminId)")
     List<Role> findRolesByProfileId(@Param("adminId") long adminId);
 
-    Optional<AdminRole> findByRole(long role);
+    Optional<ProfileRole> findByRole(long role);
 
     boolean existsByAdminAndRole(long profile, long role);
 

@@ -7,9 +7,9 @@ import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import com.meysam.common.customsecurity.model.entity.Admin;
-import com.meysam.common.customsecurity.model.entity.AdminRole;
+import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
+import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
@@ -36,7 +36,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     private final PrincipleService principleService;
     private final JwtUtil jwtUtils;
     private final ProfileService adminService;
-    private final AdminRoleService adminRoleService;
+    private final ProfileRoleService adminRoleService;
     private final RoleService roleService;
 
 
@@ -90,7 +90,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
             admin.setUsername(registerAdminRequestDto.getUsername());
             adminService.add(admin);
 
-            AdminRole adminRole = new AdminRole();
+            ProfileRole adminRole = new ProfileRole();
             adminRole.setAdmin(admin.getId());
             adminRole.setRole(role.getId());
 

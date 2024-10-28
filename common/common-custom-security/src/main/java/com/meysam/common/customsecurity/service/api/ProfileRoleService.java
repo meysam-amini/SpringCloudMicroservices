@@ -3,17 +3,16 @@ package com.meysam.common.customsecurity.service.api;
 
 import com.meysam.common.customsecurity.model.dto.ProfileRoleDTO;
 import com.meysam.common.customsecurity.model.dto.RoleDTO;
-import com.meysam.common.customsecurity.model.entity.AdminRole;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
 
 import java.util.List;
 
 
-public interface AdminRoleService {
+public interface ProfileRoleService {
 
 
-    public AdminRole add(AdminRole adminRole);
+    public ProfileRole add(ProfileRole adminRole);
 
     public List<Role> getRoles(Long profileId);
 
@@ -23,5 +22,5 @@ public interface AdminRoleService {
 
     void assignRolesToProfile(List<String> roles, String username);
 
-    AdminRole findByProfileAndRole(long profile , long role);
+    ProfileRole findByProfileAndRole(long profile , long role);
 }

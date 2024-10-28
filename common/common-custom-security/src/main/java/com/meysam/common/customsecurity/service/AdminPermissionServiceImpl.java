@@ -10,7 +10,7 @@ import com.meysam.common.customsecurity.model.entity.ProfilePermission;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.repository.AdminPermissionRepository;
 import com.meysam.common.customsecurity.service.api.AdminPermissionService;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
+import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class AdminPermissionServiceImpl implements AdminPermissionService {
 
     private final AdminPermissionRepository adminPermissionRepository;
-    private final AdminRoleService adminRoleService;
+    private final ProfileRoleService adminRoleService;
     private final RolePermissionService rolePermissionService;
 
     public List<String> getPermissions(Long adminId) {

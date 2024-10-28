@@ -25,7 +25,7 @@ public class PermissionManagementController {
     private final ProfileService adminService;
     private final RoleService roleService;
     private final AdminPermissionService adminPermissionService;
-    private final AdminRoleService adminRoleService;
+    private final ProfileRoleService adminRoleService;
     private final RolePermissionService rolePermissionService;
     private final PermissionService permissionService;
     private final LocaleMessageSourceService messageSourceService;
