@@ -5,6 +5,7 @@ import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
+import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
 import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
@@ -120,7 +121,7 @@ class AdminAuthServiceImplTest {
         ResponseEntity<?> response = adminAuthService.register(requestDto);
 
         assertEquals("register successful for username: johndoe", response.getBody());
-        verify(adminService).add(any(Admin.class));
+        verify(adminService).addProfile(any(RegisterUserDto.class));
         verify(adminRoleService).add(any(ProfileRole.class));
     }
 
