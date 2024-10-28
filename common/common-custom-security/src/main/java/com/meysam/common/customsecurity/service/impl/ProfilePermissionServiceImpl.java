@@ -1,4 +1,4 @@
-package com.meysam.common.customsecurity.service;
+package com.meysam.common.customsecurity.service.impl;
 
 
 import com.meysam.common.configs.exception.BusinessException;

@@ -5,7 +5,6 @@ import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.PermissionDTO;
 import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.ProfilePermissionServiceImpl;
 import com.meysam.common.customsecurity.service.api.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
