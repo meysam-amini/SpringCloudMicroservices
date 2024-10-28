@@ -35,7 +35,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
 //    private final AdminAuthServiceClient authServiceClient;
     private final PrincipleService principleService;
     private final JwtUtil jwtUtils;
-    private final ProfileService adminService;
+    private final ProfileService profileService;
     private final ProfileRoleService adminRoleService;
     private final RoleService roleService;
 
@@ -88,7 +88,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
             admin.setActiveTo(new Date());
             admin.setMobileNumber(registerAdminRequestDto.getPhone());
             admin.setUsername(registerAdminRequestDto.getUsername());
-            adminService.add(admin);
+            profileService.add(admin);
 
             ProfileRole adminRole = new ProfileRole();
             adminRole.setAdmin(admin.getId());
