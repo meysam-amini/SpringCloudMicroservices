@@ -37,7 +37,7 @@ public class AdminServiceImpl implements ProfileService {
     private final RedisTemplate redisTemplate;
     private final ProfileRoleService adminRoleService;
     private final RolePermissionServiceImpl rolePermissionServiceImpl;
-    private final AdminPermissionService adminPermissionService;
+    private final ProfilePermissionService adminPermissionService;
     private final OtpService otpService;
     private final PasswordEncoder passwordEncoder;
     private final LocaleMessageSourceService messageSourceService;

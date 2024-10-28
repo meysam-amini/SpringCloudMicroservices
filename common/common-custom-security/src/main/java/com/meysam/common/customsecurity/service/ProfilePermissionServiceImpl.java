@@ -8,11 +8,12 @@ import com.meysam.common.customsecurity.model.dto.RoleDTO;
 import com.meysam.common.customsecurity.model.dto.RolesPermissionsDTO;
 import com.meysam.common.customsecurity.model.entity.ProfilePermission;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.repository.AdminPermissionRepository;
-import com.meysam.common.customsecurity.service.api.AdminPermissionService;
+import com.meysam.common.customsecurity.repository.ProfilePermissionRepository;
+import com.meysam.common.customsecurity.service.api.ProfilePermissionService;
 import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,18 +25,19 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdminPermissionServiceImpl implements AdminPermissionService {
+public class ProfilePermissionServiceImpl implements ProfilePermissionService {
 
-    private final AdminPermissionRepository adminPermissionRepository;
+    private final ProfilePermissionRepository profilePermissionRepository;
     private final ProfileRoleService adminRoleService;
     private final RolePermissionService rolePermissionService;
+    private final ModelMapper modelMapper;
 
-    public List<String> getPermissions(Long adminId) {
-        return adminPermissionRepository.findPermissionsNamesByAdmin(adminId);
+    public List<String> getPermissions(long profileId) {
+        return profilePermissionRepository.findPermissionsNamesByAdmin(profileId);
     }
 
     @Override
-    public List<PermissionDTO> getAllRolePermissions(Long profileId) {
+    public List<PermissionDTO> getAllRolePermissions(long profileId) {
         List<PermissionDTO> permissions = getProfilePermissions(profileId);
         List<Role> roles = adminRoleService.getRoles(profileId);
         if(!roles.isEmpty()){
@@ -48,7 +50,10 @@ public class AdminPermissionServiceImpl implements AdminPermissionService {
     public AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId) {
         List<Role> roles = adminRoleService.getRoles(profileId);
         return AllRolePermissionsDTO.builder()
-                .rolePermissions(getPermissions(roleMapper.toDtoList(roles)))
+                .rolePermissions(getPermissions
+                        (roles.stream()
+                                .map(role -> modelMapper.map(role,RoleDTO.class))
+                                .collect(Collectors.toList())))
                 .directPermissions(profilePermissionRepository.findAllPermissionsByProfile(profileId))
                 .build();
     }

@@ -4,7 +4,7 @@ import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.AdminPermissionServiceImpl;
+import com.meysam.common.customsecurity.service.ProfilePermissionServiceImpl;
 import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RolePermissionService;
@@ -25,7 +25,7 @@ public class PrincipleServiceImpl implements PrincipleService {
 
     private final RedisTemplate redisTemplate;
     private final ProfileService adminService;
-    private final AdminPermissionServiceImpl profilePermissionService;
+    private final ProfilePermissionServiceImpl profilePermissionService;
     private final ProfileRoleService profileRoleService;
     private final RolePermissionService rolePermissionService;
 
