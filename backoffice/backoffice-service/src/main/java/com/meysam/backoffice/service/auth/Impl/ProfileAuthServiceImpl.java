@@ -5,10 +5,8 @@ import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
-import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
-import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
@@ -24,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +36,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
     private final PrincipleService principleService;
     private final JwtUtil jwtUtils;
     private final ProfileService profileService;
-    private final ProfileRoleService adminRoleService;
+    private final ProfileRoleService profileRoleService;
     private final RoleService roleService;
 
 
@@ -97,7 +94,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
             profileRole.setProfile(savedProfile.getId());
             profileRole.setRole(role.getId());
 
-            adminRoleService.add(profileRole);
+            profileRoleService.add(profileRole);
         }catch (Exception e){
             log.error("Exception on registering new admin process at time:{}, exception is:{}",System.currentTimeMillis(),e);
             throw new BusinessException(messageSourceService.getMessage("REGISTER_ASMIN_FAILED"));
