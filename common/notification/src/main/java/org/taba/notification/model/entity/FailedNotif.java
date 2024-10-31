@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.taba.notification.model.constants.NotificationConstants;
-import org.taba.outbox.outboxservice.model.entity.OutBox;
 
 @Table(name = "FAILEDNOTIF")
 @Entity
