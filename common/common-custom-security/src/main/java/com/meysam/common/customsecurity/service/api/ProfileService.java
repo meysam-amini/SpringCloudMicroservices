@@ -12,15 +12,15 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public interface AdminService {
+public interface ProfileService {
 
-    public Profile getAdminByUsername(String username);
+    Profile getProfileEntityByUsername(String username);
 
     ProfileDTO findById(Long profileId);
     ProfileDTO save(ProfileDTO profileDTO);
     ProfileDTO update(ProfileDTO dto, Long profileId);
     ProfileDTO getProfileByUsername(String username);
-    Profile getProfileEntityByUsername(String username);
+//    Profile getProfileEntityByUsername(String username);
 
     ResponseEntity<?> sendOtpForResetPass(String username, String captchaAnswer, CaptchaOperation captchaOperation);
     void resetPassword(String username, ResetPasswordDTO resetPasswordDTO);

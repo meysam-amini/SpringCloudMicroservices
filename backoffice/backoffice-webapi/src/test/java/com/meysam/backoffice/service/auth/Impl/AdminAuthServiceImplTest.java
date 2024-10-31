@@ -5,11 +5,12 @@ import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
+import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
 import com.meysam.common.customsecurity.model.entity.Admin;
-import com.meysam.common.customsecurity.model.entity.AdminRole;
+import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
-import com.meysam.common.customsecurity.service.api.AdminService;
+import com.meysam.common.customsecurity.service.api.ProfileRoleService;
+import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import com.meysam.common.customsecurity.utils.JwtUtil;
@@ -35,7 +36,7 @@ class AdminAuthServiceImplTest {
 
 
     @InjectMocks
-    private AdminAuthServiceImpl adminAuthService;
+    private ProfileAuthServiceImpl adminAuthService;
 
     @Mock
     private LocaleMessageSourceService messageSourceService;
@@ -47,10 +48,10 @@ class AdminAuthServiceImplTest {
     private JwtUtil jwtUtil;
 
     @Mock
-    private AdminService adminService;
+    private ProfileService adminService;
 
     @Mock
-    private AdminRoleService adminRoleService;
+    private ProfileRoleService adminRoleService;
 
     @Mock
     private RoleService roleService;
@@ -120,8 +121,8 @@ class AdminAuthServiceImplTest {
         ResponseEntity<?> response = adminAuthService.register(requestDto);
 
         assertEquals("register successful for username: johndoe", response.getBody());
-        verify(adminService).add(any(Admin.class));
-        verify(adminRoleService).add(any(AdminRole.class));
+        verify(adminService).addProfile(any(RegisterUserDto.class));
+        verify(adminRoleService).add(any(ProfileRole.class));
     }
 
     @Test

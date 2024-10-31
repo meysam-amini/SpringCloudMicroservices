@@ -8,10 +8,7 @@ import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
 import com.meysam.common.customsecurity.repository.ProfileRepository;
-import com.meysam.common.customsecurity.service.api.AdminPermissionService;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
-import com.meysam.common.customsecurity.service.api.AdminService;
-import com.meysam.common.customsecurity.service.api.OtpService;
+import com.meysam.common.customsecurity.service.api.*;
 import com.meysam.common.model.enums.CaptchaOperation;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +30,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements ProfileService {
 
 
     private final ProfileRepository profileRepository;
     private final RedisTemplate redisTemplate;
-    private final AdminRoleService adminRoleService;
+    private final ProfileRoleService adminRoleService;
     private final RolePermissionServiceImpl rolePermissionServiceImpl;
-    private final AdminPermissionService adminPermissionService;
+    private final ProfilePermissionService adminPermissionService;
     private final OtpService otpService;
     private final PasswordEncoder passwordEncoder;
     private final LocaleMessageSourceService messageSourceService;
@@ -50,10 +47,6 @@ public class AdminServiceImpl implements AdminService {
     @Value("${otp.resetpassword.enabled:#{true}}")
     private String OTP_RESET_PASS_ENABLED;
 
-
-    public Profile getAdminByUsername(String username) {
-        return profileRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
-    }
 
     @Override
     public ProfileDTO findById(Long profileId) {

@@ -5,7 +5,7 @@ import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import com.meysam.common.model.dto.*;
 import org.springframework.http.ResponseEntity;
 
-public interface AdminAuthService {
+public interface ProfileAuthService {
 
     ResponseEntity<AdminLoginResponseDto> login(LoginRequestDto loginRequestDto);
     ResponseEntity<String> logout(String username);
