@@ -1,7 +1,7 @@
-package org.taba.notification.service.api;
+package com.meysam.common.notification.service.api;
 
 
-import org.taba.notification.model.constants.NotificationConstants;
+import com.meysam.common.notification.model.constants.NotificationConstants;
 
 public interface NotificationService {
     void setNotifOutboxService(NotifOutboxService notifOutboxService);

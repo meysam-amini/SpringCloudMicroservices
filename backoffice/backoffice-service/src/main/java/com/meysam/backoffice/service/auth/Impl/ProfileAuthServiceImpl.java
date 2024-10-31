@@ -5,8 +5,11 @@ import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
+import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
+import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
 import com.meysam.common.customsecurity.model.entity.Admin;
+import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.api.ProfileRoleService;
@@ -79,22 +82,22 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
         //but we store admins' data on our side, not keycloak. so:
         try {
             Role role = roleService.findRoleByName(registerAdminRequestDto.getRoleName());
-            Admin admin = new Admin();
-            admin.setFirstName(registerAdminRequestDto.getFirstName());
-            admin.setLastName(registerAdminRequestDto.getLastName());
+            RegisterUserDto profile = new RegisterUserDto();
+            profile.setFirstName(registerAdminRequestDto.getFirstName());
+            profile.setLastName(registerAdminRequestDto.getLastName());
             // TODO: 02.12.23 : encrypt password!
-            admin.setPassword(registerAdminRequestDto.getPassword());
-            admin.setActiveFrom(new Date());
-            admin.setActiveTo(new Date());
-            admin.setMobileNumber(registerAdminRequestDto.getPhone());
-            admin.setUsername(registerAdminRequestDto.getUsername());
-            profileService.add(admin);
+            profile.setTemporalPassword(registerAdminRequestDto.getPassword());
+//            profile.setActiveFrom(new Date());
+//            profile.setActiveTo(new Date());
+            profile.setPhoneNumber(registerAdminRequestDto.getPhone());
+            profile.setUsername(registerAdminRequestDto.getUsername());
+            Profile savedProfile = profileService.addProfile(profile);
 
-            ProfileRole adminRole = new ProfileRole();
-            adminRole.setAdmin(admin.getId());
-            adminRole.setRole(role.getId());
+            ProfileRole profileRole = new ProfileRole();
+            profileRole.setProfile(savedProfile.getId());
+            profileRole.setRole(role.getId());
 
-            adminRoleService.add(adminRole);
+            adminRoleService.add(profileRole);
         }catch (Exception e){
             log.error("Exception on registering new admin process at time:{}, exception is:{}",System.currentTimeMillis(),e);
             throw new BusinessException(messageSourceService.getMessage("REGISTER_ASMIN_FAILED"));

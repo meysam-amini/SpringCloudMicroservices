@@ -1,19 +1,19 @@
-package org.taba.notification.service.Impl;
+package com.meysam.common.notification.service.Impl;
 
 
+import com.meysam.common.configs.exception.BusinessException;
+import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.taba.common.configs.exceptions.BusinessException;
-import org.taba.common.configs.messages.LocaleMessageSourceService;
-import org.taba.notification.model.constants.NotificationConstants;
-import org.taba.notification.model.dto.FailedSMSDto;
-import org.taba.notification.model.dto.SendSMSRequestDto;
-import org.taba.notification.model.dto.SendSMSResponseDto;
-import org.taba.notification.service.api.NotifOutboxService;
-import org.taba.notification.service.api.NotificationService;
+import com.meysam.common.notification.model.constants.NotificationConstants;
+import com.meysam.common.notification.model.dto.FailedSMSDto;
+import com.meysam.common.notification.model.dto.SendSMSRequestDto;
+import com.meysam.common.notification.model.dto.SendSMSResponseDto;
+import com.meysam.common.notification.service.api.NotifOutboxService;
+import com.meysam.common.notification.service.api.NotificationService;
 
 import java.util.Objects;
 

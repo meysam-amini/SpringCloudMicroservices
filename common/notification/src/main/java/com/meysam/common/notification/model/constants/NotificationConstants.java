@@ -1,4 +1,4 @@
-package org.taba.notification.model.constants;
+package com.meysam.common.notification.model.constants;
 
 public class NotificationConstants {
 

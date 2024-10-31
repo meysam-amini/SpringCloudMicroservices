@@ -1,8 +1,8 @@
-package org.taba.notification.service.api;
+package com.meysam.common.notification.service.api;
 
 
-import org.taba.notification.model.dto.FailedSMSDto;
-import org.taba.notification.model.entity.FailedNotif;
+import com.meysam.common.notification.model.dto.FailedSMSDto;
+import com.meysam.common.notification.model.entity.FailedNotif;
 import org.taba.outbox.outboxservice.service.api.OutboxService;
 
 public interface NotifOutboxService extends OutboxService<FailedNotif> {

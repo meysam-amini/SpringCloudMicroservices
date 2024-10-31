@@ -1,4 +1,4 @@
-package org.taba.notification.model.entity;
+package com.meysam.common.notification.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,9 +6,10 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.taba.notification.model.constants.NotificationConstants;
+import com.meysam.common.notification.model.constants.NotificationConstants;
+import org.taba.outbox.outboxservice.model.entity.OutBox;
 
-@Table(name = "FAILEDNOTIF")
+@Table
 @Entity
 @Getter
 @Setter@Builder

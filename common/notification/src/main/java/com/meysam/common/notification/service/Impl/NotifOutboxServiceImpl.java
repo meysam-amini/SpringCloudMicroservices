@@ -1,13 +1,13 @@
-package org.taba.notification.service.Impl;
+package com.meysam.common.notification.service.Impl;
 
+import com.meysam.common.notification.model.dto.FailedSMSDto;
+import com.meysam.common.notification.model.entity.FailedNotif;
+import com.meysam.common.notification.repository.FailedNotifRepository;
+import com.meysam.common.notification.service.api.NotifOutboxService;
+import com.meysam.common.notification.service.api.NotificationService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.taba.notification.model.dto.FailedSMSDto;
-import org.taba.notification.model.entity.FailedNotif;
-import org.taba.notification.repository.FailedNotifRepository;
-import org.taba.notification.service.api.NotifOutboxService;
-import org.taba.notification.service.api.NotificationService;
 import org.taba.outbox.outboxservice.model.enums.OutboxEventStatus;
 import org.taba.outbox.outboxservice.service.Impl.OutboxServiceImpl;
 

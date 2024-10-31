@@ -1,7 +1,7 @@
-package org.taba.notification.model.dto;
+package com.meysam.common.notification.model.dto;
 
 import lombok.*;
-import org.taba.notification.model.constants.NotificationConstants;
+import com.meysam.common.notification.model.constants.NotificationConstants;
 
 @Builder
 @AllArgsConstructor

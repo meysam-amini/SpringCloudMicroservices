@@ -1,12 +1,12 @@
 package org.taba.outbox.outboxservice.service.Impl;
 
+import com.meysam.common.utils.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.taba.common.util.util.PaginationUtils;
 import org.taba.outbox.outboxservice.model.entity.OutBox;
 import org.taba.outbox.outboxservice.model.enums.OutboxEventStatus;
 import org.taba.outbox.outboxservice.repository.OutboxRepository;

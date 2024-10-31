@@ -1,4 +1,4 @@
-package org.taba.notification.model.dto.restmagfa;
+package com.meysam.common.notification.model.dto.restmagfa;
 
 import lombok.Data;
 

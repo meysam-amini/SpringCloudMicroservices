@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.taba.notification.service.api.NotifOutboxService;
+import com.meysam.common.notification.service.api.NotifOutboxService;
 
 @Slf4j
 @Component

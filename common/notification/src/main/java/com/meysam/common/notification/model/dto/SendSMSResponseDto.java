@@ -1,14 +1,13 @@
-package org.taba.notification.model.dto;
+package com.meysam.common.notification.model.dto;
 
 import lombok.*;
 
 import java.util.List;
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
+@Setter@Builder
 public class SendSMSResponseDto {
     /*
 
