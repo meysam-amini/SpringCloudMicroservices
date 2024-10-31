@@ -1,16 +1,16 @@
 package com.meysam.backoffice.service.auth.Impl;
 
-import com.meysam.backoffice.service.auth.api.AdminAuthService;
+import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import com.meysam.common.customsecurity.model.entity.Admin;
-import com.meysam.common.customsecurity.model.entity.AdminRole;
+import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
-import com.meysam.common.customsecurity.service.api.AdminService;
+import com.meysam.common.customsecurity.service.api.ProfileRoleService;
+import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import com.meysam.common.customsecurity.service.api.PrincipleService;
 import com.meysam.common.customsecurity.utils.JwtUtil;
@@ -29,14 +29,14 @@ import java.util.Map;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AdminAuthServiceImpl implements AdminAuthService {
+public class ProfileAuthServiceImpl implements ProfileAuthService {
 
     private final LocaleMessageSourceService messageSourceService;
 //    private final AdminAuthServiceClient authServiceClient;
     private final PrincipleService principleService;
     private final JwtUtil jwtUtils;
-    private final AdminService adminService;
-    private final AdminRoleService adminRoleService;
+    private final ProfileService profileService;
+    private final ProfileRoleService adminRoleService;
     private final RoleService roleService;
 
 
@@ -88,9 +88,9 @@ public class AdminAuthServiceImpl implements AdminAuthService {
             admin.setActiveTo(new Date());
             admin.setMobileNumber(registerAdminRequestDto.getPhone());
             admin.setUsername(registerAdminRequestDto.getUsername());
-            adminService.add(admin);
+            profileService.add(admin);
 
-            AdminRole adminRole = new AdminRole();
+            ProfileRole adminRole = new ProfileRole();
             adminRole.setAdmin(admin.getId());
             adminRole.setRole(role.getId());
 

@@ -1,6 +1,6 @@
 package com.meysam.backoffice.webapi.controller.members;
 
-import com.meysam.backoffice.service.auth.api.AdminAuthService;
+import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
 import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
@@ -18,21 +18,21 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/protected")
 @RequiredArgsConstructor
-public class AdminProtectedController {
+public class ProfileProtectedController {
 
-    private final AdminAuthService adminAuthService;
+    private final ProfileAuthService profileAuthService;
     private final PermissionService permissionService;
 
 
     @PostMapping("log-out")
     public ResponseEntity<String> logoutAdmin(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple) {
-        return adminAuthService.logout(securityPrinciple.getUsername());
+        return profileAuthService.logout(securityPrinciple.getUsername());
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('PERMISSION_REGISTER_NEW_ADMIN')")
     public ResponseEntity registerNewAdmin(@Valid @RequestBody RegisterAdminRequestDto registerAdminRequestDto) {
-        return adminAuthService.register(registerAdminRequestDto);
+        return profileAuthService.register(registerAdminRequestDto);
     }
 
     @PostMapping(value = "add-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

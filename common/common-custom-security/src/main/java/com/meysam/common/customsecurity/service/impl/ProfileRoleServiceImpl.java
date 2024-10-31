@@ -5,12 +5,12 @@ import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.dto.ProfileRoleDTO;
 import com.meysam.common.customsecurity.model.dto.RoleDTO;
-import com.meysam.common.customsecurity.model.entity.AdminRole;
+import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.repository.ProfileRepository;
 import com.meysam.common.customsecurity.repository.AdminRoleRepository;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
+import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AdminRoleServiceImpl implements AdminRoleService {
+public class ProfileRoleServiceImpl implements ProfileRoleService {
 
     private final AdminRoleRepository adminRoleRepository;
     private final ProfileRepository adminRepository;
@@ -36,7 +36,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 
     private final LocaleMessageSourceService messageSourceService;
 
-    public AdminRole add(AdminRole adminRole){
+    public ProfileRole add(ProfileRole adminRole){
         return adminRoleRepository.save(adminRole);
     }
 
@@ -45,7 +45,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     }
 
     public void save(ProfileRoleDTO profileRoleDTO) {
-        adminRoleRepository.save(modelMapper.map(profileRoleDTO,AdminRole.class));
+        adminRoleRepository.save(modelMapper.map(profileRoleDTO, ProfileRole.class));
     }
 
     @Override
@@ -90,8 +90,8 @@ public class AdminRoleServiceImpl implements AdminRoleService {
             if(adminRoleRepository.existsByAdminAndRole(profile.getId(),role.getId())){
                 log.info("profile:{}, role:{} record already assigned",profile,role);
             }else {
-                AdminRole profileRole = new AdminRole();
-                profileRole.setAdmin(profile.getId());
+                ProfileRole profileRole = new ProfileRole();
+                profileRole.setProfile(profile.getId());
                 profileRole.setRole(role.getId());
 //                profileRole.setIsActive(true);
 //                profileRole.setCreatedAt(new Date());
@@ -102,7 +102,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     }
 
     @Override
-    public AdminRole findByProfileAndRole(long profile, long role) {
+    public ProfileRole findByProfileAndRole(long profile, long role) {
         return adminRoleRepository.findByAdminAndRole(profile,role).orElse(null);
     }
 }

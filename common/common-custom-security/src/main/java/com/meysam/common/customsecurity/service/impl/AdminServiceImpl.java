@@ -30,14 +30,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl implements ProfileService {
 
 
     private final ProfileRepository profileRepository;
     private final RedisTemplate redisTemplate;
-    private final AdminRoleService adminRoleService;
+    private final ProfileRoleService adminRoleService;
     private final RolePermissionServiceImpl rolePermissionServiceImpl;
-    private final AdminPermissionService adminPermissionService;
+    private final ProfilePermissionService adminPermissionService;
     private final OtpService otpService;
     private final PasswordEncoder passwordEncoder;
     private final LocaleMessageSourceService messageSourceService;
@@ -47,10 +47,6 @@ public class AdminServiceImpl implements AdminService {
     @Value("${otp.resetpassword.enabled:#{true}}")
     private String OTP_RESET_PASS_ENABLED;
 
-
-    public Profile getAdminByUsername(String username) {
-        return profileRepository.findByUsername(username).orElseThrow(() -> new BusinessException("User not found"));
-    }
 
     @Override
     public ProfileDTO findById(Long profileId) {

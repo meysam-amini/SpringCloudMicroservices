@@ -2,13 +2,10 @@ package com.meysam.common.customsecurity.service.impl;
 
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
-import com.meysam.common.customsecurity.model.entity.Admin;
+import com.meysam.common.customsecurity.model.dto.PermissionDTO;
+import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.service.AdminPermissionServiceImpl;
-import com.meysam.common.customsecurity.service.api.AdminRoleService;
-import com.meysam.common.customsecurity.service.api.AdminService;
-import com.meysam.common.customsecurity.service.api.RolePermissionService;
-import com.meysam.common.customsecurity.service.api.PrincipleService;
+import com.meysam.common.customsecurity.service.api.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,10 +22,11 @@ import java.util.concurrent.TimeUnit;
 public class PrincipleServiceImpl implements PrincipleService {
 
     private final RedisTemplate redisTemplate;
-    private final AdminService adminService;
-    private final AdminPermissionServiceImpl profilePermissionService;
-    private final AdminRoleService profileRoleService;
+    private final ProfileService adminService;
+    private final ProfilePermissionService profilePermissionService;
+    private final ProfileRoleService profileRoleService;
     private final RolePermissionService rolePermissionService;
+
 
 
     @Override
@@ -44,20 +43,17 @@ public class PrincipleServiceImpl implements PrincipleService {
         }
         try {
             if (Boolean.FALSE.equals(hasKey)) {
-                Admin admin = null;
-                admin = getProfileByUsername(username);
-                List<String> directPermissions = getProfilePermissions(admin.getId());
+                ProfileDTO profile = null;
+                profile = getProfileByUsername(username);
 
-                List<Role> roles = getRolesNames(admin.getId());
-                List<Long> rolesIds = roles.stream().map(Role::getId).toList();
-                List<String> permissionsByRoles = getRolesPermissionsNames(rolesIds);
-
-                permissionsByRoles.addAll(directPermissions);
+                List<Role> roles = getRolesNames(profile.getId());
+//                List<Long> rolesIds = roles.stream().map(Role::getId).toList();
+                List<String> permissions = getPermissions(profile.getId());
 
                 SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
                         .username(username)
-                        .adminId(admin.getId())
-                        .permissions(permissionsByRoles)
+                        .adminId(profile.getId())
+                        .permissions(permissions)
                         .build();
                 List<String> roleNames = roles.stream().map(Role::getName).toList();
                 securityPrinciple.setRoles(roleNames);
@@ -90,16 +86,13 @@ public class PrincipleServiceImpl implements PrincipleService {
     }
 
 
-    private Admin getProfileByUsername(String usernam) {
-        return adminService.getAdminByUsername(usernam);
+    private ProfileDTO getProfileByUsername(String username) {
+        return adminService.getProfileByUsername(username);
     }
 
-    private List<String> getProfilePermissions(Long profileId) {
-        return profilePermissionService.getPermissions(profileId);
-    }
-
-    private List<String> getRolesPermissionsNames(List<Long> rolesIds) {
-        return rolePermissionService.getPermissions(rolesIds);
+    private List<String> getPermissions(Long profileId) {
+        return profilePermissionService.getAllRolePermissions(profileId)
+                .stream().map(PermissionDTO::getEnKey).collect(Collectors.toList());
     }
 
     private List<Role> getRolesNames(Long profileId) {
