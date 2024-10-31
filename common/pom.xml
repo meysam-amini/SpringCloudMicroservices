@@ -22,6 +22,7 @@
         <module>common-configs</module>
         <module>common-custom-security</module>
         <module>outbox</module>
+        <module>notification</module>
     </modules>
 
     <properties>
