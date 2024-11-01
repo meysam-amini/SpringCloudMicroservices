@@ -63,3 +63,21 @@ web:
     time-out:
       connection: 10000
       response: 10000
+
+notification:
+  sms:
+    enabled: false
+    provider:
+      uri: https://sms
+    sender-number: 3008264823
+  email:
+    enabled: false
+    provider:
+      uri:
+
+outbox:
+  processing:
+    page:
+      size: 100
+  retry:
+    count: 3
