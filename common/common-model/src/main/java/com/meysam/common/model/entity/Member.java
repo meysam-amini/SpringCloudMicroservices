@@ -17,6 +17,11 @@ import java.math.BigInteger;
 @Table
 public class Member extends BaseEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
+    @SequenceGenerator(name = "member_seq", sequenceName = "member_seq", allocationSize = 1)
+    private long id;
+
     @Column(nullable = false , unique = true)
     private String username;
 

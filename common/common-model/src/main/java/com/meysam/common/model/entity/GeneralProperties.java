@@ -17,8 +17,8 @@ import java.math.BigInteger;
 public class GeneralProperties extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coin_seq")
-    @SequenceGenerator(name = "coin_seq", sequenceName = "coin_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "general_properties_seq")
+    @SequenceGenerator(name = "general_properties_seq", sequenceName = "general_properties_seq", allocationSize = 1)
     private long id;
 
     @NotBlank
