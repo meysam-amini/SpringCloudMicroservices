@@ -4,13 +4,15 @@ import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 
-@Table(name = "ROLE")
-@Data
+@Table
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter@Setter
 @Entity
 public class Role extends BaseEntity implements Serializable {
 

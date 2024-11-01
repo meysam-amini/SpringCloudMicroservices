@@ -61,6 +61,24 @@ public class UserAuthServiceFallBackFactory implements FallbackFactory<UserAuthS
             return returnProperResponse(cause,status);
         }
 
+        @Override
+        public ResponseEntity adminLogin(LoginRequestDto loginRequestDto) {
+            log.error(status+" error occurred when auth-ws /auth-admin/login called at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
+        }
+
+        @Override
+        public ResponseEntity registerAdmin(RegisterUserRequestDto registerRequestDto) {
+            log.error(status+" error occurred when auth-ws /auth-admin/register called at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
+        }
+
+        @Override
+        public ResponseEntity adminRefreshToken() {
+            log.error(status+" error occurred when auth-ws /auth-admin/refresh-token called at time :{}",System.currentTimeMillis());
+            return returnProperResponse(cause,status);
+        }
+
         private ResponseEntity returnProperResponse(Throwable cause, int status){
             if (cause instanceof FeignException && status ==-1) {
                 return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)

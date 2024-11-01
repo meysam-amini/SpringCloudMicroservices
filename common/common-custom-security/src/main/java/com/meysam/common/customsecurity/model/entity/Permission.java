@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 @Table(name = "PERMISSION")
 @Data
@@ -16,16 +15,19 @@ public class Permission extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    
 
     @NotNull(message = "invalid name")
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "NAME")
-    String name;
+    private String name;
+
+    @NotNull(message = "invalid enKey")
+    @Size(max = 100)
+    @Column(name = "ENKEY")
+    private String enKey;
 
     @NotNull(message = "invalid code")
     @Size(max = 20)
     @Column(name = "CODE")
-    String code;
-
+    private String code;
 }
