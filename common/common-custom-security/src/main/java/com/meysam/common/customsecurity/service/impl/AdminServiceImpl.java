@@ -6,7 +6,6 @@ import com.meysam.common.customsecurity.model.constants.OtpConstants;
 import com.meysam.common.customsecurity.model.dto.*;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
 import com.meysam.common.customsecurity.repository.ProfileRepository;
 import com.meysam.common.customsecurity.service.api.*;
 import com.meysam.common.model.enums.CaptchaOperation;
@@ -103,8 +102,8 @@ public class AdminServiceImpl implements ProfileService {
     @Transactional
     @Override
     public Profile addProfile(RegisterUserDto registerUserDto) {
-        if(profileRepository.existsByUsernameOrNationalId(registerUserDto.getUsername(),registerUserDto.getNationalId())){
-            throw new BusinessException(messageSourceService.getMessage("USER_ALREADY_EXISTS_BY_NATIONAL_ID_OR_USERNAME"));
+        if(profileRepository.existsByUsername(registerUserDto.getUsername())){
+            throw new BusinessException(messageSourceService.getMessage("USER_ALREADY_EXISTS_BY_USERNAME"));
         }
         Profile profile = new Profile();
 //        profile.setUserType(UserTypeEnum.INTERNAL_USER);
