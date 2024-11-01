@@ -15,8 +15,8 @@ public class ProfileRole implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profile_role_seq")
+    @SequenceGenerator(name = "profile_role_seq", sequenceName = "profile_role_seq", allocationSize = 1)
     private Long id;
 
     @NotNull(message = "invalid role")

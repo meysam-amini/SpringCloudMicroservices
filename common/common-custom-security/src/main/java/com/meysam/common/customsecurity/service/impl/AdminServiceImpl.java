@@ -107,21 +107,15 @@ public class AdminServiceImpl implements ProfileService {
             throw new BusinessException(messageSourceService.getMessage("USER_ALREADY_EXISTS_BY_NATIONAL_ID_OR_USERNAME"));
         }
         Profile profile = new Profile();
-        profile.setUserType(UserTypeEnum.INTERNAL_USER);
+//        profile.setUserType(UserTypeEnum.INTERNAL_USER);
         profile.setPassword(passwordEncoder.encode(registerUserDto.getTemporalPassword()));
         profile.setFirstName(registerUserDto.getFirstName());
         profile.setLastName(registerUserDto.getLastName());
         profile.setUsername(registerUserDto.getUsername());
         profile.setAddress(registerUserDto.getAddress());
-        profile.setEmail(registerUserDto.getEmail());
         profile.setFatherName(registerUserDto.getFatherName());
         profile.setPhoneNumber(registerUserDto.getPhoneNumber());
-        profile.setNationalId(registerUserDto.getNationalId());
-        profile.setNationality(registerUserDto.getNationality());
         profile.setIsActive(true);
-        profile.setOrganizationName(registerUserDto.getOrganizationName());
-        profile.setBirthDate(registerUserDto.getBirthDate());
-        profile.setZoneCode(registerUserDto.getZoneCode());
         return profileRepository.save(profile);
     }
 
@@ -153,25 +147,8 @@ public class AdminServiceImpl implements ProfileService {
     @Transactional
     public ProfileDTO update(ProfileDTO dto, Long profileId) {
         Profile profile = profileRepository.findById(profileId).orElseThrow(() -> new BusinessException("Profile not found"));
-        profile.setPhysicalCondition(dto.getPhysicalCondition());
-        profile.setReligion(dto.getReligion());
-        profile.setUserType(dto.getUserType());
-        profile.setForeignerId(dto.getForeignerId());
-        profile.setMilitaryServiceStatus(dto.getMilitaryServiceStatus());
-        profile.setNationality(dto.getNationality());
-        profile.setMaritalStatus(dto.getMaritalStatus());
-        profile.setChildrenNumber(dto.getChildrenNumber());
-        profile.setGraduationLevel(dto.getGraduationLevel());
         profile.setAddress(dto.getAddress());
         profile.setPhoneNumber(dto.getPhoneNumber());
-        profile.setMobileNumber(dto.getMobileNumber());
-        profile.setFaxNumber(dto.getFaxNumber());
-        profile.setEmail(dto.getEmail());
-        profile.setPostalCode(dto.getPostalCode());
-        profile.setLocation(dto.getLocation());
-        profile.setZoneCode(dto.getZoneCode());
-        profile.setIsPermittedToReceiveByEmail(dto.getIsPermittedToReceiveByEmail());
-        profile.setIsPermittedToReceiveByFax(dto.getIsPermittedToReceiveByFax());
         return modelMapper.map(profileRepository.save(profile),ProfileDTO.class);
     }
 

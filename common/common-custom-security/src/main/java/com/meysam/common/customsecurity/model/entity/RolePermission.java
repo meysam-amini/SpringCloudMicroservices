@@ -11,9 +11,13 @@ import java.math.BigInteger;
 @Table(name = "ROLEPERMISSION")
 @Data
 @Entity
-public class RolePermission extends BaseEntity implements Serializable {
+public class RolePermission extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_permission_seq")
+    @SequenceGenerator(name = "role_permission_seq", sequenceName = "role_permission_seq", allocationSize = 1)
+    private Long id;
 
     @NotNull(message = "invalid role")
     @Column(name = "ROLE")
