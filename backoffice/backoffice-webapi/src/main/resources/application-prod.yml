@@ -56,3 +56,10 @@ jwt:
   secret: ${PROD_JWT_SECRET:GlCUaHlZfK0qLMKBNcpAvdOpHrDoCi7sN0WgSv3T9FKUlK7Ycxc2YQ0Ql1hdufHuXOUTsJrYHSwKkA1mDnF1TX0XTxR5IWAlAoUAK3Ncz9HYfzFl2dt6ikqplqlz88CTP00Ya}
   token:
     validity: ${PROD_JWT_TOKEN_VALIDITY:86400}
+
+
+web:
+  client:
+    time-out:
+      connection: 10000
+      response: 10000

@@ -63,3 +63,28 @@ jwt:
 api:
   checkToken:
     url: https://sso_service_base_path/check_token
+
+web:
+  client:
+    time-out:
+      connection: 10000
+      response: 10000
+
+notification:
+  sms:
+    enabled: false
+    provider:
+      #      authorization-header: Basic dGFuemltXzAwMDk1L21jbHNfaXRlOkM2b1ppQUdQSlFkQ0Q1TlU=
+      uri: https://sms.magfa.com/api/http/sms/v2/send
+    sender-number: 300097500059
+  email:
+    enabled: false
+    provider:
+      uri:
+
+outbox:
+  processing:
+    page:
+      size: 100
+  retry:
+    count: 3

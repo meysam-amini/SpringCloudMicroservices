@@ -9,7 +9,7 @@ import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.repository.ProfileRepository;
-import com.meysam.common.customsecurity.repository.AdminRoleRepository;
+import com.meysam.common.customsecurity.repository.ProfileRoleRepository;
 import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProfileRoleServiceImpl implements ProfileRoleService {
 
-    private final AdminRoleRepository adminRoleRepository;
+    private final ProfileRoleRepository profileRoleRepository;
     private final ProfileRepository adminRepository;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
@@ -37,15 +37,15 @@ public class ProfileRoleServiceImpl implements ProfileRoleService {
     private final LocaleMessageSourceService messageSourceService;
 
     public ProfileRole add(ProfileRole adminRole){
-        return adminRoleRepository.save(adminRole);
+        return profileRoleRepository.save(adminRole);
     }
 
     public List<Role> getRoles(Long profileId) {
-        return adminRoleRepository.findRolesByProfileId(profileId);
+        return profileRoleRepository.findRolesByProfileId(profileId);
     }
 
     public void save(ProfileRoleDTO profileRoleDTO) {
-        adminRoleRepository.save(modelMapper.map(profileRoleDTO, ProfileRole.class));
+        profileRoleRepository.save(modelMapper.map(profileRoleDTO, ProfileRole.class));
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ProfileRoleServiceImpl implements ProfileRoleService {
         });
 
         List<Long> deletedRolesIds = deletedRolesList.stream().map(Role::getId).collect(Collectors.toList());
-        adminRoleRepository.deleteAllByIdIn(deletedRolesIds);
+        profileRoleRepository.deleteAllByIdIn(deletedRolesIds);
 
         addedRolesCodes.forEach(r->{
 
@@ -87,7 +87,7 @@ public class ProfileRoleServiceImpl implements ProfileRoleService {
                 throw new BusinessException(messageSourceService.getMessage("ROLE_NOT_FOUND")+ " code:"+r);
             }
 
-            if(adminRoleRepository.existsByAdminAndRole(profile.getId(),role.getId())){
+            if(profileRoleRepository.existsByProfileAndRole(profile.getId(),role.getId())){
                 log.info("profile:{}, role:{} record already assigned",profile,role);
             }else {
                 ProfileRole profileRole = new ProfileRole();
@@ -96,13 +96,13 @@ public class ProfileRoleServiceImpl implements ProfileRoleService {
 //                profileRole.setIsActive(true);
 //                profileRole.setCreatedAt(new Date());
 //                profileRole.setCreatedBy(0L);
-                adminRoleRepository.save(profileRole);
+                profileRoleRepository.save(profileRole);
             }
         });
     }
 
     @Override
     public ProfileRole findByProfileAndRole(long profile, long role) {
-        return adminRoleRepository.findByAdminAndRole(profile,role).orElse(null);
+        return profileRoleRepository.findByProfileAndRole(profile,role).orElse(null);
     }
 }

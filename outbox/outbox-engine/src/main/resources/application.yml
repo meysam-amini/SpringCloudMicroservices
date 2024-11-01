@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: outbox-engine
+
+  datasource:
+    url: jdbc:oracle:thin:@10.2.10.20:1521:dbdev
+    username: prkardata
+    password: s5j7d~qD}PU?Hx{N$Wb+:E
+  jpa:
+    database: oracle
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ######
+      connect-timeout: 10000
+      timeout: 10000
+      jedis:
+        pool:
+          enabled: true
+          max-active: 300
+          max-wait: 5000
+          max-idle: 100
+          min-idle: 20
+
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss.SSS"
+    time-zone: Asia/Tehran
+
+
+server:
+  port: 4444
+  address: 0.0.0.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
+logging:
+  appender:
+    console:
+      enabled: true
+    logstash:
+      enabled: true
+      destination:
+        url:
+        port:
+  level:
+    root: info
+
+
+notification:
+  sms:
+    enabled: true
+    provider:
+      #      authorization-header: Basic dGFuemltXzAwMDk1L21jbHNfaXRlOkM2b1ppQUdQSlFkQ0Q1TlU=
+      uri: https://sms.magfa.com/api/http/sms/v2/send
+    sender-number: 300097500059
+  email:
+    enabled: false
+    provider:
+      uri:
+
+web:
+  client:
+    time-out:
+      connection: 10000
+      response: 10000
+
+outbox:
+  processing:
+    page:
+      size: 100
+  retry:
+    count: 3

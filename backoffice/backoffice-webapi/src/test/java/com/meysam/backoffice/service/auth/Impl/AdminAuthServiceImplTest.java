@@ -6,7 +6,7 @@ import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
-import com.meysam.common.customsecurity.model.entity.Admin;
+import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.api.ProfileRoleService;
@@ -48,13 +48,14 @@ class AdminAuthServiceImplTest {
     private JwtUtil jwtUtil;
 
     @Mock
-    private ProfileService adminService;
+    private ProfileService profileService;
 
     @Mock
     private ProfileRoleService adminRoleService;
 
     @Mock
     private RoleService roleService;
+
 
     @BeforeAll
     static void beforeAll() {
@@ -116,12 +117,16 @@ class AdminAuthServiceImplTest {
 
         Role role = new Role();
         role.setId(1L);
+
+        Profile profile = new Profile();
+        profile.setId(1L);
         when(roleService.findRoleByName("ADMIN")).thenReturn(role);
+        when(profileService.addProfile(any())).thenReturn(profile);
 
         ResponseEntity<?> response = adminAuthService.register(requestDto);
 
         assertEquals("register successful for username: johndoe", response.getBody());
-        verify(adminService).addProfile(any(RegisterUserDto.class));
+        verify(profileService).addProfile(any(RegisterUserDto.class));
         verify(adminRoleService).add(any(ProfileRole.class));
     }
 

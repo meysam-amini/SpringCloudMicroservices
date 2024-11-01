@@ -1,12 +1,14 @@
 package com.meysam.common.customsecurity.model.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data@Builder
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter@Setter
 public class RegisterUserDto {
 
     private String firstName;

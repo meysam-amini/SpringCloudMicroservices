@@ -4,19 +4,23 @@ import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 
-@Table(name = "ROLE")
-@Data
+@Table
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter@Setter
 @Entity
-public class Role extends BaseEntity implements Serializable {
+public class Role extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
 
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", allocationSize = 1)
+    private long id;
 
     @NotNull(message = "invalid name")
     @Size(max = 50)

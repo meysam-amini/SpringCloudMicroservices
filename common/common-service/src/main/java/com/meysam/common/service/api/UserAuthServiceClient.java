@@ -27,4 +27,14 @@ public interface UserAuthServiceClient {
 
     @PostMapping(value = "/auth-user/refresh-token",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity refreshToken();
+
+
+    @PostMapping(value = "/auth-admin/login",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<LoginResponseDto> adminLogin(@RequestBody @Valid LoginRequestDto loginRequestDto);
+
+    @PostMapping(value = "/auth-admin/register",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity registerAdmin(@RequestBody @Valid RegisterUserRequestDto registerRequestDto);
+
+    @PostMapping(value = "/auth-admin/refresh-token",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity adminRefreshToken();
 }

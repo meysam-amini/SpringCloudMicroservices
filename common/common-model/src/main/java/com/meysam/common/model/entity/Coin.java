@@ -13,6 +13,11 @@ import java.math.BigInteger;
 @Table@Entity
 public class Coin extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "coin_seq")
+    @SequenceGenerator(name = "coin_seq", sequenceName = "coin_seq", allocationSize = 1)
+    private long id;
+
     @NotNull(message = "coin symbol cannot be null")
     @Column(nullable = false)
     private String symbol;

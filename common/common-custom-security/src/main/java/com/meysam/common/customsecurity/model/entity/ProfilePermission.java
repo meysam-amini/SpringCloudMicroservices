@@ -10,13 +10,11 @@ import java.util.Date;
 @Table(name = "PROFILEPERMISSION")
 @Data
 @Entity
-public class ProfilePermission implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class ProfilePermission  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profile_permission_seq")
+    @SequenceGenerator(name = "profile_permission_seq", sequenceName = "profile_permission_seq", allocationSize = 1)
     private Long id;
 
     @NotNull(message = "invalid permission")

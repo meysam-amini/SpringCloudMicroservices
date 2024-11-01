@@ -7,25 +7,30 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 @Table(name = "PERMISSION")
 @Data
 @Entity
-public class Permission extends BaseEntity implements Serializable {
+public class Permission extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
 
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "permission_seq")
+    @SequenceGenerator(name = "permission_seq", sequenceName = "permission_seq", allocationSize = 1)
+    private long id;
 
     @NotNull(message = "invalid name")
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "NAME")
-    String name;
+    private String name;
+
+    @NotNull(message = "invalid enKey")
+    @Size(max = 100)
+    @Column(name = "ENKEY")
+    private String enKey;
 
     @NotNull(message = "invalid code")
     @Size(max = 20)
     @Column(name = "CODE")
-    String code;
-
+    private String code;
 }
