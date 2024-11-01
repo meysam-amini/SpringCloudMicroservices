@@ -26,7 +26,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(value = BusinessException.class)
     public ResponseEntity<String> businessExceptionHandler(BusinessException ex) {
         log.error("handling BusinessException at time :{}, exception is : {}",System.currentTimeMillis(),ex);
-        return ResponseEntity.status(ex.getHttpStatusCode()).body(ex.getLocalizedMessage());
+        return ResponseEntity.status(ex.getHttpStatusCode() == null ? HttpStatus.INTERNAL_SERVER_ERROR : ex.getHttpStatusCode()).body(ex.getLocalizedMessage());
     }
 
     @ResponseBody

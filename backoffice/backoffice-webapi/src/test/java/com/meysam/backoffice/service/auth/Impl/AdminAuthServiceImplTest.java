@@ -147,7 +147,7 @@ class AdminAuthServiceImplTest {
 
     private SecurityPrinciple createMockSecurityPrinciple() {
         return SecurityPrinciple.builder()
-                .adminId(1L)
+                .profileId(1L)
                 .roles(Collections.singletonList("ADMIN"))
                 .permissions(Collections.singletonList("READ_PRIVILEGES"))
                 .build();
