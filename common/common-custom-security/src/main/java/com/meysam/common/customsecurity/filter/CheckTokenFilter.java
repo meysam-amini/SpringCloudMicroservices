@@ -66,7 +66,7 @@ public class CheckTokenFilter extends OncePerRequestFilter {
                     unauthenticated("Token is invalid ",response);
                 }
                     if(!securityService.hasActiveSession(clientPrinciple.getUsername())){
-                        unauthenticated("You have been logged out already",response);
+                        unauthenticated("You have been logged out already or your session has expired",response);
                         return;
                     }
                     SecurityContext securityContext = new CustomSecurityContext(clientPrinciple);

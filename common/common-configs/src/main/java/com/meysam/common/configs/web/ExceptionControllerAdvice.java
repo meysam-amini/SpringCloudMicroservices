@@ -9,10 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.nio.file.AccessDeniedException;
 import java.util.concurrent.TimeoutException;
 
 @ControllerAdvice
@@ -58,6 +61,15 @@ public class ExceptionControllerAdvice {
     public ResponseEntity<String>  httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException exception){
         log.error("handling HttpRequestMethodNotSupportedException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(messageSourceService.getMessage("WRONG_HTTP_METHOD"));
+    }
+
+    @ExceptionHandler(ServletRequestBindingException.class)
+    public ResponseEntity<String>  ServletRequestBindingException(ServletRequestBindingException exception){
+        log.error("handling ServletRequestBindingException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
+        if(exception.getLocalizedMessage().contains("Missing session attribute 'clientId'"))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageSourceService.getMessage("THE_SERVICE_NEEDS_AUTHENTICATION_BUT_SECURITY_IS_DISABLED"));
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageSourceService.getMessage("BAD_REQUEST"));
     }
 
     @ExceptionHandler(Exception.class)
