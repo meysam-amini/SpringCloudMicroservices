@@ -16,10 +16,9 @@ public class AdminPublicController {
 
     private final ProfileAuthService adminAuthService;
 
-    @PostMapping(value = "login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "login", consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AdminLoginResponseDto> loginAdmin(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         return adminAuthService.login(loginRequestDto);
     }
-
 
 }

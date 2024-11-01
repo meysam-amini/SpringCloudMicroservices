@@ -52,7 +52,7 @@ public class PrincipleServiceImpl implements PrincipleService {
 
                 SecurityPrinciple securityPrinciple = SecurityPrinciple.builder()
                         .username(username)
-                        .adminId(profile.getId())
+                        .profileId(profile.getId())
                         .permissions(permissions)
                         .build();
                 List<String> roleNames = roles.stream().map(Role::getName).toList();

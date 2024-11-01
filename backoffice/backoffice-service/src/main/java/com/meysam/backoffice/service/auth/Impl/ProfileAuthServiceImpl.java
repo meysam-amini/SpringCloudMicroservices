@@ -10,7 +10,6 @@ import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
-import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
 import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
@@ -125,7 +124,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
         SecurityPrinciple principle = principleService.getSecurityPrinciple(username);
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", username);
-        claims.put("profileId", principle.getAdminId());
+        claims.put("profileId", principle.getProfileId());
         claims.put("roles", commaSeperated(principle.getRoles()));
         claims.put("permissions", commaSeperated(principle.getPermissions()));
         String token = jwtUtils.doGenerateToken(claims, username);

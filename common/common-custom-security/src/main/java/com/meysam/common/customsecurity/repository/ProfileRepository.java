@@ -14,15 +14,11 @@ public interface ProfileRepository extends BaseRepository<Profile> {
 
     List<Profile> findByLastName(String lastName);
 
-    Optional<Profile> findByNationalId(String nationalId);
-
     Optional<Profile> findByUsernameAndPasswordAndIsActive(String username, String pass, Boolean active);
-
-    Optional<Profile> findByNationalIdAndPasswordAndIsActive(String nationalId, String pass, Boolean active);
 
     Optional<Profile> findByUsername(String username);
 
     List<Profile> findAllByIdIn(List<Long> ids);
 
-    boolean existsByUsernameOrNationalId(String username,String nationalId);
+    boolean existsByUsername(String username);
 }

@@ -24,8 +24,8 @@ public class ProfileProtectedController {
     private final PermissionService permissionService;
 
 
-    @PostMapping("log-out")
-    public ResponseEntity<String> logoutAdmin(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple) {
+    @PostMapping("logout")
+    public ResponseEntity<String> logoutProfile(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple) {
         return profileAuthService.logout(securityPrinciple.getUsername());
     }
 
