@@ -14,11 +14,13 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Getter@Setter
 @Entity
-public class Role extends BaseEntity implements Serializable {
+public class Role extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
 
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", allocationSize = 1)
+    private long id;
 
     @NotNull(message = "invalid name")
     @Size(max = 50)

@@ -10,6 +10,7 @@ import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
+import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
 import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.ProfileService;
 import com.meysam.common.customsecurity.service.api.RoleService;
@@ -19,12 +20,14 @@ import com.meysam.common.model.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -38,6 +41,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
     private final ProfileService profileService;
     private final ProfileRoleService profileRoleService;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -50,6 +54,20 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
 
         //or just check the password and create token based on username(in this approach, we keep admin's info on our side
         // and there would be no call to keycloak on login/register):
+
+        if (Objects.isNull(loginRequestDto.getUsername()) || Objects.isNull(loginRequestDto.getPassword()))
+            throw new BusinessException(messageSourceService.getMessage("WRONG_USER_NAME_OR_PASSWORD"));
+        Profile profile = profileService.getProfileEntityByUsername(loginRequestDto.getUsername());
+        if(Objects.isNull(profile)){
+            throw new BusinessException(messageSourceService.getMessage("PROFILE_NOT_FOUND"));
+        }
+//        if(!profile.getUserType().equals(UserTypeEnum.INTERNAL_USER)){
+//            throw new BusinessException(messageSourceService.getMessage("YOU_ARE_NOT_AN_INTERNAL_USER"));
+//        }
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(),profile.getPassword())) {
+            throw new BusinessException(messageSourceService.getMessage("WRONG_USER_NAME_OR_PASSWORD"));
+        }
+
 
         // TODO: 02.12.23 : check password correctness and then:
         AdminLoginResponseDto loginResponseDto = AdminLoginResponseDto.builder()

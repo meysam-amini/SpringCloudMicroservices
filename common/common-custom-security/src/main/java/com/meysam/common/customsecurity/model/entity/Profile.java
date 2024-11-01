@@ -1,6 +1,7 @@
 package com.meysam.common.customsecurity.model.entity;
 
 import com.meysam.common.customsecurity.model.enums.UserTypeEnum;
+import com.meysam.common.model.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -13,14 +14,12 @@ import java.util.Date;
 @Table(name = "PROFILE")
 @Data
 @Entity
-public class Profile implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Profile extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profile_seq")
+    @SequenceGenerator(name = "profile_seq", sequenceName = "profile_seq", allocationSize = 1)
+    private long id;
 
     @Size(max = 50)
     @Column(name = "FIRSTNAME")
@@ -140,12 +139,6 @@ public class Profile implements Serializable {
     @Column(name = "ISACTIVE")
     private Boolean isActive;
 
-    //    @NotNull(message= "invalid secret key")
-    @Size(max = 16000)
-    @Column(name = "SECRETKEY")
-    private String secretKey;
-
-
     @Column(name = "ACTIVEFROM")
     @Temporal(TemporalType.TIMESTAMP)
     private Date activeFrom;
@@ -160,22 +153,9 @@ public class Profile implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-
     @Column(name = "CREATEDBY")
     private Long createdBy;
 
-    @Column(name = "MODIFIEDAT")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedAt;
-
-    @Column(name = "MODIFIEDBY")
-    private Long modifiedBy;
-
-    @Column(name = "RELIGION")
-    private Long religion;
-
-    @Column(name = "EMAIL")
-    private String email;
 
     @Column(name = "ISPERMITTEDTORECEIVEBYEMAIL")
     private Boolean isPermittedToReceiveByEmail;
@@ -186,17 +166,14 @@ public class Profile implements Serializable {
     @Column(name = "MILITARYSERVICESTATUS")
     private Long militaryServiceStatus;
 
-    @Column(name = "USERTYPE")
-    private UserTypeEnum userType;
+    @Column(name = "MODIFIEDAT")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedAt;
 
+    @Column(name = "MODIFIEDBY")
+    private Long modifiedBy;
 
-//
-//    @NotNull
-//    @Column(name = "CITY")
-//    private Long city;
-//
-//    @NotNull
-//    @Column(name = "PROVINCE")
-//    private Long province;
+//    @Column(name = "USERTYPE")
+//    private UserTypeEnum userType;
 
 }

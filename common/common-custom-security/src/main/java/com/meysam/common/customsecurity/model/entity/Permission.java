@@ -11,10 +11,13 @@ import java.io.Serializable;
 @Table(name = "PERMISSION")
 @Data
 @Entity
-public class Permission extends BaseEntity implements Serializable {
+public class Permission extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "permission_seq")
+    @SequenceGenerator(name = "permission_seq", sequenceName = "permission_seq", allocationSize = 1)
+    private long id;
 
     @NotNull(message = "invalid name")
     @Size(max = 100)

@@ -1,6 +1,5 @@
 package com.meysam.common.customsecurity.repository;
 
-import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.dao.BaseRepository;
 import org.springframework.stereotype.Repository;

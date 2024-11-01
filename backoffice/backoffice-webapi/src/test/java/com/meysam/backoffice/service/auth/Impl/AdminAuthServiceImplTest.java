@@ -6,7 +6,6 @@ import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
 import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import com.meysam.common.customsecurity.model.dto.RegisterUserDto;
-import com.meysam.common.customsecurity.model.entity.Admin;
 import com.meysam.common.customsecurity.model.entity.Profile;
 import com.meysam.common.customsecurity.model.entity.ProfileRole;
 import com.meysam.common.customsecurity.model.entity.Role;
