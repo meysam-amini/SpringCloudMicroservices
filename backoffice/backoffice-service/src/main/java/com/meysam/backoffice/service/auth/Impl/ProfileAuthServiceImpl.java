@@ -58,7 +58,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
             throw new BusinessException(messageSourceService.getMessage("WRONG_USER_NAME_OR_PASSWORD"));
         Profile profile = profileService.getProfileEntityByUsername(loginRequestDto.getUsername());
         if(Objects.isNull(profile)){
-            throw new BusinessException(messageSourceService.getMessage("PROFILE_NOT_FOUND"));
+            throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
         }
 //        if(!profile.getUserType().equals(UserTypeEnum.INTERNAL_USER)){
 //            throw new BusinessException(messageSourceService.getMessage("YOU_ARE_NOT_AN_INTERNAL_USER"));

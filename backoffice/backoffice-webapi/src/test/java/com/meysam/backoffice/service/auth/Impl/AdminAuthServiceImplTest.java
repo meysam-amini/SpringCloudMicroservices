@@ -23,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 
@@ -34,9 +35,6 @@ import static org.mockito.Mockito.when;
 @Slf4j
 class AdminAuthServiceImplTest {
 
-
-    @InjectMocks
-    private ProfileAuthServiceImpl adminAuthService;
 
     @Mock
     private LocaleMessageSourceService messageSourceService;
@@ -56,6 +54,12 @@ class AdminAuthServiceImplTest {
     @Mock
     private RoleService roleService;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @InjectMocks
+    private ProfileAuthServiceImpl profileAuthService;
+
 
     @BeforeAll
     static void beforeAll() {
@@ -71,12 +75,18 @@ class AdminAuthServiceImplTest {
     void login_ShouldReturnAdminLoginResponseDto() {
         LoginRequestDto loginRequestDto = new LoginRequestDto();
         loginRequestDto.setUsername("admin");
+        loginRequestDto.setPassword("123");
 
         String expectedToken = "sample-token";
+        Profile p = new Profile();
+        p.setPassword("");
+        p.setId(1L);
         when(principleService.getSecurityPrinciple(anyString())).thenReturn(createMockSecurityPrinciple());
         when(jwtUtil.doGenerateToken(anyMap(), anyString())).thenReturn(expectedToken);
+        when(profileService.getProfileEntityByUsername(anyString())).thenReturn(p);
+        when(passwordEncoder.matches(anyString(),anyString())).thenReturn(true);
 
-        ResponseEntity<AdminLoginResponseDto> response = adminAuthService.login(loginRequestDto);
+        ResponseEntity<AdminLoginResponseDto> response = profileAuthService.login(loginRequestDto);
 
         assertNotNull(response);
         assertEquals(expectedToken, response.getBody().getToken());
@@ -88,7 +98,7 @@ class AdminAuthServiceImplTest {
         when(principleService.removeSession(username)).thenReturn(true);
         when(messageSourceService.getMessage("LOG_OUT_SUCCESS")).thenReturn("Logout successful");
 
-        ResponseEntity<String> response = adminAuthService.logout(username);
+        ResponseEntity<String> response = profileAuthService.logout(username);
 
         assertEquals("Logout successful", response.getBody());
         verify(principleService).removeSession(username);
@@ -100,7 +110,7 @@ class AdminAuthServiceImplTest {
         when(principleService.removeSession(username)).thenReturn(false);
         when(messageSourceService.getMessage("SESSION_EXPIRED_ALREADY")).thenReturn("Session expired");
 
-        ResponseEntity<String> response = adminAuthService.logout(username);
+        ResponseEntity<String> response = profileAuthService.logout(username);
 
         assertEquals("Session expired", response.getBody());
     }
@@ -123,7 +133,7 @@ class AdminAuthServiceImplTest {
         when(roleService.findRoleByName("ADMIN")).thenReturn(role);
         when(profileService.addProfile(any())).thenReturn(profile);
 
-        ResponseEntity<?> response = adminAuthService.register(requestDto);
+        ResponseEntity<?> response = profileAuthService.register(requestDto);
 
         assertEquals("register successful for username: johndoe", response.getBody());
         verify(profileService).addProfile(any(RegisterUserDto.class));
@@ -140,7 +150,7 @@ class AdminAuthServiceImplTest {
         when(roleService.findRoleByName("ADMIN")).thenThrow(new RuntimeException());
         when(messageSourceService.getMessage("REGISTER_ASMIN_FAILED")).thenReturn("Registration failed");
 
-        BusinessException exception = assertThrows(BusinessException.class, () -> adminAuthService.register(requestDto));
+        BusinessException exception = assertThrows(BusinessException.class, () -> profileAuthService.register(requestDto));
         assertEquals("Registration failed", exception.getMessage());
         verify(messageSourceService).getMessage("REGISTER_ASMIN_FAILED");
     }
