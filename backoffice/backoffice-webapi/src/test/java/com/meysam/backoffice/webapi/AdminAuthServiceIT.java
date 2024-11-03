@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AdminAuthServiceIT {
 
     @Autowired
-    private ProfileAuthService adminAuthService;
+    private ProfileAuthService profileAuthService;
     @Autowired
     private  PermissionService permissionService;
 
@@ -68,12 +68,12 @@ public class AdminAuthServiceIT {
                 .password("p")
                 .build();
         try {
-            ResponseEntity<AdminLoginResponseDto> response = adminAuthService.login(loginRequestDto);
+            ResponseEntity<AdminLoginResponseDto> response = profileAuthService.login(loginRequestDto);
             assertEquals(ResponseEntity.ok(),response.getStatusCode());
 
         }catch (Exception e){
 //            assertEquals(BusinessException.class,e);
-            assertEquals("User not found", e.getMessage());
+            assertEquals("user not found!", e.getMessage());
         }
     }
 
