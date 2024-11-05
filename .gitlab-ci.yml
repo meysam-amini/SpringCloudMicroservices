@@ -74,12 +74,21 @@ integration_tests:
     - main
 
 deploy:
+#  stage: deploy
+#  tags:
+#    - maven
+#  only:
+#    - main
+#  script:
+#    - echo "Deploying to production server with prod profile..."
+#    - mvn clean package -Pprod -Dmaven.test.skip=true
+#    # Add your deployment scripts here\
+
   stage: deploy
   tags:
-    - maven
-  only:
-    - main
+    - docker
   script:
-    - echo "Deploying to production server with prod profile..."
-    - mvn clean package -Pprod -Dmaven.test.skip=true
-    # Add your deployment scripts here
+    - echo "Building Docker images..."
+    - docker-compose build
+    - echo "Deploying containers..."
+    - docker-compose up -d
