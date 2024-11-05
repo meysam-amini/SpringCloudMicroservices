@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--  <profiles>-->
+<!--    <profile>-->
+<!--      <repositories>-->
+
+<!--        <repository>-->
+<!--          <id>m</id>-->
+<!--          <url>https://repo.com/repository/maven/</url>-->
+<!--        </repository>-->
+
+<!--      </repositories>-->
+<!--      <pluginRepositories>-->
+
+<!--        <pluginRepository>-->
+<!--          <id>m</id>-->
+<!--          <url>https://repo.com/repository/maven/</url>-->
+<!--        </pluginRepository>-->
+
+<!--      </pluginRepositories>-->
+<!--      <id>repoId</id>-->
+<!--    </profile>-->
+<!--  </profiles>-->
+<!--  <activeProfiles>-->
+<!--    <activeProfile>repoId</activeProfile>-->
+<!--  </activeProfiles>-->
+<!--  <servers>-->
+<!--    <server>-->
+<!--      <id>m</id>-->
+<!--      <username>${env.CI_REGISTRY_USERNAME}</username>-->
+<!--      <password>${env.CI_REGISTRY_PASSWORD}</password>-->
+<!--    </server>-->
+<!--  </servers>-->
+
+</settings>
+
