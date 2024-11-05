@@ -33,9 +33,8 @@ notification:
   sms:
     enabled: false
     provider:
-      #      authorization-header: Basic dGFuemltXzAwMDk1L21jbHNfaXRlOkM2b1ppQUdQSlFkQ0Q1TlU=
-      uri: https://sms.magfa.com/api/http/sms/v2/send
-    sender-number: 300097500059
+      uri: https://sms
+    sender-number: 3008264823
   email:
     enabled: false
     provider:
