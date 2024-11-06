@@ -24,7 +24,7 @@ COPY src ./src
 RUN mvn clean package --batch-mode --update-snapshots
 
 # Stage 2: Create the final lightweight image
-FROM repo.asredanesh.com/openjdk-ubu:21-jdk
+FROM openjdk:21-jdk
 
 # Set the working directory
 WORKDIR /app
@@ -33,7 +33,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Set environment variables for the Spring profile
-ENV SPRING_PROFILES_ACTIVE=docker
+#ENV SPRING_PROFILES_ACTIVE=docker
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=docker", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
