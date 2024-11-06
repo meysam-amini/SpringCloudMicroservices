@@ -86,7 +86,7 @@ deploy:
 
   stage: deploy
   tags:
-    - docker
+    - maven
   script:
     - echo "Building Docker images..."
     - docker-compose build
