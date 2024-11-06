@@ -11,6 +11,8 @@ services:
 #      - SPRING_PROFILES_ACTIVE=docker
 #    depends_on:
 #      - database
+    networks:
+      - meysam-docker
 
 #  another-module:
 #    build:

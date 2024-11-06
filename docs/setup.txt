@@ -1,0 +1,71 @@
+Steps to Set Up the Docker Registry:
+1.Pull the Docker Registry Image:
+docker pull registry:2
+2.Start the Docker Registry Container:
+docker run -d -p 5000:5000 --name my-registry registry:2
+3.Push and Pull Images: Tag an image to point to your registry, then push it:
+docker tag my-image <server-ip>:5000/my-image
+docker push <server-ip>:5000/my-image
+Pulling the image from your registry would be:
+docker pull <server-ip>:5000/my-image
+
+4.Secure Your Registry with Authentication and TLS, and Configure Docker Daemon to Trust Your Registry
+4.1.Install NGINX on Your Server
+sudo apt install nginx -y
+4.2.Set Up SSL Certificates:
+Option 1: Generate a Self-Signed Certificate
+Option 2: Use Let’s Encrypt (if you have a domain)
+
+4.2.1.Generate a Self-Signed Certificate
+sudo mkdir -p /etc/nginx/certs
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/certs/registry.key -out /etc/nginx/certs/registry.crt
+4.3.Configure Basic Authentication
+sudo apt install apache2-utils -y
+sudo htpasswd -c /etc/nginx/.htpasswd myuser
+//This will prompt you to enter a password for myuser. You can add more users by running htpasswd /etc/nginx/.htpasswd otheruser.
+
+5.Configure NGINX for Docker Registry
+Create an NGINX configuration for the Docker Registry:
+sudo nano /etc/nginx/sites-available/docker-registry
+Add the following configuration:
+
+server {
+    listen 443 ssl;
+    server_name your-domain.com; # or use _ if no domain
+
+    ssl_certificate /etc/nginx/certs/registry.crt;
+    ssl_certificate_key /etc/nginx/certs/registry.key;
+
+    location / {
+        proxy_pass http://localhost:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Basic authentication
+        auth_basic "Docker Registry";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+    }
+}
+
+6.Enable the Configuration and Restart NGINX
+Link the configuration file and restart NGINX:
+sudo ln -s /etc/nginx/sites-available/docker-registry /etc/nginx/sites-enabled/
+
+note:
+////////////////
+Symbolic Link (ln -s): Creates a shortcut, meaning if you update the file in sites-available, those changes immediately apply in sites-enabled because both paths point to the same file.
+                Copying (cp): Creates a separate file in sites-enabled, which means if you update the file in sites-available, you would need to copy it again to apply the changes in sites-enabled.
+///////////////
+sudo nginx -t
+note:
+///////////////
+tests the NGINX configuration files for syntax errors and potential issues without actually reloading or restarting the NGINX service.
+//////////////
+sudo systemctl restart nginx
+
+7.Update Docker Clients to Use the Registry
+ If you’re using self-signed certificates, add the registry as an
+ insecure registry on each client machine. Update the Docker daemon’s
+ configuration on each client at /etc/docker/daemon.json:
