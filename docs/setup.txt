@@ -9,6 +9,60 @@ docker push <server-ip>:5000/my-image
 Pulling the image from your registry would be:
 docker pull <server-ip>:5000/my-image
 
+//////////////////////////////////add custom images///////////////////////////////////
+dockerFile1(Build a custom Maven image based on Java 21 for building the Spring Boot project):
+FROM maven:3.9.9-amazoncorretto-21-alpine
+WORKDIR /app
+
+Build and push it to the registry:
+docker build -t localhost:5000/custom-maven:latest .
+docker push localhost:5000/custom-maven:latest
+
+dockerFile2(Build a custom Java runtime image):
+FROM amazoncorretto:21
+WORKDIR /app
+
+Build and push it to the registry:
+docker build -t localhost:5000/custom-java:latest .
+docker push localhost:5000/custom-java:latest
+
+script:
+#!/bin/bash
+
+# Define registry and image names
+REGISTRY="localhost:5000"
+MAVEN_IMAGE_NAME="custom-maven"
+JAVA_IMAGE_NAME="custom-java"
+
+# Step 1: Build custom Maven image for building the Spring Boot project
+echo "Building custom Maven image..."
+cat > Dockerfile_maven <<EOF
+FROM maven:3.9.9-amazoncorretto-21-alpine
+WORKDIR /app
+EOF
+
+docker build -t $REGISTRY/$MAVEN_IMAGE_NAME:latest -f Dockerfile_maven .
+docker push $REGISTRY/$MAVEN_IMAGE_NAME:latest
+rm Dockerfile_maven
+echo "Custom Maven image built and pushed to $REGISTRY/$MAVEN_IMAGE_NAME:latest."
+
+# Step 2: Build custom Java runtime image
+echo "Building custom Java runtime image..."
+cat > Dockerfile_java <<EOF
+FROM amazoncorretto:21
+WORKDIR /app
+EOF
+
+docker build -t $REGISTRY/$JAVA_IMAGE_NAME:latest -f Dockerfile_java .
+docker push $REGISTRY/$JAVA_IMAGE_NAME:latest
+rm Dockerfile_java
+echo "Custom Java runtime image built and pushed to $REGISTRY/$JAVA_IMAGE_NAME:latest."
+
+echo "All images have been built and pushed to the registry."
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 4.Secure Your Registry with Authentication and TLS, and Configure Docker Daemon to Trust Your Registry
 4.1.Install NGINX on Your Server
 sudo apt install nginx -y
@@ -31,7 +85,8 @@ Add the following configuration:
 
 server {
     listen 443 ssl;
-    server_name your-domain.com; # or use _ if no domain
+    #server_name your-domain.com; # or use _ if no domain
+    #server_name _;
 
     ssl_certificate /etc/nginx/certs/registry.crt;
     ssl_certificate_key /etc/nginx/certs/registry.key;
