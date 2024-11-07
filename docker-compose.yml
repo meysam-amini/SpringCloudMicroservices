@@ -4,7 +4,7 @@ services:
   backoffice-webapi:
     build:
       context: ./backoffice/backoffice-webapi  # Path to the module with Dockerfile
-    image: backoffice-webapi:latest
+    image: 163.5.94.91:5000/backoffice-webapi:latest
     ports:
       - "9999:9999"
 #    environment:
@@ -38,3 +38,7 @@ services:
 #
 #volumes:
 #  postgres_data:
+
+networks:
+  your-network-name:
+    driver: bridge

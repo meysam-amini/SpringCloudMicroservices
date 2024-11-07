@@ -4,16 +4,16 @@ FROM 163.5.94.91:5000/maven:21 AS build
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the custom settings.xml for Maven to use the private repository
-#COPY settings.xml /root/.m2/
+# Copy the custom settings.xml for Maven to use the private repository (if needed)
+COPY settings.xml /root/.m2/
 
 # Pass the CI registry credentials as build arguments (these will come from environment variables)
-#ARG CI_REGISTRY_USERNAME
-#ARG CI_REGISTRY_PASSWORD
+ARG CI_REGISTRY_USERNAME
+ARG CI_REGISTRY_PASSWORD
 
-# Set the Maven repository credentials as environment variables
-#ENV CI_REGISTRY_USERNAME=${CI_REGISTRY_USERNAME}
-#ENV CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}
+# Set the Maven repository credentials as environment variables (if needed)
+ENV CI_REGISTRY_USERNAME=${CI_REGISTRY_USERNAME}
+ENV CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}
 
 # Copy the pom.xml and download the dependencies (cached if no changes)
 COPY pom.xml .
@@ -22,6 +22,7 @@ RUN mvn dependency:go-offline
 # Copy the source code and build the application
 COPY src ./src
 RUN mvn clean package --batch-mode --update-snapshots
+
 
 # Stage 2: Create the final lightweight image
 FROM 163.5.94.91:5000/openjdk:21

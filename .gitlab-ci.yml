@@ -6,26 +6,14 @@ stages:
   - integration_tests
   - deploy
 
-#services:
-#  - docker:dind
-
+# Cache Maven dependencies
 cache:
   paths:
     - .m2/repository
 
-#variables:
-#  MAVEN_CLI_OPTS: ""
-#  DOCKER_DRIVER: overlay2
-#  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode --errors --fail-at-end --show-version"
-
 before_script:
-#  - export $(grep -v '^#' root/meysam/projects/springcloudmicroservices/.env | xargs)
-#  - env | grep DEV_
-#  - docker network create meysam-docker
-#  - echo "Docker network 'meysam-docker' created."
-#  - git remote set-url origin http://163.5.94.91/meysam-team/springcloudmicroservices.git
-#  - echo "Setting up Maven environment"
-#  - mvn $MAVEN_CLI_OPTS --version
+  # Docker login step to authenticate to the private Docker registry
+  - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
 
 build:
   stage: build
@@ -40,7 +28,7 @@ build:
   only:
     changes:
       - src/**/*
-#      - Dockerfile
+      - Dockerfile
       - pom.xml
     refs:
       - dev
@@ -55,7 +43,7 @@ unit_tests:
   only:
     changes:
       - src/**/*
-      #      - Dockerfile
+      - Dockerfile
       - pom.xml
     refs:
       - dev
@@ -66,29 +54,22 @@ integration_tests:
     - maven
   script:
     - echo "Running Integration Tests with dev profile..."
-#    - echo "Waiting for PostgreSQL to be ready..."
-#    - until curl postgres:5432; do echo "Waiting for PostgreSQL..."; sleep 5; done
-#    - echo "PostgreSQL is up!"
     - mvn -Pdev -Dskip.ut=true verify
   only:
     - main
 
 deploy:
-#  stage: deploy
-#  tags:
-#    - maven
-#  only:
-#    - main
-#  script:
-#    - echo "Deploying to production server with prod profile..."
-#    - mvn clean package -Pprod -Dmaven.test.skip=true
-#    # Add your deployment scripts here\
-
   stage: deploy
   tags:
     - maven
   script:
     - echo "Building Docker images..."
-    - docker-compose build
+    - docker-compose build  # Build Docker images based on your Dockerfile
+    - echo "Tagging Docker image with latest tag..."
+    - docker tag your-image-name:latest 163.5.94.91:5000/your-image-name:latest
+    - echo "Pushing Docker image to registry..."
+    - docker push 163.5.94.91:5000/your-image-name:latest  # Push to your private registry
     - echo "Deploying containers..."
-    - docker-compose up -d
+    - docker-compose up -d  # Deploy containers after build
+  only:
+    - main
