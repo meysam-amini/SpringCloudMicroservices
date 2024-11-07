@@ -1,5 +1,5 @@
 # Stage 1: Build the Maven project
-FROM maven:3.8.6-eclipse-temurin-21 AS build
+FROM 163.5.94.91:5000/maven:21 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -24,7 +24,7 @@ COPY src ./src
 RUN mvn clean package --batch-mode --update-snapshots
 
 # Stage 2: Create the final lightweight image
-FROM openjdk:21-jdk
+FROM 163.5.94.91:5000/openjdk:21
 #FROM maven:3.8.6-eclipse-temurin-21
 
 # Set the working directory

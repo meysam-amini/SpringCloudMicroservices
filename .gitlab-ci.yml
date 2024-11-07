@@ -1,4 +1,4 @@
-image: maven:3.8.6-eclipse-temurin-21
+image: 163.5.94.91:5000/maven:21
 
 stages:
   - build
