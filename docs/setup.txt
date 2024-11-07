@@ -83,6 +83,7 @@ Create an NGINX configuration for the Docker Registry:
 sudo nano /etc/nginx/sites-available/docker-registry
 Add the following configuration:
 
+
 server {
     listen 443 ssl;
     #server_name your-domain.com; # or use _ if no domain
