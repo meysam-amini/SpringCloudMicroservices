@@ -20,6 +20,7 @@ cache:
 
 before_script:
   # Docker login step to authenticate to the private Docker registry
+  - git remote set-url origin http://163.5.94.91:8080/meysam-team/springcloudmicroservices.git
   - echo $CI_REGISTRY_PASSWORD | docker login 163.5.94.91:5000 --username $CI_REGISTRY_USERNAME --password-stdin
 
 
