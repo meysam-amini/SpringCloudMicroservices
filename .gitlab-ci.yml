@@ -7,6 +7,7 @@ stages:
   - deploy
 
 
+
 variables:
 #  CI_REGISTRY: "163.5.94.91:5000" # Your Docker registry
   CI_SERVER_URL: "http://163.5.94.91:8080"
