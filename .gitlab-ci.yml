@@ -9,7 +9,9 @@ stages:
 
 
 variables:
-#  CI_REGISTRY: "163.5.94.91:5000" # Your Docker registry
+  GIT_STRATEGY: clone
+  GIT_DEPTH: 0
+  CI_REGISTRY: "163.5.94.91:5000" # Your Docker registry
   CI_SERVER_URL: "http://163.5.94.91:8080"
   CI_REPOSITORY_URL: "http://163.5.94.91:8080"
   MODULES: "backoffice-webapi " # Define the list of modules to build and push
