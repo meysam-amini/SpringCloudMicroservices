@@ -72,11 +72,11 @@ deploy:
     - echo "Building and pushing Docker images for modules: $MODULES"
     - |
       for MODULE in $MODULES; do
-        echo "Building Docker image for $MODULE...";
-        docker-compose -f docker-compose.yml build $MODULE; # Build each service in Docker Compose
-        echo "Tagging and pushing image $CI_REGISTRY/$MODULE:latest...";
-        docker tag $MODULE:latest $CI_REGISTRY/$MODULE:latest; # Tag image for registry
-        docker push $CI_REGISTRY/$MODULE:latest; # Push image to registry
+        echo "Building Docker image for $MODULE..."
+        docker-compose -f docker-compose.yml build $MODULE  # Build each service in Docker Compose
+        echo "Tagging and pushing image $CI_REGISTRY/$MODULE:latest..."
+        docker tag $MODULE:latest $CI_REGISTRY/$MODULE:latest  # Tag image for registry
+        docker push $CI_REGISTRY/$MODULE:latest  # Push image to registry
       done
     - echo "Pulling images and deploying containers with Docker Compose..."
     - docker-compose pull  # Ensure all services use the latest images
