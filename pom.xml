@@ -97,9 +97,9 @@
         </dependencies>
     </dependencyManagement>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>dev</id>-->
 <!--            <properties>-->
 <!--                <spring.profiles.active>dev</spring.profiles.active>-->
 <!--            </properties>-->
@@ -120,14 +120,14 @@
 <!--                    </resource>-->
 <!--                </resources>-->
 <!--            </build>-->
-        </profile>
-        <profile>
-            <id>prod</id>
+<!--        </profile>-->
+<!--        <profile>-->
+<!--            <id>prod</id>-->
 <!--            <properties>-->
 <!--                <spring.profiles.active>prod</spring.profiles.active>-->
 <!--            </properties>-->
-        </profile>
-    </profiles>
+<!--        </profile>-->
+<!--    </profiles>-->
 <build>
     <plugins>
         <plugin>
