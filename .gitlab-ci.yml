@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/maven:21
+image: $CI_REGISTRY/maven:jdk-21
 
 stages:
   - build
@@ -9,7 +9,6 @@ stages:
 
 variables:
 #  CI_REGISTRY: "163.5.94.91:5000" # Your Docker registry
-  CI_REGISTRY: "163.5.94.91:5000"
   MODULES: "backoffice-webapi " # Define the list of modules to build and push
 
 # Cache Maven dependencies
