@@ -71,7 +71,7 @@ deploy:
   script:
     - echo "Building and pushing Docker images for modules: $MODULES"
     - |
-        for MODULE in $MODULES;
+        for MODULE in $MODULES
         do
           echo "Building Docker image for $MODULE..."
           docker-compose -f docker-compose.yml build $MODULE  # Build each service in Docker Compose
