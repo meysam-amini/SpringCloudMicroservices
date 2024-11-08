@@ -7,6 +7,7 @@ stages:
   - deploy
 
 before_script:
+  - set -x  # Enable debug mode to log each command executed
   - echo $CI_REPOSITORY_URL
   - echo $GITLAB_USER_LOGIN
   - echo $CI_PROJECT_URL
