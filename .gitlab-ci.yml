@@ -13,7 +13,8 @@ cache:
 
 before_script:
   # Docker login step to authenticate to the private Docker registry
-  - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+  - echo $CI_REGISTRY_PASSWORD | docker login 163.5.94.91:5000 --username $CI_REGISTRY_USERNAME --password-stdin
+
 
 build:
   stage: build
