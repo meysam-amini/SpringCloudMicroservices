@@ -1,5 +1,5 @@
 # Stage 1: Build the Maven project
-FROM ${CI_REGISTRY}/maven:21 AS build
+FROM ${CI_REGISTRY}/maven:jdk-21 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
