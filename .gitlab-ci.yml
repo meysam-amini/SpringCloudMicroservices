@@ -68,23 +68,27 @@ deploy:
   stage: deploy
   tags:
     - maven
-  script:
-    - echo "Building and pushing Docker images for modules: $MODULES"
-    - |
-      # Define the list of modules
-      MODULES=("backoffice-webapi")
-      
-      # Loop through each module
-      for MODULE in "${MODULES[@]}"
-      do
-        echo "Building Docker image for $MODULE..."
-        docker-compose -f docker-compose.yml build $MODULE
-        echo "Tagging and pushing image $CI_REGISTRY/$MODULE:latest..."
-        docker tag $MODULE:latest $CI_REGISTRY/$MODULE:latest
-        docker push $CI_REGISTRY/$MODULE:latest
-      done
-    - echo "Pulling images and deploying containers with Docker Compose..."
-    - docker-compose pull  # Ensure all services use the latest images
-    - docker-compose up -d  # Start containers with the latest images
+  script: |
+    echo "Building and pushing Docker images for modules..."
+    
+    # Define the list of modules
+    MODULES=("backoffice-webapi" "another-module")
+    
+    # Loop through each module and build, tag, and push the Docker images
+    for MODULE in "${MODULES[@]}"
+    do
+      echo "Building Docker image for $MODULE..."
+      docker-compose -f docker-compose.yml build $MODULE
+    
+      echo "Tagging and pushing image $CI_REGISTRY/$MODULE:latest..."
+      docker tag $MODULE:latest $CI_REGISTRY/$MODULE:latest
+      docker push $CI_REGISTRY/$MODULE:latest
+    done
+    
+    # Pull images and deploy containers with Docker Compose
+    echo "Pulling images and deploying containers with Docker Compose..."
+    docker-compose pull
+    docker-compose up -d
   only:
     - main
+
