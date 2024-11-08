@@ -6,6 +6,13 @@ stages:
   - integration_tests
   - deploy
 
+before_script:
+  - echo $CI_REPOSITORY_URL
+  - echo $GITLAB_USER_LOGIN
+  - echo $CI_PROJECT_URL
+  # Docker login step to authenticate to the private Docker registry
+  - git remote set-url origin http://163.5.94.91:8080/meysam-team/springcloudmicroservices.git
+  - echo $CI_REGISTRY_PASSWORD | docker login 163.5.94.91:5000 --username $CI_REGISTRY_USERNAME --password-stdin
 
 
 variables:
@@ -21,27 +28,11 @@ cache:
   paths:
     - .m2/repository
 
-before_script:
-  - echo $CI_REPOSITORY_URL
-  - echo $GITLAB_USER_LOGIN
-  - echo $CI_PROJECT_URL
-  # Docker login step to authenticate to the private Docker registry
-  - git remote set-url origin http://163.5.94.91:8080/meysam-team/springcloudmicroservices.git
-  - echo $CI_REGISTRY_PASSWORD | docker login 163.5.94.91:5000 --username $CI_REGISTRY_USERNAME --password-stdin
-
-
 build:
   stage: build
   tags:
     - maven
   script:
-    - echo "maraaaaaaaaaaazzzzzzzzzzzzzzzzzz"
-    - echo $CI_REPOSITORY_URL
-    - echo $GITLAB_USER_LOGIN
-    - echo $CI_PROJECT_URL
-    # Docker login step to authenticate to the private Docker registry
-    - git remote set-url origin http://163.5.94.91:8080/meysam-team/springcloudmicroservices.git
-    - echo $CI_REGISTRY_PASSWORD | docker login 163.5.94.91:5000 --username $CI_REGISTRY_USERNAME --password-stdin
     - echo "Building the project with dev profile..."
     - mvn clean package -Pdev -Dmaven.test.skip=true
   artifacts:
@@ -76,13 +67,6 @@ integration_tests:
   tags:
     - maven
   script:
-    - echo "maraaaaaaaaaaazzzzzzzzzzzzzzzzzz"
-    - echo $CI_REPOSITORY_URL
-    - echo $GITLAB_USER_LOGIN
-    - echo $CI_PROJECT_URL
-    # Docker login step to authenticate to the private Docker registry
-    - git remote set-url origin http://163.5.94.91:8080/meysam-team/springcloudmicroservices.git
-    - echo $CI_REGISTRY_PASSWORD | docker login 163.5.94.91:5000 --username $CI_REGISTRY_USERNAME --password-stdin
     - echo "Running Integration Tests with dev profile..."
     - mvn -Pdev -Dskip.ut=true verify
   only:
