@@ -41,6 +41,7 @@ build:
       - pom.xml
     refs:
       - dev
+      - main
 
 unit_tests:
   stage: unit_tests
