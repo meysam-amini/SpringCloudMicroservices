@@ -4,7 +4,7 @@ services:
   backoffice-webapi:
     build:
       context: ./backoffice/backoffice-webapi  # Path to the module with Dockerfile
-    image: 163.5.94.91:5000/backoffice-webapi:latest
+    image: ${CI_REGISTRY}/backoffice-webapi:latest
     ports:
       - "9999:9999"
 #    environment:
@@ -20,10 +20,12 @@ services:
 #    image: another-module:latest
 #    ports:
 #      - "8081:8080" # Map to a different port as needed
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    depends_on:
-#      - database
+##    environment:
+##      - SPRING_PROFILES_ACTIVE=docker
+##    depends_on:
+##      - database
+#    networks:
+#      - meysam-docker
 
 #  database:
 #    image: postgres:latest

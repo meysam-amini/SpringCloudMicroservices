@@ -1,10 +1,15 @@
-image: 163.5.94.91:5000/maven:21
+image: $CI_REGISTRY/maven:21
 
 stages:
   - build
   - unit_tests
   - integration_tests
   - deploy
+
+
+variables:
+#  CI_REGISTRY: "163.5.94.91:5000" # Your Docker registry
+  MODULES: "backoffice-webapi " # Define the list of modules to build and push
 
 # Cache Maven dependencies
 cache:
@@ -64,13 +69,16 @@ deploy:
   tags:
     - maven
   script:
-    - echo "Building Docker images..."
-    - docker-compose build  # Build Docker images based on your Dockerfile
-    - echo "Tagging Docker image with latest tag..."
-    - docker tag your-image-name:latest 163.5.94.91:5000/your-image-name:latest
-    - echo "Pushing Docker image to registry..."
-    - docker push 163.5.94.91:5000/your-image-name:latest  # Push to your private registry
-    - echo "Deploying containers..."
-    - docker-compose up -d  # Deploy containers after build
+    - echo "Building and pushing Docker images for modules: $MODULES"
+    - for MODULE in $MODULES; do
+      echo "Building Docker image for $MODULE...";
+      docker-compose -f docker-compose.yml build $MODULE; # Build each service in Docker Compose
+      echo "Tagging and pushing image $CI_REGISTRY/$MODULE:latest...";
+      docker tag $MODULE:latest $CI_REGISTRY/$MODULE:latest; # Tag image for registry
+      docker push $CI_REGISTRY/$MODULE:latest; # Push image to registry
+      done
+    - echo "Pulling images and deploying containers with Docker Compose..."
+    - docker-compose pull  # Ensure all services use the latest images
+    - docker-compose up -d  # Start containers with the latest images
   only:
     - main

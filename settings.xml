@@ -7,13 +7,13 @@
             <repositories>
                 <repository>
                     <id>my-registry</id>
-                    <url>https://163.5.94.91:5000/repository/maven-releases/</url>
+                    <url>https://163.5.94.91/v2/</url>
                 </repository>
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
                     <id>my-registry</id>
-                    <url>https://163.5.94.91:5000/repository/maven-plugins/</url>
+                    <url>http://163.5.94.91:5000/v2/</url>
                 </pluginRepository>
             </pluginRepositories>
             <id>my-repo-profile</id>
