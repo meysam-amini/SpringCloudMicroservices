@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set variables
-REGISTRY_URL="localhost:5000"                   # Your Docker registry URL
+REGISTRY_URL="163.5.94.91:5000"                   # Your Docker registry URL
 
 # Image 1: Maven with OpenJDK 21 on Alpine
 MAVEN_IMAGE_NAME="maven"    # Custom image name for Maven
