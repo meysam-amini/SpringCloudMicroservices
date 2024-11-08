@@ -35,6 +35,7 @@ build:
   tags:
     - maven
   script:
+    - echo "maraaaaaaaaaaazzzzzzzzzzzzzzzzzz"
     - echo $CI_REPOSITORY_URL
     - echo $GITLAB_USER_LOGIN
     - echo $CI_PROJECT_URL
