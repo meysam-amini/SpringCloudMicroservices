@@ -193,8 +193,8 @@ services:
 volumes:
   postgres_data:
 #  pgadmin_data:
-  elastic_data:
-    driver: local
+#  elastic_data:
+#    driver: local
   redis_data:
 
 networks:
