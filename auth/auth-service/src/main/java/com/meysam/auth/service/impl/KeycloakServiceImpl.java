@@ -6,7 +6,6 @@ import com.meysam.auth.model.enums.MemberLevel;
 import com.meysam.auth.service.api.KeycloakService;
 import com.meysam.common.configs.exception.KeycloakException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
-import com.meysam.common.model.auth.entity.Role;
 import com.meysam.common.model.dto.*;
 import com.meysam.common.model.entity.Member;
 import com.meysam.common.service.api.MemberService;
@@ -50,11 +49,6 @@ public class KeycloakServiceImpl implements KeycloakService {
     private String PASSWORD_GRANT_TYPE = "password";
     private String CLIENT_CREDENTIAL_GRANT_TYPE = "client_credentials";
 
-
-    @Override
-    public List<Role> getRoles() {
-        return null;
-    }
 
     @Override
     public ResponseEntity registerUser(RegisterUserRequestDto registerDto, MemberLevel memberLevel) {
@@ -151,16 +145,6 @@ public class KeycloakServiceImpl implements KeycloakService {
 
     @Override
     public ResponseEntity getTokenByRefreshToken(LoginRequestDto loginDto) {
-        return null;
-    }
-
-    @Override
-    public Role getUserRole(String username) {
-        return null;
-    }
-
-    @Override
-    public Member assignRole(Member user) {
         return null;
     }
 

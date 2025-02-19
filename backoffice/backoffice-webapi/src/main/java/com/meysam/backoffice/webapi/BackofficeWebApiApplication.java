@@ -14,34 +14,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages = {"com.meysam"
-//        "com.meysam.backoffice.*",
-//        "com.meysam.common.customsecurity.*",
-//        "com.meysam.backoffice.service.auth.*"
-////        "com.meysam.users.*"
-//        ,"com.meysam.common.utils.*"
-//        ,"com.meysam.common.configs.*"
-//        ,"com.meysam.common.security"
-//        ,"com.meysam.common.service.*"
-})
-@EnableJpaRepositories(basePackages = {
-        "com.meysam.common.dao",
-        "com.meysam.common.customsecurity.repository",
-        "com.meysam.backoffice.repository",
-        "com.meysam.common.notification.repository"
-
-}
-
-)
-@EntityScan(basePackages =
-        {
-                "com.meysam.common.model.entity",
-                "com.meysam.common.customsecurity.model.entity",
-                "com.meysam.common.notification.model.entity"
-
-
-        })
-@EnableFeignClients(basePackages = {"com.meysam.common.service.*"})
+@ComponentScan(basePackages = "com.meysam")
+@EnableJpaRepositories(basePackages = "com.meysam")
+@EntityScan(basePackages = "com.meysam")
+@EnableFeignClients(basePackages = "com.meysam")
 @Slf4j
 public class BackofficeWebApiApplication {
 

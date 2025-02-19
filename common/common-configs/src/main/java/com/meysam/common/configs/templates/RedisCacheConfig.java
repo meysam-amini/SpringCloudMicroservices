@@ -1,8 +1,6 @@
 package com.meysam.common.configs.templates;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -14,8 +12,8 @@ import java.time.Duration;
 
 
 @Configuration
-@EnableCaching
-public class RedisCacheConfig extends CachingConfigurerSupport {
+//@EnableCaching
+public class RedisCacheConfig {
 
     @Value("${spring.data.redis.host}")
     private String REDIS_HOST="localhost";
