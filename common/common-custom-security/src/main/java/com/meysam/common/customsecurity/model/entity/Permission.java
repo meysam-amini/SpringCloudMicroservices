@@ -33,4 +33,8 @@ public class Permission extends BaseEntity {
     @Size(max = 20)
     @Column(name = "CODE")
     private String code;
+
+    @NotNull(message = "invalid parent")
+    @Column(name = "PARENT")
+    private int parent;
 }
