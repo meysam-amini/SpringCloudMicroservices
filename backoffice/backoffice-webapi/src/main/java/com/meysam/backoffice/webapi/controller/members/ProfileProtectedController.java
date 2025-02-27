@@ -5,6 +5,7 @@ import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
 import com.meysam.common.customsecurity.model.dto.*;
 import com.meysam.common.customsecurity.service.api.PermissionService;
+import com.meysam.common.customsecurity.service.api.ProfilePermissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -21,6 +22,7 @@ public class ProfileProtectedController {
 
     private final ProfileAuthService profileAuthService;
     private final PermissionService permissionService;
+    private final ProfilePermissionService profilePermissionService;
 
 
     @PostMapping("logout")
@@ -30,7 +32,7 @@ public class ProfileProtectedController {
 
     @GetMapping(value = "get-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PermissionDTO>> getPermissions(SecurityPrinciple securityPrinciple){
-        return ResponseEntity.ok(permissionService.findAll(securityPrinciple.getProfileId()));
+        return ResponseEntity.ok(profilePermissionService.getAllRolePermissions(securityPrinciple.getProfileId()));
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

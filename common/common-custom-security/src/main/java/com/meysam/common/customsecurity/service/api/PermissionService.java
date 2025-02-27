@@ -15,5 +15,4 @@ public interface PermissionService {
     Permission addPermission(AddPermissionDto permissionDto);
     RolePermission assignPermissionToRole(AssignRolePermissionDto rolePermissionDto);
     String assignPermissionToUsername(AssignDirectPermissionDto permissionDto);
-    List<PermissionDTO> findAll(Long profileId);
 }
