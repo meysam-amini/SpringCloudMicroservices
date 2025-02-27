@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Table(name = "PERMISSION")
 @Data
 @Entity
-public class Permission extends BaseEntity {
+public class Permission extends BaseEntity implements Serializable {
 
 
     @Id

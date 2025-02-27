@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -52,5 +54,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public String assignPermissionToUsername(AssignDirectPermissionDto permissionDto) {
         return null;
+    }
+
+    @Override
+    public List<Permission> getBasePermissions() {
+        return permissionRepository.findAllByParentIsNullAndEnabledIsTrue();
     }
 }
