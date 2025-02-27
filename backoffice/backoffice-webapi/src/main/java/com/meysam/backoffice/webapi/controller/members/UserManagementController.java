@@ -31,7 +31,7 @@ public class UserManagementController {
 
     @PreAuthorize("hasAnyAuthority('PERMISSION_QUERY_USER')")
     @PostMapping("query")
-    public ResponseEntity<RestResponseDTO<Page<ProfileDTO>>> registerNewUser(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple, @RequestBody ProfileQueryModel profileQueryModel){
+    public ResponseEntity<RestResponseDTO<Page<ProfileDTO>>> queryUsers(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple, @RequestBody ProfileQueryModel profileQueryModel){
 
         return ResponseEntity.ok(RestResponseDTO.generate(false,0,userManagerService.queryUsers(profileQueryModel)));
     }

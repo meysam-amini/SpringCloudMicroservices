@@ -3,11 +3,8 @@ package com.meysam.backoffice.webapi.controller.members;
 import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
-import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
-import com.meysam.common.customsecurity.model.dto.AssignRolePermissionDto;
+import com.meysam.common.customsecurity.model.dto.*;
 import com.meysam.common.customsecurity.service.api.PermissionService;
-import com.meysam.common.customsecurity.model.dto.AddPermissionDto;
-import com.meysam.common.customsecurity.model.dto.RegisterAdminRequestDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -15,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/protected")
+@RequestMapping("/profile")
 @RequiredArgsConstructor
 public class ProfileProtectedController {
 
@@ -27,6 +26,11 @@ public class ProfileProtectedController {
     @PostMapping("logout")
     public ResponseEntity<String> logoutProfile(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple) {
         return profileAuthService.logout(securityPrinciple.getUsername());
+    }
+
+    @GetMapping(value = "get-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PermissionDTO>> getPermissions(SecurityPrinciple securityPrinciple){
+        return ResponseEntity.ok(permissionService.findAll(securityPrinciple.getProfileId()));
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

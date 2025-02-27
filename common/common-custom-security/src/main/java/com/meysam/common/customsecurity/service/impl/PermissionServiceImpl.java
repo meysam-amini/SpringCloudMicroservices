@@ -4,16 +4,20 @@ import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
 import com.meysam.common.customsecurity.model.dto.AssignRolePermissionDto;
+import com.meysam.common.customsecurity.model.dto.PermissionDTO;
 import com.meysam.common.customsecurity.model.entity.Permission;
 import com.meysam.common.customsecurity.model.entity.RolePermission;
 import com.meysam.common.customsecurity.repository.PermissionRepository;
 import com.meysam.common.customsecurity.repository.RolePermissionRepository;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import com.meysam.common.customsecurity.model.dto.AddPermissionDto;
+import com.meysam.common.customsecurity.service.api.ProfilePermissionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -23,6 +27,7 @@ public class PermissionServiceImpl implements PermissionService {
     private final PermissionRepository permissionRepository;
     private final RolePermissionRepository rolePermissionRepository;
     private final LocaleMessageSourceService messageSourceService;
+    private final ProfilePermissionService profilePermissionService;
 
 
     @Override
@@ -53,5 +58,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public String assignPermissionToUsername(AssignDirectPermissionDto permissionDto) {
         return null;
+    }
+
+    @Override
+    public List<PermissionDTO> findAll(Long profileId) {
+        return profilePermissionService.getAllRolePermissions(profileId);
     }
 }
