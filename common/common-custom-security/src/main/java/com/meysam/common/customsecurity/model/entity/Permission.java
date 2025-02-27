@@ -36,5 +36,5 @@ public class Permission extends BaseEntity implements Serializable {
 
     @NotNull(message = "invalid parent")
     @Column(name = "PARENT")
-    private int parent;
+    private Long parent;
 }

@@ -6,7 +6,7 @@ import com.meysam.common.customsecurity.model.entity.Permission;
 import com.meysam.common.customsecurity.model.entity.RolePermission;
 import com.meysam.common.customsecurity.model.dto.AddPermissionDto;
 
-import java.util.List;
+import java.util.HashMap;
 
 
 public interface PermissionService {
@@ -14,5 +14,5 @@ public interface PermissionService {
     Permission addPermission(AddPermissionDto permissionDto);
     RolePermission assignPermissionToRole(AssignRolePermissionDto rolePermissionDto);
     String assignPermissionToUsername(AssignDirectPermissionDto permissionDto);
-    List<Permission> getBasePermissions();
+    HashMap<Long, Permission> getBasePermissions();
 }

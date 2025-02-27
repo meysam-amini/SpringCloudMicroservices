@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.nio.file.AccessDeniedException;
 import java.util.concurrent.TimeoutException;
@@ -70,6 +71,12 @@ public class ExceptionControllerAdvice {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageSourceService.getMessage("THE_SERVICE_NEEDS_AUTHENTICATION_BUT_SECURITY_IS_DISABLED"));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageSourceService.getMessage("BAD_REQUEST"));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<String>  NoResourceFoundException(NoResourceFoundException exception){
+        log.error("handling NoResourceFoundException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSourceService.getMessage("PATH_NOT_FOUND"));
     }
 
     @ExceptionHandler(Exception.class)

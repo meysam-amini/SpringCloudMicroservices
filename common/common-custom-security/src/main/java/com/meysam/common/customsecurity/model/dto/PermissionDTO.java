@@ -19,7 +19,7 @@ public class PermissionDTO implements Serializable {
 
     private String enKey;
 
-    private int parent;
+    private Long parent;
 
 
 }

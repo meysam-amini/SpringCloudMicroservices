@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
 
 
 @Slf4j
@@ -57,7 +57,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<Permission> getBasePermissions() {
-        return permissionRepository.findAllByParentIsNullAndEnabledIsTrue();
+    public HashMap<Long, Permission> getBasePermissions() {
+        HashMap<Long, Permission> permissionHashMap = new HashMap<>();
+        permissionRepository.findAllByParentIsNullAndEnabledIsTrue().forEach(permission -> {
+            permissionHashMap.put(permission.getId(),permission);
+        });
+        return permissionHashMap;
     }
 }

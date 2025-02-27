@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/profile")
@@ -31,8 +32,8 @@ public class ProfileProtectedController {
     }
 
     @GetMapping(value = "get-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PermissionDTO>> getPermissions(SecurityPrinciple securityPrinciple){
-        return ResponseEntity.ok(profilePermissionService.getAllRolePermissions(securityPrinciple.getProfileId()));
+    public ResponseEntity<Map<String, List<String>>> getPermissions(SecurityPrinciple securityPrinciple){
+        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId()));
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -21,11 +21,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.meysam.common.model.constants.GlobalConstants.BASE_PERMISSIONS_KEY;
 
 
 @Slf4j
@@ -43,35 +42,51 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     private final RedisTemplate redisTemplate;
 
 
-
-
     @Override
     public List<PermissionDTO> getAllRolePermissions(Long profileId) {
         List<PermissionDTO> permissions = getProfilePermissions(profileId);
         List<Role> roles = profileRoleService.getRoles(profileId);
-        if(!roles.isEmpty()){
+        if (!roles.isEmpty()) {
             permissions.addAll(rolePermissionService.getPermissions(roles.stream().map(Role::getId).collect(Collectors.toList())));
         }
         return permissions;
     }
 
     @Override
-    public List<PermissionDTO> getMappedPermissions(Long profileId) {
+    public Map<String, List<String>> getMappedPermissions(Long profileId) {
         List<PermissionDTO> permissions = getAllRolePermissions(profileId);
+        HashMap<Long,Permission> basePermissionsMap;
         try {
-            ValueOperations<String, List<Permission>> valueOperations = redisTemplate.opsForValue();
-            List<Permission> basePermissions = valueOperations.get(CachedDataServiceImpl);
+            ValueOperations<String, HashMap<Long,Permission>> valueOperations = redisTemplate.opsForValue();
+            basePermissionsMap = valueOperations.get(BASE_PERMISSIONS_KEY);
         } catch (Exception e) {
             log.error("Exception on connecting to Redis server for refreshing base permissions cache at time:{} , exception is:{}", System.currentTimeMillis(), e);
             throw new BusinessException("Server error refreshing permissions cache!");
         }
+        HashMap<String,List<String>> permissionsMap;
+
+        Map<String, List<String>> groupedByPermissionsNames = new HashMap<>();
+        permissions.forEach(permissionDTO -> {
+
+            String basePermission = basePermissionsMap.get(permissionDTO.getParent()).getName();
+
+            if(!groupedByPermissionsNames.containsKey(basePermission)){
+                groupedByPermissionsNames.put(basePermission, Collections.singletonList(permissionDTO.getName()));
+            }else {
+                groupedByPermissionsNames.get(basePermission).add(permissionDTO.getName());
+            }
+
+        });
+
+        return groupedByPermissionsNames;
+
     }
 
     @Override
     public AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId) {
         List<Role> roles = profileRoleService.getRoles(profileId);
         return AllRolePermissionsDTO.builder()
-                .rolePermissions(getPermissions(roles.stream().map(role -> roleMapper.map(role,RoleDTO.class)).collect(Collectors.toList())))
+                .rolePermissions(getPermissions(roles.stream().map(role -> roleMapper.map(role, RoleDTO.class)).collect(Collectors.toList())))
                 .directPermissions(profilePermissionRepository.findAllPermissionsByProfile(profileId))
                 .build();
     }
@@ -83,7 +98,7 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     }
 
 
-    private List<RolesPermissionsDTO> getPermissions(List<RoleDTO> roles){
+    private List<RolesPermissionsDTO> getPermissions(List<RoleDTO> roles) {
         return roles.parallelStream().map(role -> RolesPermissionsDTO.builder()
                 .role(role)
                 .permissions(rolePermissionService.getPermissions(Collections.singletonList(role.getId())))
@@ -97,7 +112,7 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     @Override
     public void assignPermissionsToProfile(List<String> incomingProfilePermissions, String username) {
         Profile profile = profileRepository.findByUsername(username).orElse(null);
-        if(Objects.isNull(profile)){
+        if (Objects.isNull(profile)) {
             throw new BusinessException(messageSourceService.getMessage("PROFILE_NOT_FOUND"));
         }
 
@@ -107,29 +122,29 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
         List<String> addedProfilePermissionsCodes = new ArrayList<>();
         List<PermissionDTO> deletedProfilePermissions = new ArrayList<>();
 
-        incomingProfilePermissions.forEach(roleCode->{
-            if(!currentPermissionsCodes.contains(roleCode)){
+        incomingProfilePermissions.forEach(roleCode -> {
+            if (!currentPermissionsCodes.contains(roleCode)) {
                 addedProfilePermissionsCodes.add(roleCode);
             }
         });
-        currentProfilePermissionsList.forEach(permission->{
-            if(!incomingProfilePermissions.contains(permission.getCode())){
+        currentProfilePermissionsList.forEach(permission -> {
+            if (!incomingProfilePermissions.contains(permission.getCode())) {
                 deletedProfilePermissions.add(permission);
             }
         });
 
         List<Long> deletedProfilePermissionsIds = deletedProfilePermissions.stream().map(PermissionDTO::getId).toList();
         profilePermissionRepository.deleteAllByIdIn(deletedProfilePermissionsIds);
-        addedProfilePermissionsCodes.forEach(p->{
+        addedProfilePermissionsCodes.forEach(p -> {
 
             Permission permission = permissionService.findEntityByCode(p);
-            if(Objects.isNull(permission)){
-                throw new BusinessException(messageSourceService.getMessage("PERMISSION_NOT_FOUND")+" code: "+p);
+            if (Objects.isNull(permission)) {
+                throw new BusinessException(messageSourceService.getMessage("PERMISSION_NOT_FOUND") + " code: " + p);
             }
 
-            if(profilePermissionRepository.existsByPermissionAndProfile(permission.getId(), profile.getId())){
-                log.info("profile:{}, permission:{} record already assigned",profile,permission);
-            }else {
+            if (profilePermissionRepository.existsByPermissionAndProfile(permission.getId(), profile.getId())) {
+                log.info("profile:{}, permission:{} record already assigned", profile, permission);
+            } else {
                 ProfilePermission profilePermission = new ProfilePermission();
                 profilePermission.setPermission(permission.getId());
                 profilePermission.setProfile(profile.getId());
