@@ -1,13 +1,9 @@
-package com.meysam.backoffice.service.auth.Impl;
+package com.meysam.backoffice.service.cached.impl;
 
 
-import com.meysam.backoffice.service.auth.api.CachedDataService;
+import com.meysam.backoffice.service.cached.api.CachedDataService;
 import com.meysam.common.configs.exception.BusinessException;
-import com.meysam.common.customsecurity.model.SecurityPrinciple;
-import com.meysam.common.customsecurity.model.dto.PermissionDTO;
-import com.meysam.common.customsecurity.model.dto.ProfileDTO;
 import com.meysam.common.customsecurity.model.entity.Permission;
-import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.service.api.PermissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

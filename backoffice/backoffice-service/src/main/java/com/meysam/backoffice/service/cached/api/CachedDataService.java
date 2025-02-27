@@ -1,4 +1,4 @@
-package com.meysam.backoffice.service.auth.api;
+package com.meysam.backoffice.service.cached.api;
 
 public interface CachedDataService {
 

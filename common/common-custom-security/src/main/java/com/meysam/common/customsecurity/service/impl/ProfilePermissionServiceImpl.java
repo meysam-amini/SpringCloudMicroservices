@@ -17,6 +17,8 @@ import com.meysam.common.customsecurity.service.api.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     private final RoleService roleService;
     private final RolePermissionService rolePermissionService;
     private final ModelMapper roleMapper;
+    private final RedisTemplate redisTemplate;
+
 
 
 
@@ -49,6 +53,18 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
             permissions.addAll(rolePermissionService.getPermissions(roles.stream().map(Role::getId).collect(Collectors.toList())));
         }
         return permissions;
+    }
+
+    @Override
+    public List<PermissionDTO> getMappedPermissions(Long profileId) {
+        List<PermissionDTO> permissions = getAllRolePermissions(profileId);
+        try {
+            ValueOperations<String, List<Permission>> valueOperations = redisTemplate.opsForValue();
+            List<Permission> basePermissions = valueOperations.get(CachedDataServiceImpl);
+        } catch (Exception e) {
+            log.error("Exception on connecting to Redis server for refreshing base permissions cache at time:{} , exception is:{}", System.currentTimeMillis(), e);
+            throw new BusinessException("Server error refreshing permissions cache!");
+        }
     }
 
     @Override

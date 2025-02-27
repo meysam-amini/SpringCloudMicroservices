@@ -12,6 +12,8 @@ public interface ProfilePermissionService {
     //    String assignPermissionToUsername(AssignDirectPermissionDto permissionDto);
     List<PermissionDTO> getAllRolePermissions(Long profileId);
 
+    List<PermissionDTO> getMappedPermissions(Long profileId);
+
     List<RolesPermissionsDTO> getAllRolePermissions();
 
     AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId);
