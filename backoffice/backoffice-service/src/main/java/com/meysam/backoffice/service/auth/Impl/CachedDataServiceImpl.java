@@ -16,7 +16,6 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -28,26 +27,20 @@ public class CachedDataServiceImpl implements CachedDataService {
     private final RedisTemplate redisTemplate;
 
 
-
     @Override
     public void refreshCache() {
         refreshBasePermissions();
 
     }
 
-    private void refreshBasePermissions(){
-        ValueOperations<String, List<Permission>> valueOperations = redisTemplate.opsForValue();
-        Boolean hasKey;
+    private void refreshBasePermissions() {
         try {
-            hasKey = valueOperations.getOperations().hasKey(BASE_PERMISSIONS_KEY);
-        } catch (Exception e) {
-            log.error("Exception on connecting to Redis server for getting client principle at login process at time:{} , exception is:{}", System.currentTimeMillis(), e);
-            throw new BusinessException("Server error at login process");
-        }
-        if (Boolean.FALSE.equals(hasKey)) {
+            ValueOperations<String, List<Permission>> valueOperations = redisTemplate.opsForValue();
             List<Permission> basePermissions = permissionService.getBasePermissions();
-            valueOperations.set(BASE_PERMISSIONS_KEY, basePermissions, 15, TimeUnit.MINUTES);
-
+            valueOperations.set(BASE_PERMISSIONS_KEY, basePermissions);
+        } catch (Exception e) {
+            log.error("Exception on connecting to Redis server for refreshing base permissions cache at time:{} , exception is:{}", System.currentTimeMillis(), e);
+            throw new BusinessException("Server error refreshing permissions cache!");
         }
     }
 }

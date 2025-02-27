@@ -83,7 +83,7 @@ public class CheckTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.clearContext();
             }
             else {
-                log.info("someone try to call service with an invalid toke, from : {}", request.getRemoteAddr());
+                log.info("someone try to call service with an invalid token, from : {}", request.getRemoteAddr());
                 unauthenticated("Token is invalid ",response);
                 return;
             }
