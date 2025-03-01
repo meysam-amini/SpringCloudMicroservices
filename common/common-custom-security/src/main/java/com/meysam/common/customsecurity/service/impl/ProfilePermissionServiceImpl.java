@@ -73,9 +73,11 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
                 String basePermission = basePermissionsMap.get(permissionDTO.getParent()).getName();
 
                 if (!groupedByPermissionsNames.containsKey(basePermission)) {
-                    groupedByPermissionsNames.put(basePermission, Collections.singletonList(permissionDTO.getName()));
+                    groupedByPermissionsNames.put(basePermission, Arrays.asList(permissionDTO.getName()));
                 } else {
-                    groupedByPermissionsNames.get(basePermission).add(permissionDTO.getName());
+                    List<String> list = new ArrayList<>(groupedByPermissionsNames.get(basePermission));
+                    list.add(permissionDTO.getName());
+                    groupedByPermissionsNames.put(basePermission, list);
                 }
             });
         }catch (Exception e){
