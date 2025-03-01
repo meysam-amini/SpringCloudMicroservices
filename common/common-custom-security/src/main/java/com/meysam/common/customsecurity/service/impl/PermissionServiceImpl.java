@@ -14,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -57,11 +60,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public HashMap<Long, Permission> getBasePermissions() {
-        HashMap<Long, Permission> permissionHashMap = new HashMap<>();
-        permissionRepository.findAllByParentIsNullAndEnabledIsTrue().forEach(permission -> {
-            permissionHashMap.put(permission.getId(),permission);
-        });
-        return permissionHashMap;
+    public List<Permission> getBasePermissions() {
+        List<Permission> permissions = permissionRepository.findAllByParentIsNullAndEnabledIsTrue()
+                .stream()
+                .sorted(Comparator.comparing(Permission::getCode))
+                .toList();
+        return permissions;
     }
 }

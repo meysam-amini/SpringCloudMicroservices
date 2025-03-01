@@ -33,9 +33,9 @@ public class CachedDataServiceImpl implements CachedDataService {
 
     private void refreshBasePermissions() {
         try {
-            ValueOperations<String, HashMap<Long,Permission>> valueOperations = redisTemplate.opsForValue();
-            HashMap<Long,Permission> basePermissionsMap = permissionService.getBasePermissions();
-            valueOperations.set(BASE_PERMISSIONS_KEY, basePermissionsMap);
+            ValueOperations<String, List<Permission>> valueOperations = redisTemplate.opsForValue();
+            List<Permission> basePermissions = permissionService.getBasePermissions();
+            valueOperations.set(BASE_PERMISSIONS_KEY, basePermissions);
         } catch (Exception e) {
             log.error("Exception on connecting to Redis server for refreshing base permissions cache at time:{} , exception is:{}", System.currentTimeMillis(), e);
             throw new BusinessException("Server error refreshing permissions cache!");

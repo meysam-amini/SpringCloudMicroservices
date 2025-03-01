@@ -17,7 +17,7 @@ public interface ProfilePermissionRepository extends BaseRepository<ProfilePermi
 
     List<ProfilePermission> findAllByProfile(long profile);
 
-    @Query(value = "select new com.meysam.common.customsecurity.model.dto.PermissionDTO(p.id,p.name,p.code,p.enKey,p.parent) from Permission p where p.id in (select pp.permission from ProfilePermission pp where pp.profile =:profileId)")
+    @Query(value = "select new com.meysam.common.customsecurity.model.dto.PermissionDTO(p.id,p.name,p.code,p.enKey,p.parent) from Permission p where p.id in (select pp.permission from ProfilePermission pp where pp.profile =:profileId) and p.parent is not null")
     List<PermissionDTO> findAllPermissionsByProfile(@Param("profileId") long profileId);
 
     boolean existsByPermissionAndProfile(long permission,long profile);

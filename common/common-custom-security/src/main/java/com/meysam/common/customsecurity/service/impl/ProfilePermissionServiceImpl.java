@@ -1,6 +1,7 @@
 package com.meysam.common.customsecurity.service.impl;
 
 
+import com.meysam.backoffice.model.dto.PermissionGroupDto;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.dto.AllRolePermissionsDTO;
@@ -22,6 +23,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static com.meysam.common.model.constants.GlobalConstants.BASE_PERMISSIONS_KEY;
@@ -53,39 +55,36 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     }
 
     @Override
-    public Map<String, List<String>> getMappedPermissions(Long profileId) {
-        List<PermissionDTO> permissions = getAllRolePermissions(profileId);
-        HashMap<Long, Permission> basePermissionsMap;
+    public List<PermissionGroupDto> getMappedPermissions(Long profileId) {
+
+        List<Permission> basePermissions;
         try {
-            ValueOperations<String, HashMap<Long, Permission>> valueOperations = redisTemplate.opsForValue();
-            basePermissionsMap = valueOperations.get(BASE_PERMISSIONS_KEY);
+            ValueOperations<String, List<Permission>> valueOperations = redisTemplate.opsForValue();
+            basePermissions = valueOperations.get(BASE_PERMISSIONS_KEY);
         } catch (Exception e) {
-            log.error("Exception on connecting to Redis server for refreshing base permissions cache at time:{} , exception is:{}", System.currentTimeMillis(), e);
-            throw new BusinessException(messageSourceService.getMessage("SERVER_ERROR_REFRESHING_PERMISSIONS_CACHE"));
+            log.error("Exception on connecting to Redis server for fetching base permissions at time:{} , exception is:{}", System.currentTimeMillis(), e);
+            throw new BusinessException(messageSourceService.getMessage("EXCEPTION_IN_PROCESSING_PERMISSIONS_MAP"));
         }
-        HashMap<String, List<String>> permissionsMap;
-
-        Map<String, List<String>> groupedByPermissionsNames = new HashMap<>();
+        List<PermissionGroupDto> permissionGroupDtos = new ArrayList<>();
 
         try {
-            permissions.forEach(permissionDTO -> {
+            Map<Long, List<PermissionDTO>> permissions = getAllRolePermissions(profileId).stream()
+                    .collect(Collectors.groupingBy(PermissionDTO::getParent));
 
-                String basePermission = basePermissionsMap.get(permissionDTO.getParent()).getName();
+            for (Permission basePermission : basePermissions) {
+                PermissionGroupDto dto = PermissionGroupDto.builder()
+                        .name(basePermission.getName())
+                        .subGroups(permissions.get(basePermission.getId()).stream().map(PermissionDTO::getName).collect(Collectors.toList()))
+                        .build();
+                permissionGroupDtos.add(dto);
+            }
 
-                if (!groupedByPermissionsNames.containsKey(basePermission)) {
-                    groupedByPermissionsNames.put(basePermission, Arrays.asList(permissionDTO.getName()));
-                } else {
-                    List<String> list = new ArrayList<>(groupedByPermissionsNames.get(basePermission));
-                    list.add(permissionDTO.getName());
-                    groupedByPermissionsNames.put(basePermission, list);
-                }
-            });
-        }catch (Exception e){
-            log.error("Exception in processing permissions map at time:{}, exception:{}",System.currentTimeMillis(),e);
+        } catch (Exception e) {
+            log.error("Exception in processing permissions map at time:{}, exception:{}", System.currentTimeMillis(), e);
             throw new BusinessException(messageSourceService.getMessage("EXCEPTION_IN_PROCESSING_PERMISSIONS_MAP"));
         }
 
-        return groupedByPermissionsNames;
+        return permissionGroupDtos;
 
     }
 

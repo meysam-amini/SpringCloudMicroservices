@@ -1,5 +1,6 @@
 package com.meysam.backoffice.webapi.controller.members;
 
+import com.meysam.backoffice.model.dto.PermissionGroupDto;
 import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
@@ -32,7 +33,7 @@ public class ProfileProtectedController {
     }
 
     @GetMapping(value = "get-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<String>>> getPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
+    public ResponseEntity<List<PermissionGroupDto>> getPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
         return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId()));
     }
 
