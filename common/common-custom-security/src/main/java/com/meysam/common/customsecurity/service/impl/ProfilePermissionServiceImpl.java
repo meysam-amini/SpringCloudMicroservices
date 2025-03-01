@@ -55,28 +55,33 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     @Override
     public Map<String, List<String>> getMappedPermissions(Long profileId) {
         List<PermissionDTO> permissions = getAllRolePermissions(profileId);
-        HashMap<Long,Permission> basePermissionsMap;
+        HashMap<Long, Permission> basePermissionsMap;
         try {
-            ValueOperations<String, HashMap<Long,Permission>> valueOperations = redisTemplate.opsForValue();
+            ValueOperations<String, HashMap<Long, Permission>> valueOperations = redisTemplate.opsForValue();
             basePermissionsMap = valueOperations.get(BASE_PERMISSIONS_KEY);
         } catch (Exception e) {
             log.error("Exception on connecting to Redis server for refreshing base permissions cache at time:{} , exception is:{}", System.currentTimeMillis(), e);
-            throw new BusinessException("Server error refreshing permissions cache!");
+            throw new BusinessException(messageSourceService.getMessage("SERVER_ERROR_REFRESHING_PERMISSIONS_CACHE"));
         }
-        HashMap<String,List<String>> permissionsMap;
+        HashMap<String, List<String>> permissionsMap;
 
         Map<String, List<String>> groupedByPermissionsNames = new HashMap<>();
-        permissions.forEach(permissionDTO -> {
 
-            String basePermission = basePermissionsMap.get(permissionDTO.getParent()).getName();
+        try {
+            permissions.forEach(permissionDTO -> {
 
-            if(!groupedByPermissionsNames.containsKey(basePermission)){
-                groupedByPermissionsNames.put(basePermission, Collections.singletonList(permissionDTO.getName()));
-            }else {
-                groupedByPermissionsNames.get(basePermission).add(permissionDTO.getName());
-            }
+                String basePermission = basePermissionsMap.get(permissionDTO.getParent()).getName();
 
-        });
+                if (!groupedByPermissionsNames.containsKey(basePermission)) {
+                    groupedByPermissionsNames.put(basePermission, Collections.singletonList(permissionDTO.getName()));
+                } else {
+                    groupedByPermissionsNames.get(basePermission).add(permissionDTO.getName());
+                }
+            });
+        }catch (Exception e){
+            log.error("Exception in processing permissions map at time:{}, exception:{}",System.currentTimeMillis(),e);
+            throw new BusinessException(messageSourceService.getMessage("EXCEPTION_IN_PROCESSING_PERMISSIONS_MAP"));
+        }
 
         return groupedByPermissionsNames;
 

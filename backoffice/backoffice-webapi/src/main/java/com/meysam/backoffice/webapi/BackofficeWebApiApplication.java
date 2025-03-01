@@ -32,14 +32,6 @@ public class BackofficeWebApiApplication implements CommandLineRunner {
 
     }
 
-    @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource= new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages/messages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
-    }
-
     @Override
     public void run(String... args) throws Exception {
         cachedDataService.refreshCache();
