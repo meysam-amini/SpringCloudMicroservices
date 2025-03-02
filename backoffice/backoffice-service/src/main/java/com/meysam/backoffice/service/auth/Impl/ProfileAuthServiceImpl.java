@@ -2,6 +2,7 @@ package com.meysam.backoffice.service.auth.Impl;
 
 import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.configs.exception.BusinessException;
+import com.meysam.common.configs.exception.UnauthorizedException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.dto.AdminLoginResponseDto;
@@ -18,6 +19,7 @@ import com.meysam.common.customsecurity.utils.JwtUtil;
 import com.meysam.common.model.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,18 +60,13 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
             throw new BusinessException(messageSourceService.getMessage("WRONG_USER_NAME_OR_PASSWORD"));
         Profile profile = profileService.getProfileEntityByUsername(loginRequestDto.getUsername());
         if(Objects.isNull(profile)){
-            log.error("USER_NOT_FOUND:{}",messageSourceService.getMessage("USER_NOT_FOUND"));
-            throw new BusinessException(messageSourceService.getMessage("USER_NOT_FOUND"));
+            throw new UnauthorizedException(HttpStatus.UNAUTHORIZED,"USER_NOT_FOUND");
         }
-//        if(!profile.getUserType().equals(UserTypeEnum.INTERNAL_USER)){
-//            throw new BusinessException(messageSourceService.getMessage("YOU_ARE_NOT_AN_INTERNAL_USER"));
-//        }
+
         if (!passwordEncoder.matches(loginRequestDto.getPassword(),profile.getPassword())) {
             throw new BusinessException(messageSourceService.getMessage("WRONG_USER_NAME_OR_PASSWORD"));
         }
 
-
-        // TODO: 02.12.23 : check password correctness and then:
         AdminLoginResponseDto loginResponseDto = AdminLoginResponseDto.builder()
                 .token(generateTokenForAdmin(loginRequestDto.getUsername()))
                 .build();

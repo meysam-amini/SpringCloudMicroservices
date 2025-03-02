@@ -1,6 +1,7 @@
 package com.meysam.common.configs.web;
 
 import com.meysam.common.configs.exception.KeycloakException;
+import com.meysam.common.configs.exception.UnauthorizedException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.configs.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -77,6 +78,12 @@ public class ExceptionControllerAdvice {
     public ResponseEntity<String>  NoResourceFoundException(NoResourceFoundException exception){
         log.error("handling NoResourceFoundException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(messageSourceService.getMessage("PATH_NOT_FOUND"));
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<String>  UnauthorizedException(UnauthorizedException exception){
+        log.error("handling UnauthorizedException at time :{} , exception is : {}",System.currentTimeMillis(),exception);
+        return ResponseEntity.status(exception.getHttpStatusCode()).body(messageSourceService.getMessage(exception.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
