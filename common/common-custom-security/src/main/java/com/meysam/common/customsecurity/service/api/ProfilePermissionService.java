@@ -15,11 +15,12 @@ public interface ProfilePermissionService {
 
     List<PermissionGroupDto> getMappedPermissions(Long profileId);
 
+    List<PermissionDTO> getBasePermissions(Long profileId);
+
     List<RolesPermissionsDTO> getAllRolePermissions();
 
     AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId);
 
     void assignPermissionsToProfile(List<String> permissions, String username);
-
 
 }

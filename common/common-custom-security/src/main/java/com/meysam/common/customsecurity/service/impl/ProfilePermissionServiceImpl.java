@@ -40,7 +40,7 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     private final ProfileRoleService profileRoleService;
     private final RoleService roleService;
     private final RolePermissionService rolePermissionService;
-    private final ModelMapper roleMapper;
+    private final ModelMapper modelMapper;
     private final RedisTemplate redisTemplate;
 
 
@@ -89,10 +89,18 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     }
 
     @Override
+    public List<PermissionDTO> getBasePermissions(Long profileId) {
+            return getAllRolePermissions(profileId)
+                    .stream()
+                    .filter(permissionDTO -> permissionDTO.getParent()==null)
+                    .collect(Collectors.toList());
+    }
+
+    @Override
     public AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId) {
         List<Role> roles = profileRoleService.getRoles(profileId);
         return AllRolePermissionsDTO.builder()
-                .rolePermissions(getPermissions(roles.stream().map(role -> roleMapper.map(role, RoleDTO.class)).collect(Collectors.toList())))
+                .rolePermissions(getPermissions(roles.stream().map(role -> modelMapper.map(role, RoleDTO.class)).collect(Collectors.toList())))
                 .directPermissions(profilePermissionRepository.findAllPermissionsByProfile(profileId))
                 .build();
     }
@@ -158,4 +166,5 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
             }
         });
     }
+
 }

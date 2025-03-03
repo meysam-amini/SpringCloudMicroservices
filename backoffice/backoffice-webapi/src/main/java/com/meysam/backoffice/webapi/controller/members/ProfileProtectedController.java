@@ -15,7 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/profile")
@@ -32,8 +31,13 @@ public class ProfileProtectedController {
         return profileAuthService.logout(securityPrinciple.getUsername());
     }
 
-    @GetMapping(value = "get-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PermissionGroupDto>> getPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
+    @GetMapping(value = "get-base-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PermissionDTO>> getBasePermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
+        return ResponseEntity.ok(profilePermissionService.getBasePermissions(securityPrinciple.getProfileId()));
+    }
+
+    @GetMapping(value = "get-mapped-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PermissionGroupDto>> getMappedPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
         return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId()));
     }
 
