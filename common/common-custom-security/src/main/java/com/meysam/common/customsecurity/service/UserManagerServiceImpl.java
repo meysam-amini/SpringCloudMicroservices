@@ -39,9 +39,6 @@ public class UserManagerServiceImpl implements UserManagerService {
     public ProfileDTO addUser(RegisterUserDto registerUserDto) {
         Profile newProfile = profileService.addProfile(registerUserDto);
 
-        if(Objects.nonNull(registerUserDto.getPermissions())&&!registerUserDto.getPermissions().isEmpty()) {
-            profilePermissionService.assignPermissionsToProfile(registerUserDto.getPermissions(), registerUserDto.getUsername());
-        }
         if(Objects.nonNull(registerUserDto.getRoles())&&!registerUserDto.getRoles().isEmpty()) {
             profileRoleService.assignRolesToProfile(registerUserDto.getRoles(), registerUserDto.getUsername());
         }

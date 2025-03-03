@@ -31,14 +31,9 @@ public class ProfileProtectedController {
         return profileAuthService.logout(securityPrinciple.getUsername());
     }
 
-    @GetMapping(value = "get-base-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PermissionDTO>> getBasePermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
-        return ResponseEntity.ok(profilePermissionService.getBasePermissions(securityPrinciple.getProfileId()));
-    }
-
     @GetMapping(value = "get-mapped-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PermissionGroupDto>> getMappedPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
-        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId()));
+        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId(),false));
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,18 +47,5 @@ public class ProfileProtectedController {
     public ResponseEntity addNewPermission(@Valid @RequestBody AddPermissionDto addPermissionDto) {
         return ResponseEntity.ok(permissionService.addPermission(addPermissionDto));
     }
-
-    @PostMapping(value = "assign-direct-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
-    public ResponseEntity assignDirectPermission(@Valid @RequestBody AssignDirectPermissionDto directPermissionDto) {
-        return ResponseEntity.ok(permissionService.assignPermissionToUsername(directPermissionDto));
-    }
-
-    @PostMapping(value = "assign-role-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
-    public ResponseEntity assignRolePermission(@Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
-        return ResponseEntity.ok(permissionService.assignPermissionToRole(rolePermissionDto));
-    }
-
 
 }

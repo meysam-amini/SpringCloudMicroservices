@@ -2,7 +2,6 @@ package com.meysam.common.customsecurity.service.impl;
 
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
-import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
 import com.meysam.common.customsecurity.model.dto.AssignRolePermissionDto;
 import com.meysam.common.customsecurity.model.entity.Permission;
 import com.meysam.common.customsecurity.model.entity.RolePermission;
@@ -15,9 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -49,15 +46,6 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionRepository.save(permission);
     }
 
-    @Override
-    public RolePermission assignPermissionToRole(AssignRolePermissionDto rolePermissionDto) {
-        return null;
-    }
-
-    @Override
-    public String assignPermissionToUsername(AssignDirectPermissionDto permissionDto) {
-        return null;
-    }
 
     @Override
     public List<Permission> getBasePermissions() {

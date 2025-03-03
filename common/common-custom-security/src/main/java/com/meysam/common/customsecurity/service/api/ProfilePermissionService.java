@@ -10,17 +10,11 @@ import java.util.List;
 
 public interface ProfilePermissionService {
 
-    //    String assignPermissionToUsername(AssignDirectPermissionDto permissionDto);
     List<PermissionDTO> getAllRolePermissions(Long profileId);
 
-    List<PermissionGroupDto> getMappedPermissions(Long profileId);
-
-    List<PermissionDTO> getBasePermissions(Long profileId);
+    List<PermissionGroupDto> getMappedPermissions(Long profileId,boolean inMenuCheck);
 
     List<RolesPermissionsDTO> getAllRolePermissions();
 
     AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId);
-
-    void assignPermissionsToProfile(List<String> permissions, String username);
-
 }

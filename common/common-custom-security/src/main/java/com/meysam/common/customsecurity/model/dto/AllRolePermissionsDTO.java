@@ -11,6 +11,5 @@ import java.util.List;
 public class AllRolePermissionsDTO implements Serializable {
 
     List<RolesPermissionsDTO> rolePermissions;
-    List<PermissionDTO> directPermissions;
 
 }

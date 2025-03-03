@@ -5,13 +5,15 @@ import com.meysam.backoffice.webapi.config.aspect.log.annotation.MethodLog;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
-import com.meysam.common.customsecurity.model.dto.AssignDirectPermissionDto;
 import com.meysam.common.customsecurity.model.dto.AssignProfileRoleDto;
+import com.meysam.common.customsecurity.model.dto.AssignRolePermissionDto;
 import com.meysam.common.customsecurity.model.dto.RestResponseDTO;
 import com.meysam.common.customsecurity.service.api.*;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,28 +27,11 @@ public class PermissionManagementController {
     private final ProfileService adminService;
     private final RoleService roleService;
     private final ProfilePermissionService adminPermissionService;
-    private final ProfileRoleService adminRoleService;
     private final RolePermissionService rolePermissionService;
     private final PermissionService permissionService;
     private final LocaleMessageSourceService messageSourceService;
 
 
-
-    @MethodLog
-    @PostMapping(value = "assign-profile-permission")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_PERMISSION_MANAGEMENT')")
-    public ResponseEntity<RestResponseDTO<?>> assignDirectPermission(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, @RequestBody AssignDirectPermissionDto directPermissionDto) {
-        adminPermissionService.assignPermissionsToProfile(directPermissionDto.getPermissions(),directPermissionDto.getUsername());
-        return ResponseEntity.ok(RestResponseDTO.generate(false,0,messageSourceService.getMessage("PERMISSION_ASSIGNED_SUCCESSFULLY")));
-    }
-
-    @MethodLog
-    @PostMapping(value = "assign-profile-role")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_ROLE_MANAGEMENT')")
-    public ResponseEntity<RestResponseDTO<?>> assignRole(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, @RequestBody AssignProfileRoleDto assignProfileRoleDto) {
-        adminRoleService.assignRolesToProfile(assignProfileRoleDto.getRoles(),assignProfileRoleDto.getUsername());
-        return ResponseEntity.ok(RestResponseDTO.generate(false,0,messageSourceService.getMessage("ROLE_ASSIGNED_SUCCESSFULLY")));
-    }
 
     @GetMapping(value = "get-all-roles")
     @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
@@ -64,6 +49,14 @@ public class PermissionManagementController {
     @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
     public ResponseEntity<RestResponseDTO<?>> getPermissionRolesByProfile(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple,Long profile) {
         return ResponseEntity.ok(RestResponseDTO.generate(false,0, adminPermissionService.getAllRolePermissionsByProfile(profile)));
+    }
+
+
+    @PostMapping(value = "assign-role-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
+    public ResponseEntity assignRolePermission(@Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
+        rolePermissionService.assignPermissionsToRole(rolePermissionDto);
+        return ResponseEntity.ok(messageSourceService.getMessage("PERMISSION_ASSIGNED_TO_ROLE_SUCCESSFULLY"));
     }
 
     /*@PostMapping(value = "assign-role-permission")

@@ -21,5 +21,7 @@ public class PermissionDTO implements Serializable {
 
     private Long parent;
 
+    private boolean inMenu;
+
 
 }
