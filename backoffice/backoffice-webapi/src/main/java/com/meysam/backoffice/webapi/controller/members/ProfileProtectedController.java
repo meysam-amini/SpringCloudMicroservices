@@ -33,7 +33,7 @@ public class ProfileProtectedController {
 
     @GetMapping(value = "get-mapped-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PermissionGroupDto>> getMappedPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
-        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId(),false));
+        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId(),true));
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -65,7 +65,7 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
 
         try {
             Map<Long, List<PermissionDTO>> permissions = allPermissions.stream()
-                    .filter(permissionDTO -> permissionDTO.getParent()!=null)
+                    .filter(permissionDTO -> permissionDTO.getParent() != null)
                     .filter(permissionDTO -> {
                                 if (inMenuCheck)
                                     return permissionDTO.isInMenu() == inMenuCheck;
@@ -76,8 +76,10 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
             for (PermissionDTO basePermission : basePermissions) {
                 PermissionGroupDto dto = PermissionGroupDto.builder()
                         .name(basePermission.getName())
-                        .subGroups(permissions.get(basePermission.getId()).stream().map(PermissionDTO::getName).collect(Collectors.toList()))
                         .build();
+                if (permissions.get(basePermission.getId()) != null)
+                    dto.setSubGroups(permissions.get(basePermission.getId()).stream().map(PermissionDTO::getName).collect(Collectors.toList()));
+
                 permissionGroupDtos.add(dto);
             }
 
@@ -91,11 +93,9 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
     }
 
     @Override
-    public AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId) {
+    public List<RolesPermissionsDTO> getAllRolePermissionsByProfile(long profileId) {
         List<Role> roles = profileRoleService.getRoles(profileId);
-        return AllRolePermissionsDTO.builder()
-                .rolePermissions(getPermissions(roles.stream().map(role -> modelMapper.map(role, RoleDTO.class)).collect(Collectors.toList())))
-                .build();
+        return getPermissions(roles.stream().map(role -> modelMapper.map(role, RoleDTO.class)).collect(Collectors.toList()));
     }
 
     @Override

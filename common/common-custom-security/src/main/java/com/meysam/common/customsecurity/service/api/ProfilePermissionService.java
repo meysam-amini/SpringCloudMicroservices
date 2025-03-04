@@ -2,7 +2,6 @@ package com.meysam.common.customsecurity.service.api;
 
 
 import com.meysam.backoffice.model.dto.PermissionGroupDto;
-import com.meysam.common.customsecurity.model.dto.AllRolePermissionsDTO;
 import com.meysam.common.customsecurity.model.dto.PermissionDTO;
 import com.meysam.common.customsecurity.model.dto.RolesPermissionsDTO;
 
@@ -16,5 +15,5 @@ public interface ProfilePermissionService {
 
     List<RolesPermissionsDTO> getAllRolePermissions();
 
-    AllRolePermissionsDTO getAllRolePermissionsByProfile(long profileId);
+    List<RolesPermissionsDTO> getAllRolePermissionsByProfile(long profileId);
 }

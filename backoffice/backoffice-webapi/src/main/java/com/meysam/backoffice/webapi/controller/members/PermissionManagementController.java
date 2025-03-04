@@ -5,9 +5,7 @@ import com.meysam.backoffice.webapi.config.aspect.log.annotation.MethodLog;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;
-import com.meysam.common.customsecurity.model.dto.AssignProfileRoleDto;
-import com.meysam.common.customsecurity.model.dto.AssignRolePermissionDto;
-import com.meysam.common.customsecurity.model.dto.RestResponseDTO;
+import com.meysam.common.customsecurity.model.dto.*;
 import com.meysam.common.customsecurity.service.api.*;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -17,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -35,20 +35,20 @@ public class PermissionManagementController {
 
     @GetMapping(value = "get-all-roles")
     @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
-    public ResponseEntity<RestResponseDTO<?>> getRoles(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple) {
-        return ResponseEntity.ok(RestResponseDTO.generate(false,0,roleService.findAllRoles()));
+    public ResponseEntity<List<RoleDTO>> getRoles(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple) {
+        return ResponseEntity.ok(roleService.findAllRoles());
     }
 
     @GetMapping(value = "get-role-permissions")
     @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
-    public ResponseEntity<RestResponseDTO<?>> getPermissionRoles(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple) {
-        return ResponseEntity.ok(RestResponseDTO.generate(false,0, adminPermissionService.getAllRolePermissions()));
+    public ResponseEntity<List<RolesPermissionsDTO>> getPermissionRoles(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple) {
+        return ResponseEntity.ok(adminPermissionService.getAllRolePermissions());
     }
 
     @GetMapping(value = "get-role-permissions-by-profile")
     @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
-    public ResponseEntity<RestResponseDTO<?>> getPermissionRolesByProfile(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple,Long profile) {
-        return ResponseEntity.ok(RestResponseDTO.generate(false,0, adminPermissionService.getAllRolePermissionsByProfile(profile)));
+    public ResponseEntity<List<RolesPermissionsDTO>> getPermissionRolesByProfile(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, Long profile) {
+        return ResponseEntity.ok(adminPermissionService.getAllRolePermissionsByProfile(profile));
     }
 
 
