@@ -1,10 +1,9 @@
 package com.meysam.common.customsecurity.service.impl;
 
 
-import com.meysam.backoffice.model.dto.PermissionGroupDto;
+import com.meysam.common.customsecurity.model.dto.PermissionGroupDto;
 import com.meysam.common.configs.exception.BusinessException;
 import com.meysam.common.configs.messages.LocaleMessageSourceService;
-import com.meysam.common.customsecurity.model.dto.AllRolePermissionsDTO;
 import com.meysam.common.customsecurity.model.dto.PermissionDTO;
 import com.meysam.common.customsecurity.model.dto.RoleDTO;
 import com.meysam.common.customsecurity.model.dto.RolesPermissionsDTO;
@@ -78,7 +77,7 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
                         .name(basePermission.getName())
                         .build();
                 if (permissions.get(basePermission.getId()) != null)
-                    dto.setSubGroups(permissions.get(basePermission.getId()).stream().map(PermissionDTO::getName).collect(Collectors.toList()));
+                    dto.setSubGroup(permissions.get(basePermission.getId()));
 
                 permissionGroupDtos.add(dto);
             }

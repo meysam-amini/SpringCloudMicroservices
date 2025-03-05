@@ -1,6 +1,6 @@
 package com.meysam.backoffice.webapi.controller.members;
 
-import com.meysam.backoffice.model.dto.PermissionGroupDto;
+import com.meysam.common.customsecurity.model.dto.PermissionGroupDto;
 import com.meysam.backoffice.service.auth.api.ProfileAuthService;
 import com.meysam.common.customsecurity.model.SecurityPrinciple;
 import com.meysam.common.customsecurity.model.constants.SessionConstants;

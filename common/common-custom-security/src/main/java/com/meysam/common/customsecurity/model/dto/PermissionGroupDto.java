@@ -1,4 +1,4 @@
-package com.meysam.backoffice.model.dto;
+package com.meysam.common.customsecurity.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -10,5 +10,6 @@ import java.util.List;
 @Builder
 public class PermissionGroupDto {
     private String name;
-    private List<String> subGroups = new ArrayList<>();
+    private String id;
+    private List<PermissionDTO> subGroup = new ArrayList<>();
 }

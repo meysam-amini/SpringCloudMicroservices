@@ -1,7 +1,7 @@
 package com.meysam.common.customsecurity.service.api;
 
 
-import com.meysam.backoffice.model.dto.PermissionGroupDto;
+import com.meysam.common.customsecurity.model.dto.PermissionGroupDto;
 import com.meysam.common.customsecurity.model.dto.PermissionDTO;
 import com.meysam.common.customsecurity.model.dto.RolesPermissionsDTO;
 
