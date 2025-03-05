@@ -31,9 +31,14 @@ public class ProfileProtectedController {
         return profileAuthService.logout(securityPrinciple.getUsername());
     }
 
+    @GetMapping(value = "get-mapped-permissions-for-menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PermissionGroupDto>> getMappedPermissionsForMenu(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
+        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId(),true));
+    }
+
     @GetMapping(value = "get-mapped-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PermissionGroupDto>> getMappedPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
-        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId(),true));
+        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId(),false));
     }
 
     @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
