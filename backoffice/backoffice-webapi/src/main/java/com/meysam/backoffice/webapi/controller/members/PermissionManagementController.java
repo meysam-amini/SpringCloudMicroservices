@@ -52,6 +52,13 @@ public class PermissionManagementController {
     }
 
 
+    @PostMapping(value = "update-permission-by-roleId", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
+    public ResponseEntity updatePermissionsByRole(@Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
+        rolePermissionService.updatePermissionsByRole(rolePermissionDto);
+        return ResponseEntity.ok(messageSourceService.getMessage("PERMISSIONS_UPDATED_SUCCESSFULLY"));
+    }
+
     @PostMapping(value = "assign-role-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
     public ResponseEntity assignRolePermission(@Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {

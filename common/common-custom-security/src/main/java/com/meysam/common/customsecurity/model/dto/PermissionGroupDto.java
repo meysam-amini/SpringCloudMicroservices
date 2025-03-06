@@ -10,6 +10,6 @@ import java.util.List;
 @Builder
 public class PermissionGroupDto {
     private String name;
-    private String id;
+    private String code;
     private List<PermissionDTO> subGroup = new ArrayList<>();
 }

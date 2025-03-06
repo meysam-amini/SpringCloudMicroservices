@@ -9,7 +9,6 @@ import com.meysam.common.customsecurity.model.entity.Role;
 import com.meysam.common.customsecurity.model.entity.RolePermission;
 import com.meysam.common.customsecurity.repository.RolePermissionRepository;
 import com.meysam.common.customsecurity.service.api.PermissionService;
-import com.meysam.common.customsecurity.service.api.ProfileRoleService;
 import com.meysam.common.customsecurity.service.api.RolePermissionService;
 import com.meysam.common.customsecurity.service.api.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -43,11 +41,10 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Override
     public void assignPermissionsToRole(AssignRolePermissionDto rolePermissionDto) {
-        Role role = roleService.findEntityByCode(rolePermissionDto.getRoleCode());
-        if (Objects.isNull(role)) {
-            throw new BusinessException(messageSourceService.getMessage("ROLE_NOT_FOUND"));
-        }
-        rolePermissionDto.getPermissions().forEach(p -> {
+        Role role = roleService.findEntityId(rolePermissionDto.getRoleId())
+                .orElseThrow(()-> new BusinessException(messageSourceService.getMessage("ROLE_NOT_FOUND")));
+
+        rolePermissionDto.getPermissionCodes().forEach(p -> {
 
             Permission permission = permissionService.findEntityByCode(p);
             if (Objects.isNull(permission)) {
@@ -62,5 +59,10 @@ public class RolePermissionServiceImpl implements RolePermissionService {
             rolePermission.setRole(role.getId());
             rolePermissionRepository.save(rolePermission);
         });
+    }
+
+    @Override
+    public void updatePermissionsByRole(AssignRolePermissionDto rolePermissionDto) {
+
     }
 }

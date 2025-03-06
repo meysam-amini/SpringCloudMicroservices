@@ -11,4 +11,5 @@ public interface RolePermissionService {
     List<String> getPermissionsNames(List<Long> rolesIds);
     List<PermissionDTO> getPermissions(List<Long> rolesIds);
     void assignPermissionsToRole(AssignRolePermissionDto rolePermissionDto);
+    void updatePermissionsByRole(AssignRolePermissionDto rolePermissionDto);
 }

@@ -75,6 +75,8 @@ public class ProfilePermissionServiceImpl implements ProfilePermissionService {
             for (PermissionDTO basePermission : basePermissions) {
                 PermissionGroupDto dto = PermissionGroupDto.builder()
                         .name(basePermission.getName())
+                        .code(basePermission.getCode())
+
                         .build();
                 if (permissions.get(basePermission.getId()) != null)
                     dto.setSubGroup(permissions.get(basePermission.getId()));
