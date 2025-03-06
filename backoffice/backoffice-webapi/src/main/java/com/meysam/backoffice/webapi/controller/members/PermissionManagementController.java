@@ -51,6 +51,7 @@ public class PermissionManagementController {
     }
 
 
+    @MethodLog
     @PostMapping(value = "assign-role-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('PERMISSION_PERMISSION_MANAGEMENT')")
     public ResponseEntity assignRolePermission(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, @Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
