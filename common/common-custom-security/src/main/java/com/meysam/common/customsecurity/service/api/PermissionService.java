@@ -12,4 +12,5 @@ public interface PermissionService {
     Permission findEntityByCode(String code);
     Permission addPermission(AddPermissionDto permissionDto);
     List<Permission> getBasePermissions();
+    List<Permission> findAllPermissionsByCodes(List<String> permissionCodes);
 }

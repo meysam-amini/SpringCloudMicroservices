@@ -32,7 +32,6 @@ public class PermissionManagementController {
     private final LocaleMessageSourceService messageSourceService;
 
 
-
     @GetMapping(value = "get-all-roles")
     @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
     public ResponseEntity<List<RoleDTO>> getRoles(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple) {
@@ -52,17 +51,10 @@ public class PermissionManagementController {
     }
 
 
-    @PostMapping(value = "update-permission-by-roleId", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
-    public ResponseEntity updatePermissionsByRole(@Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
-        rolePermissionService.updatePermissionsByRole(rolePermissionDto);
-        return ResponseEntity.ok(messageSourceService.getMessage("PERMISSIONS_UPDATED_SUCCESSFULLY"));
-    }
-
     @PostMapping(value = "assign-role-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
-    public ResponseEntity assignRolePermission(@Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
-        rolePermissionService.assignPermissionsToRole(rolePermissionDto);
+    @PreAuthorize("hasAnyAuthority('PERMISSION_PERMISSION_MANAGEMENT')")
+    public ResponseEntity assignRolePermission(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, @Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
+        rolePermissionService.assignPermissionsToRole(clientPrinciple, rolePermissionDto);
         return ResponseEntity.ok(messageSourceService.getMessage("PERMISSION_ASSIGNED_TO_ROLE_SUCCESSFULLY"));
     }
 

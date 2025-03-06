@@ -38,7 +38,7 @@ public class Permission extends BaseEntity implements Serializable {
     @Column(name = "PARENT")
     private Long parent;
 
-    @NotNull(message = "invalid parent")
+    @NotNull(message = "inMenu field null")
     @Column(name = "IN_MENU")
     private Boolean inMenu;
 }

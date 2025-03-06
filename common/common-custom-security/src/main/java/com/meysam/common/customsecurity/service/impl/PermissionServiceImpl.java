@@ -55,4 +55,9 @@ public class PermissionServiceImpl implements PermissionService {
                 .toList();
         return permissions;
     }
+
+    @Override
+    public List<Permission> findAllPermissionsByCodes(List<String> permissionCodes) {
+        return permissionRepository.findPermissionsByCodeIsIn(permissionCodes);
+    }
 }

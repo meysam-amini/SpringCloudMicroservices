@@ -31,4 +31,10 @@ public class Role extends BaseEntity {
     @Size(max = 20)
     @Column(name = "CODE")
     String code;
+
+    @NotNull(message = "invalid parent")
+    @Column(name = "PARENT")
+    private Long parent;
+
+
 }

@@ -18,4 +18,7 @@ public interface PermissionRepository extends BaseRepository<Permission> {
 
     List<Permission> findAllByParentIsNullAndEnabledIsTrue();
 
+    List<Permission> findPermissionsByCodeIsIn(List<String> codes);
+
+
 }
