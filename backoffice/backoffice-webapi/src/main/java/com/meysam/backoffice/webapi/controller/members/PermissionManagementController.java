@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("role-permission")
+@RequestMapping("permissions")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyAuthority('PERMISSION_PERMISSION_MANAGEMENT')")
 public class PermissionManagementController {
@@ -46,7 +46,7 @@ public class PermissionManagementController {
     @PostMapping(value = "assign-role-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity assignRolePermission(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, @Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
         rolePermissionService.assignPermissionsToRole(clientPrinciple, rolePermissionDto);
-        return ResponseEntity.ok(messageSourceService.getMessage("PERMISSION_ASSIGNED_TO_ROLE_SUCCESSFULLY"));
+        return ResponseEntity.ok(messageSourceService.getMessage("PERMISSIONS_UPDATED_SUCCESSFULLY"));
     }
 
 

@@ -72,7 +72,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role addRole(AddRoleDto addRoleDto) {
+    public RoleDTO addRole(AddRoleDto addRoleDto) {
         if(Objects.isNull(addRoleDto)){
             throw new BusinessException(messageSourceService.getMessage("ROLE_OBJECT_NULL"));
         }
@@ -92,7 +92,7 @@ public class RoleServiceImpl implements RoleService {
                 .enabled(true)
                 .build();
 
-        return roleRepository.save(role);
+        return modelMapper.map(roleRepository.save(role),RoleDTO.class);
     }
 
     @Override

@@ -51,22 +51,17 @@ public class RolePermissionServiceImpl implements RolePermissionService {
                 .orElseThrow(() -> new BusinessException(messageSourceService.getMessage("ROLE_NOT_FOUND")));
 
         if(clientPrinciple.getRoles().contains(role.getName())){
-            throw new UnauthorizedException("YOU_CANT_MODIFY_YOUR_OWN_PERMISSIONS", HttpStatus.FORBIDDEN);
+            throw new UnauthorizedException("YOU_CANT_MODIFY_YOUR_OWN_PERMISSIONS", HttpStatus.NOT_ACCEPTABLE);
         }
 
         List<Permission> newPermissions = permissionService.findAllPermissionsByCodes(rolePermissionDto.getPermissionCodes());
-        if (newPermissions==null || newPermissions.size()==0)
-            newPermissions = new ArrayList<>();
-
         List<Permission> currentPermissionsByRole = rolePermissionRepository.findAllPermissionsByRole(role.getId());
-        if(currentPermissionsByRole==null || currentPermissionsByRole.size()==0)
-            currentPermissionsByRole = new ArrayList<>();
-
         List<Permission> revokedPermissions = new ArrayList<>(currentPermissionsByRole);
+
         revokedPermissions.removeAll(newPermissions);
 
         if (revokedPermissions.size() > 0)
-            rolePermissionRepository.deleteAllByRoleAndPermissionIsIn(role.getId(), revokedPermissions);
+            rolePermissionRepository.deleteAllByRoleAndPermissionIsIn(role.getId(), revokedPermissions.stream().map(Permission::getId).toList());
 
         newPermissions.removeAll(currentPermissionsByRole);
 

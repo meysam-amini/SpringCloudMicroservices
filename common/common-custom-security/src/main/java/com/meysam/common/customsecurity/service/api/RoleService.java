@@ -19,7 +19,7 @@ public interface RoleService  {
     List<BackofficeRoleDTO> findAllRolesForBackoffice();
     Role findEntityByCode(String code);
     Optional<Role> findEntityId(long id);
-    Role addRole(AddRoleDto addRoleDto);
+    RoleDTO addRole(AddRoleDto addRoleDto);
     Role getRoleEntityByCode(String code);
 
 }
