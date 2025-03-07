@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -75,7 +73,26 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role addRole(AddRoleDto addRoleDto) {
-        return null;
+        if(Objects.isNull(addRoleDto)){
+            throw new BusinessException(messageSourceService.getMessage("ROLE_OBJECT_NULL"));
+        }
+        if(isNullOrBlank(addRoleDto.getName())||isNullOrBlank(addRoleDto.getCode())){
+            throw new BusinessException(messageSourceService.getMessage("ROLE_NAME_OR_CODE_NULL"));
+        }
+        if(roleRepository.existsByNameOrCode(addRoleDto.getName(),addRoleDto.getCode())){
+            throw new BusinessException(messageSourceService.getMessage("ROLE_ALREADY_EXISTS_BY_NAME_OR_ROLE"));
+        }
+
+        Role role = Role.builder()
+                .code(addRoleDto.getCode())
+                .name(addRoleDto.getName())
+                .createdDate(new Date())
+                .updatedDate(new Date())
+                .version(1L)
+                .enabled(true)
+                .build();
+
+        return roleRepository.save(role);
     }
 
     @Override
@@ -84,4 +101,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
+    private boolean isNullOrBlank(String s){
+        return s.isBlank() || s.isEmpty();
+    }
 }

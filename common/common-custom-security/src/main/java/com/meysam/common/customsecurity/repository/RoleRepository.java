@@ -14,5 +14,7 @@ public interface RoleRepository extends BaseRepository<Role> {
 
     Optional<Role> findByName(String name);
 
+    boolean existsByNameOrCode(String name,String code);
+
     Optional<Role> findByCodeAndName(String code, String name);
 }

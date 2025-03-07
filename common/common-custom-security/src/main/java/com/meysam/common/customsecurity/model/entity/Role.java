@@ -5,15 +5,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import java.io.Serializable;
-import java.math.BigInteger;
+import lombok.experimental.SuperBuilder;
 
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter@Setter
-@Entity
+@Entity@SuperBuilder
 public class Role extends BaseEntity {
 
 
@@ -31,10 +29,4 @@ public class Role extends BaseEntity {
     @Size(max = 20)
     @Column(name = "CODE")
     String code;
-
-    @NotNull(message = "invalid parent")
-    @Column(name = "PARENT")
-    private Long parent;
-
-
 }

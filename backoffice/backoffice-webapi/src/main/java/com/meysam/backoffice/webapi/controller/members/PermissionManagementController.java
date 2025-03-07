@@ -20,55 +20,45 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("permission")
+@RequestMapping("role-permission")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyAuthority('PERMISSION_PERMISSION_MANAGEMENT')")
 public class PermissionManagementController {
 
     private final ProfileService adminService;
     private final RoleService roleService;
-    private final ProfilePermissionService adminPermissionService;
+    private final ProfilePermissionService profilePermissionService;
     private final RolePermissionService rolePermissionService;
     private final PermissionService permissionService;
     private final LocaleMessageSourceService messageSourceService;
 
-
-    @GetMapping(value = "get-all-roles")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
-    public ResponseEntity<List<RoleDTO>> getRoles(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple) {
-        return ResponseEntity.ok(roleService.findAllRoles());
-    }
-
     @GetMapping(value = "get-role-permissions")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
     public ResponseEntity<List<RolesPermissionsDTO>> getPermissionRoles(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple) {
-        return ResponseEntity.ok(adminPermissionService.getAllRolePermissions());
+        return ResponseEntity.ok(profilePermissionService.getAllRolePermissions());
     }
 
     @GetMapping(value = "get-role-permissions-by-profile")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_READ_ROLES')")
     public ResponseEntity<List<RolesPermissionsDTO>> getPermissionRolesByProfile(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, Long profile) {
-        return ResponseEntity.ok(adminPermissionService.getAllRolePermissionsByProfile(profile));
+        return ResponseEntity.ok(profilePermissionService.getAllRolePermissionsByProfile(profile));
     }
-
 
     @MethodLog
     @PostMapping(value = "assign-role-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('PERMISSION_PERMISSION_MANAGEMENT')")
     public ResponseEntity assignRolePermission(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, @Valid @RequestBody AssignRolePermissionDto rolePermissionDto) {
         rolePermissionService.assignPermissionsToRole(clientPrinciple, rolePermissionDto);
         return ResponseEntity.ok(messageSourceService.getMessage("PERMISSION_ASSIGNED_TO_ROLE_SUCCESSFULLY"));
     }
 
-    /*@PostMapping(value = "assign-role-permission")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
-    public ResponseEntity assignRolePermission(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple,@RequestBody AssignRolePermissionDto rolePermissionDto) {
-        rolePermissionService.assignPermissionsToRole(rolePermissionDto);
-        return ResponseEntity.ok(RestResponseDTO.generate(false,0,messageSourceService.getMessage("PERMISSION_ASSIGNED_SUCCESSFULLY")));
-    }*/
 
-    /*@PostMapping(value = "add-permission")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_ADD_NEW_PERMISSION')")
-    public ResponseEntity<RestResponseDTO<?>> addNewPermission(@Parameter(hidden = true) @SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple clientPrinciple, @RequestBody AddPermissionDto addPermissionDto) {
-        return ResponseEntity.ok(RestResponseDTO.generate(false,0,permissionService.addPermission(addPermissionDto)));
-    }*/
+    @GetMapping(value = "get-mapped-permissions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<PermissionGroupDto>> getMappedPermissions(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple){
+        return ResponseEntity.ok(profilePermissionService.getMappedPermissions(securityPrinciple.getProfileId(),false));
+    }
+
+
+    @PostMapping(value = "add-permission", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addNewPermission(@Valid @RequestBody AddPermissionDto addPermissionDto) {
+        return ResponseEntity.ok(permissionService.addPermission(addPermissionDto));
+    }
+
 }
