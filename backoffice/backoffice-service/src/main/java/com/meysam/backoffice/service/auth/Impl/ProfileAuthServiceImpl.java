@@ -64,7 +64,7 @@ public class ProfileAuthServiceImpl implements ProfileAuthService {
         }
 
         if (!passwordEncoder.matches(loginRequestDto.getPassword(),profile.getPassword())) {
-            throw new BusinessException(messageSourceService.getMessage("WRONG_USER_NAME_OR_PASSWORD"));
+            throw new UnauthorizedException("WRONG_USER_NAME_OR_PASSWORD",HttpStatus.UNAUTHORIZED);
         }
 
         AdminLoginResponseDto loginResponseDto = AdminLoginResponseDto.builder()
