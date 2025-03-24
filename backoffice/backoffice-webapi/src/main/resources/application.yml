@@ -14,7 +14,8 @@ spring:
       paths: >
         /swagger-ui/**,
         /public/**,
-        /api/public/**
+        /api/public/**,
+        /actuator/**
 
   #  ##############DATA SOURCE####################
   #  h2:
@@ -196,6 +197,15 @@ management:
     web:
       exposure:
         include: "*"
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 
 web:
   client:

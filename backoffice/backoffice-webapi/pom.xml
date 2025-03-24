@@ -41,6 +41,12 @@
             <artifactId>common-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+<!--        Prometheus will scrape metrics from your Spring Boot application and store them as time-series data.-->
+<!--        We should edit the prometheus.yml file to scrape metrics from our Spring Boot application-->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

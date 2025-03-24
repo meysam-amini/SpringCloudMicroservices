@@ -73,6 +73,7 @@ class AdminAuthServiceImplTest {
 
     @Test
     void login_ShouldReturnAdminLoginResponseDto() {
+        System.out.println("#########    UNIT TESTS      ########");
         LoginRequestDto loginRequestDto = new LoginRequestDto();
         loginRequestDto.setUsername("admin");
         loginRequestDto.setPassword("123");
