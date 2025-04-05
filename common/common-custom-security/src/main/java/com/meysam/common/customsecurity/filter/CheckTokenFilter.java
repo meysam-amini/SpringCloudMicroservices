@@ -42,8 +42,8 @@ public class CheckTokenFilter extends OncePerRequestFilter {
             return;
         }
         ignoredPathMatchers = new RequestMatcher[ignoredPaths.length];
-        for (int counter = 0; counter < ignoredPaths.length; counter++) {
-            ignoredPathMatchers[counter] = new AntPathRequestMatcher(ignoredPaths[counter]);
+        for (int i = 0; i < ignoredPaths.length; i++) {
+            ignoredPathMatchers[i] = new AntPathRequestMatcher(ignoredPaths[i]);
         }
     }
 
