@@ -74,7 +74,7 @@ public class AdminAuthServiceIT {
         }catch (Exception e){
             log.error("exception:{}",e);
 //            assertEquals(BusinessException.class,e);
-            assertEquals("user not found!", e.getMessage());
+            assertEquals("USER_NOT_FOUND", e.getMessage());
         }
     }
 
