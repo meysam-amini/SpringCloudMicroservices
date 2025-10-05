@@ -1,46 +1,57 @@
-version: '3.8'
+version: "3.5"
 
 services:
-  backoffice-webapi:
-    build:
-      context: ./backoffice/backoffice-webapi  # Path to the module with Dockerfile
-    image: ${CI_REGISTRY}/backoffice-webapi:latest
+
+  postgres:
+    container_name: postgres
+    image: postgres:14.2
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: keycloak
     ports:
-      - "9999:9999"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    depends_on:
-#      - database
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
     networks:
       - meysam-docker
 
-#  another-module:
-#    build:
-#      context: ./another/module  # Path to the next module
-#    image: another-module:latest
-#    ports:
-#      - "8081:8080" # Map to a different port as needed
-##    environment:
-##      - SPRING_PROFILES_ACTIVE=docker
-##    depends_on:
-##      - database
-#    networks:
-#      - meysam-docker
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "5050:80"
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - meysam-docker
 
-#  database:
-#    image: postgres:latest
-#    environment:
-#      - POSTGRES_USER=youruser
-#      - POSTGRES_PASSWORD=yourpassword
-#      - POSTGRES_DB=yourdatabase
-#    ports:
-#      - "5432:5432"
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#
-#volumes:
-#  postgres_data:
+  redis:
+    container_name: redis
+    image: redis:6
+    ports:
+      - "6379:6379"
+    restart: always
+    command:
+      - redis-server
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - meysam-docker
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  redis_data:
+
 
 networks:
-  your-network-name:
+  meysam-docker:
     driver: bridge
