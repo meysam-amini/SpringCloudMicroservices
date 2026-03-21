@@ -18,7 +18,7 @@ public class CachedDataController {
 
     @MethodLog
     @PostMapping("refresh-cache")
-    public ResponseEntity<String> logoutProfile(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple) {
+    public ResponseEntity<String> refreshCache(@SessionAttribute(SessionConstants.CLIENT_SESSION) SecurityPrinciple securityPrinciple) {
         cachedDataService.refreshCache();
         return ResponseEntity.ok("Cached Data Refreshed Successfully");
     }
