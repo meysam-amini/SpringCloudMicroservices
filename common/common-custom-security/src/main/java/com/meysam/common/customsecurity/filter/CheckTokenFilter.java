@@ -14,7 +14,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class CheckTokenFilter extends OncePerRequestFilter {
         }
         ignoredPathMatchers = new RequestMatcher[ignoredPaths.length];
         for (int i = 0; i < ignoredPaths.length; i++) {
-            ignoredPathMatchers[i] = new AntPathRequestMatcher(ignoredPaths[i]);
+            ignoredPathMatchers[i] = PathPatternRequestMatcher.withDefaults().matcher(ignoredPaths[i]);
         }
     }
 

@@ -35,8 +35,9 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .addFilterAfter(new CheckTokenFilter(Boolean.parseBoolean(enableSecurity),securityService, ignoredPaths), ConcurrentSessionFilter.class);
+        http.sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterAfter(new CheckTokenFilter(Boolean.parseBoolean(enableSecurity), securityService, ignoredPaths), ConcurrentSessionFilter.class);
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);

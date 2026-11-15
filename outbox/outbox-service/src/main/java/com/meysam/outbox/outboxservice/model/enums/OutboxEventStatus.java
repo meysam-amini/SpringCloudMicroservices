@@ -1,4 +1,4 @@
-package org.taba.outbox.outboxservice.model.enums;
+package com.meysam.outbox.outboxservice.model.enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;

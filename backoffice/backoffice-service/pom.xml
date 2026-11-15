@@ -12,11 +12,6 @@
     <artifactId>backoffice-service</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.meysam.backoffice</groupId>
@@ -37,6 +32,10 @@
             <groupId>com.meysam.common</groupId>
             <artifactId>common-custom-security</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 </project>

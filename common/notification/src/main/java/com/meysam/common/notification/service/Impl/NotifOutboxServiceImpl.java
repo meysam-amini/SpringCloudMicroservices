@@ -8,8 +8,8 @@ import com.meysam.common.notification.service.api.NotificationService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.taba.outbox.outboxservice.model.enums.OutboxEventStatus;
-import org.taba.outbox.outboxservice.service.Impl.OutboxServiceImpl;
+import com.meysam.outbox.outboxservice.model.enums.OutboxEventStatus;
+import com.meysam.outbox.outboxservice.service.Impl.OutboxServiceImpl;
 
 import java.util.Date;
 import java.util.Objects;

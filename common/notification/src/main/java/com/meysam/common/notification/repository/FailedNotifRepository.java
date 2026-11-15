@@ -2,7 +2,7 @@ package com.meysam.common.notification.repository;
 
 import com.meysam.common.notification.model.entity.FailedNotif;
 import org.springframework.stereotype.Repository;
-import org.taba.outbox.outboxservice.repository.OutboxRepository;
+import com.meysam.outbox.outboxservice.repository.OutboxRepository;
 
 import java.util.Optional;
 

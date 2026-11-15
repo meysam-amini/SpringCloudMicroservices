@@ -1,4 +1,4 @@
-package org.taba.outbox.outboxservice.repository;
+package com.meysam.outbox.outboxservice.repository;
 
 import com.meysam.common.dao.BaseRepository;
 import org.springframework.data.domain.Page;
@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.taba.outbox.outboxservice.model.entity.OutBox;
-import org.taba.outbox.outboxservice.model.enums.OutboxEventStatus;
+import com.meysam.outbox.outboxservice.model.entity.OutBox;
+import com.meysam.outbox.outboxservice.model.enums.OutboxEventStatus;
 
 import java.util.List;
 

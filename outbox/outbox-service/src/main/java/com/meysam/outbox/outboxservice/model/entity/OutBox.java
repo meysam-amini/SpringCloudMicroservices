@@ -1,4 +1,4 @@
-package org.taba.outbox.outboxservice.model.entity;
+package com.meysam.outbox.outboxservice.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.taba.outbox.outboxservice.model.enums.OutboxEventStatus;
+import com.meysam.outbox.outboxservice.model.enums.OutboxEventStatus;
 
 import java.util.Date;
 

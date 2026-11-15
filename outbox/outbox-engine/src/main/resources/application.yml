@@ -3,14 +3,25 @@ spring:
     name: outbox-engine
 
   datasource:
-    url: jdbc:oracle:thin:@10.2.10.20:1521:dbdev
-    username: prkardata
-    password: s5j7d~qD}PU?Hx{N$Wb+:E
+    # --- Oracle (commented out) ---
+    # url: jdbc:oracle:thin:@10.2.10.20:1521:dbdev
+    # username: eeeee
+    # password: eeee
+    # driver-class-name: oracle.jdbc.OracleDriver
+
+    # --- H2---
+    url: jdbc:h2:file:./data/outbox;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
   jpa:
-    database: oracle
+    # database: oracle   # was for Oracle, remove/comment for H2
+    database-platform: org.hibernate.dialect.H2Dialect
     generate-ddl: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update   # was 'none'; with H2 you want schema auto-created
+
   data:
     redis:
       host: localhost
@@ -29,7 +40,6 @@ spring:
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss.SSS"
     time-zone: Asia/Tehran
-
 
 server:
   port: 4444
@@ -53,14 +63,13 @@ logging:
   level:
     root: info
 
-
 notification:
   sms:
     enabled: true
     provider:
-      #      authorization-header: Basic dGFuemltXzAwMDk1L21jbHNfaXRlOkM2b1ppQUdQSlFkQ0Q1TlU=
-      uri: https://sms.magfa.com/api/http/sms/v2/send
-    sender-number: 300097500059
+      # authorization-header: XXXXX
+      uri: https://test.sms.com/api/http/sms/v2/send
+    sender-number: 30000059
   email:
     enabled: false
     provider:

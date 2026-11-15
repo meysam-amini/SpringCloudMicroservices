@@ -1,9 +1,9 @@
-package org.taba.outbox.outboxservice.service.api;
+package com.meysam.outbox.outboxservice.service.api;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.taba.outbox.outboxservice.model.entity.OutBox;
-import org.taba.outbox.outboxservice.model.enums.OutboxEventStatus;
+import com.meysam.outbox.outboxservice.model.entity.OutBox;
+import com.meysam.outbox.outboxservice.model.enums.OutboxEventStatus;
 
 import java.util.List;
 

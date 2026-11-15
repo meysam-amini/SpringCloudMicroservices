@@ -1,6 +1,5 @@
 package com.meysam.common.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.meysam.common.model.entity.QMember;
 import com.meysam.common.model.pagination.PageQueryBaseModel;
 import com.querydsl.core.types.dsl.BooleanExpression;

@@ -6,7 +6,7 @@ import java.util.List;
 
 @Getter@Setter
 @AllArgsConstructor
-@NoArgsConstructor@Builder
+@NoArgsConstructor
 public class PageResult<T> {
     private List<T> records;
     private long totalCount;

@@ -11,10 +11,7 @@
 
     <artifactId>backoffice-webapi</artifactId>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.meysam.common</groupId>
@@ -72,7 +69,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-            <version>3.0.3</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -100,14 +96,18 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.19.7</version>
+            <version>1.21.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.19.7</version>
+            <version>1.21.4</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
     <build>

@@ -1,4 +1,4 @@
-package org.taba.outbox.outboxengine.job;
+package com.meysam.outbox.outboxengine.job;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ public class NotificationOutboxScheduler {
 
 
 //    @Scheduled(cron = "0 0 0 * * *",zone = "Asia/Tehran")
-    @Scheduled(fixedDelay = 60*1000*60)
+    @Scheduled(fixedDelay = 1000)
     public void scheduler(){
 
         log.info("start scheduling failed notifications job at time:{}",System.currentTimeMillis());
